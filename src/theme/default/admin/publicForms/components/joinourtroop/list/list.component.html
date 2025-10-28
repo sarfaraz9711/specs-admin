@@ -1,0 +1,48 @@
+
+<div class="row products-section products-sub-section">
+
+    <div class="col-12">
+        <div class="flex filter-row">
+            <div class="filter-lft">
+            </div>
+
+            <div class="filter-nav-list">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="flex product-wrap">
+    <!--Filter-->
+    <div class="product-table" style="width: 100%">
+        <div class="export-row flex subscription-outer-actions">
+            <button class="btn" (click)="exportAsXLSX()">Export as Excel</button>
+        </div>
+        <div class="table-responsive subscription-content-table">
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Mobile</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Funtional Area/ Field of Interest</th>
+                    <th scope="col">External Link 1</th>
+                    <th scope="col">External Link 2</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let troopInfo of troopList; let i = i" >
+                        <td>{{troopInfo.Name}}</td>
+                        <td>{{troopInfo.Email}}</td>
+                        <td>{{troopInfo.Mobile_no}}</td>
+                        <td>{{troopInfo.Address}}</td>
+                        <td>{{troopInfo.Functional_area}}</td>
+                        <td>{{troopInfo.External_link_1}}</td>
+                        <td>{{troopInfo.External_link_2}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- <button (click)="exportAsXLSX()">Export as Excel</button> -->
+        </div>
+    </div>

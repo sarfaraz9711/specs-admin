@@ -1,0 +1,164 @@
+<div class="row products-section products-sub-section">
+
+    <div class="col-12">
+        <div class="flex filter-row">
+            <div class="filter-lft">
+                <!-- <div class="toggle">
+                    <p>{{'catalog.coupon.Filters'| translate}}</p>
+                    <input class="tgl tgl-light" id="cb1" type="checkbox" [checked]="true" (change)="changeFilter($event)" />
+                    <label class="tgl-btn" for="cb1"></label>
+                </div>
+                <ul class="order-status">
+                    
+                    <li>
+                        <span class="active"></span>{{'catalog.coupon.Active'| translate}}
+                    </li>
+                    <li>
+                        <span class="inactive"></span>{{'catalog.coupon.In-Active'| translate}}
+                    </li>
+                </ul> -->
+            </div>
+
+            <div class="filter-nav-list promos-outer-actions">
+                <div class="bc-col-btn">
+                    <button class="btn mr-3 " (click)="addCouponBasedPromo()"><img src="assets/img/add-white-ico.png"
+                            alt="add Free Product Promo"> Add Coupon
+                    </button>
+                    <button class="btn d-none" (click)="exportData()" ><img src="assets/img/add-white-ico.png"
+                        alt="add Free Product Promo"> Export Data
+                </button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+<div class="row">
+    <!-- <div class="col-md-12 text-left">
+        <input type="button" value="Export Data" class="btn btn-primary" (click)="exportAsXLSX()" />
+    </div> -->
+    </div>
+<div class="search-form mb-3">
+    <div class="search-item row">
+    <div class="col-md-2">
+        <label>Promotion Type</label>
+        <!-- <input type="text" #couponPromotionType class="form-control" formControlName="couponPromotionType" placeholder="Promotion Type"
+            (change)="formOnChange(couponPromotionType.value, 'couponPromotionType')" /> -->
+
+            <select class="form-control" #req (change)="formOnChange(req.value, 'couponPromotionType')">
+                <option value="">Select User</option>
+                <option value="allUsers">All User</option>
+                <option value="employeesOnly">Employees Only</option>
+    
+            </select>
+    </div>
+    <div class="col-md-2">
+        <label>Coupon code</label>
+        <input type="text" #couponCode class="form-control" formControlName="couponCode" placeholder="Coupon code"
+            (change)="formOnChange(couponCode.value, 'couponCode')" />
+    </div>
+    <div class="col-md-2">
+        <label>Counpon Value</label>
+        <input type="text" #couponValue class="form-control" formControlName="couponValue" placeholder="Counpon Value"
+            (change)="formOnChange(couponValue.value, 'couponValue')" />
+    </div>
+    <div class="col-md-2">
+        <label>Status</label>
+        <select class="form-control" #req1 (change)="formOnChange(req1.value, 'isActive')">
+            <option value="">Select Status</option>
+            <option value="0,1">All</option>
+            <option value="1">Active</option>
+            <option value="0">Inactive</option>
+
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label>Start Date</label>
+        <input type="date" #startDate class="form-control" formControlName="startDate" placeholder="Start Date"
+            (change)="formOnChange(startDate.value, 'startDate')" />
+    </div>
+    <div class="col-md-2">
+        <label>End Date</label>
+        <input type="date" #endDate class="form-control" formControlName="endDate" placeholder="End Date"
+            (change)="formOnChange(endDate.value, 'endDate')" />
+    </div>
+</div>
+</div>
+</div>
+<div class="search-buttons col-md-2 d-flex align-items-end">
+    <button class="btn btn-primary" (click)="searchcancel(1)">search</button>
+    <button class="btn btn-primary" (click)="searchcancel(2)">Reset</button>
+    <button class="btn btn-primary" (click)="exportAsXLSX()">ExportData</button>
+
+</div>
+
+<div class="flex product-wrap">
+    <!--Filter-->
+    <div class="product-table" style="width: 100%">
+        <div class="table-responsive promo-content-table">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Promotion Type</th>
+                        <th scope="col">Coupon code</th>
+                        <th scope="col">Coupon name</th>
+                        <th scope="col">Coupon type</th>
+                        <th scope="col">Counpon Value</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                        <th scope="col">Usages</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let promoInfo of promotionsList; let i = i">
+                        <td width="10%">{{promoInfo.couponPromotionType== "employeesOnly"? "For Redchief Employee":"For All Users"}}</td>
+                        <td width="10%">{{promoInfo.couponCode}}</td>
+                        <td width="20%">{{promoInfo.couponName}}</td>
+                        <td width="20%">{{promoInfo.couponType == 1? "Percantage discount": "Amount discount"}}</td>
+                        <td width="20%">{{promoInfo.couponValue}}</td>
+                        <td>{{ promoInfo.isActive == 1? "Enabled": "Disabled" }}</td>
+                        <td>{{promoInfo.startDate | date: 'dd-MM-yyyy, h:mm a'}}</td>
+                        <td>{{promoInfo.endDate  | date: 'dd-MM-yyyy, h:mm a'}}</td>
+                        <td class="couponViewUsages" (click)="checkCouponDetail(promoInfo.couponCode)">View Usages</td>
+
+                        <td class="cat-prd-action" width="120px">
+                            <a class="globe_icon" [routerLink]="['/promotions/coupon-based/edit', promoInfo.couponId]">
+                                <img src="assets/img/edit.png" alt="edit" />
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal show pop-show" *ngIf="usagesPopUp" tabindex="-1" role="dialog">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Coupon Usages Detail</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    (click)="modelOpenStatus(false)">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" class="couponViewUsagesModal">
+                <div class="alert alert-warning" *ngFor="let couponInfo of couponDetail">
+                <div>Order Id: {{couponInfo?.order_id}}</div>
+                <div>Coupon code: {{couponInfo?.coupon_code}}</div>
+                <div>Discounted Amount: {{couponInfo?.discounted_amount}}</div>
+            </div>
+            </div>
+            <div class="modal-body alert alert-warning" *ngIf="couponDetail ==''">
+                <span>No Record Found</span>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pop-up-overflow" *ngIf="usagesPopUp"></div>

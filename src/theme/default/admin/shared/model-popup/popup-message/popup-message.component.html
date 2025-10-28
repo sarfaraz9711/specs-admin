@@ -1,0 +1,17 @@
+<div class="modal fade show pop-show" *ngIf="popuUpDetails?.popupShow">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">{{popuUpDetails?.popupHeader}}</h4>
+        </div>
+        <div class="modal-body" [class]="popuUpDetails?.popupClass">
+            <span [innerHTML]="popuUpDetails?.popupMessage"></span>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" (click)="closePopup()">{{popuUpDetails?.popupAction}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pop-up-overflow" *ngIf="popuUpDetails?.popupShow"></div>

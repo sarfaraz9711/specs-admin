@@ -1,0 +1,263 @@
+<!--REACTIVE FORM-->
+<form novalidate (ngSubmits)="onSubmits(formData.value)" [formGroup]="formData">
+    <div class="row products-section" style="margin:unset">
+        <div class="col-12">
+            <div class="breadcrumbs-row noborder">
+                <div class="bc-col">
+                </div>
+                <div class="bc-col-btn ap-col-btn">
+                    <button class="btn btn-save" [disabled]="formData.invalid" (click)="onSubmits(formData.value)">
+                        <img src="assets/img/tick-round-white.png" alt="save" />
+                        Save
+                    </button>
+                    <button class="btn btn-cancel" (click)="onCancel()">
+                        <img src="assets/img/close-white-ico.png" alt="cancel" />Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!--Breadcrumbs-->
+    </div>
+    <div class="flex addproduct-wrap">
+        <div class="card ap-general">
+            <div class="ap-header">
+                <span>1</span> General Information
+            </div>
+
+            <div class="flex ap-body">
+
+                <!-- Col -->
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Coupon Type<sup>*</sup> </label>
+                        <input *ngIf="isEdit" type="text" readonly class="form-control" placeholder="Coupon Code" formControlName="couponPromotionType" [ngModel]="promoDetails.couponPromotionType" />
+                        <ng-select *ngIf="!isEdit" placeholder="Select coupon Type" formControlName="couponPromotionType" [ngModel]= "promoDetails.couponPromotionType" (change)="employeeCoupen($event)" >
+                            <ng-option value="allUsers">All Users</ng-option>
+                            <ng-option value="employeesOnly">Empolyees Only</ng-option>
+                        </ng-select>
+
+                    </div>
+                </div>
+                <div class="ap-body-col" *ngIf="employeePromotionType == 'employeesOnly'" >
+                    <div class="form-group">
+                        <label>Coupon Code
+                            <sup>*</sup> <img placement="top" body="container"
+                                title="Enter a Code for the Coupon. For example, 'christmas25'."
+                                style="margin-left: 5px;" src="assets/img/info-ico.png" alt="info" /></label>
+
+                        <input type="text" class="form-control" placeholder="Coupon Code"
+                            formControlName="couponCode" [ngModel]="promoDetails.couponCode" />
+
+                            <input type="hidden" class="form-control" 
+                            formControlName="orderId" [ngModel]="promoDetails.orderId" />
+    
+                    </div>
+                </div>
+                <div class="ap-body-col" *ngIf="employeePromotionType == 'allUsers'">
+                    <div class="form-group">
+                        <label>Coupon Code
+                            <sup>*</sup> <img placement="top" body="container"
+                                title="Enter a Code for the Coupon. For example, 'christmas25'."
+                                style="margin-left: 5px;" src="assets/img/info-ico.png" alt="info" /></label>
+
+                        <input type="text" class="form-control" placeholder="Coupon Code"
+                            formControlName="couponCode" [ngModel]="promoDetails.couponCode" />
+
+                            
+    
+                    </div>
+                </div>
+                <div class="ap-body-col" *ngIf="employeePromotionType == 'allUsers'">
+                    <div class="form-group">
+                        <label>Order Id
+                            <img placement="top" body="container"
+                                style="margin-left: 5px;" src="assets/img/info-ico.png" alt="info" /></label>
+
+                                <input type="text" placeholder="Order Id" class="form-control" 
+                                formControlName="orderId" [ngModel]="promoDetails.orderId" />
+    
+                    </div>
+                </div>
+                <!-- Col -->
+                <div class="ap-body-col" *ngIf="!isEdit && employeePromotionType == 'allUsers'">
+                    <div class="form-group">
+                        <label>Number of Coupon
+                            <sup>*</sup> <img placement="top" body="container" title="No of coupon"
+                                style="margin-left: 5px;" src="assets/img/info-ico.png" alt="info" /></label>
+
+                        <input type="number" class="form-control" placeholder="Number of Coupon"
+                            formControlName="noOfCoupon" [ngModel]="promoDetails.noOfCoupon"/>
+
+
+                    </div>
+                </div>
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Coupon Name
+                            <sup>*</sup> <img placement="top" body="container" title="Coupon Name"
+                                style="margin-left: 5px;" src="assets/img/info-ico.png" alt="info" /></label>
+
+                        <input type="text" class="form-control" placeholder="Coupon Name"
+                            formControlName="couponName"  [ngModel]="promoDetails.couponName" />
+
+
+                    </div>
+                </div>
+                <!-- Col -->
+                <div class="ap-body-col" *ngIf="employeePromotionType == 'allUsers'" >
+                    <div class="form-group">
+                        <label>Discount Type<sup>*</sup> </label>
+                        <ng-select placeholder="Select coupon Type" formControlName="couponType" [ngModel]= "promoDetails.couponType" >
+                            <ng-option [value]="1">Percentage Discount</ng-option>
+                            <ng-option [value]="2">Amount Discount</ng-option>
+                        </ng-select>
+
+                    </div>
+                </div>
+                <!-- Col -->
+                <div class="ap-body-col" *ngIf="employeePromotionType == 'allUsers'" >
+                    <div class="form-group">
+                        <label>Discount Value
+                            <sup>*</sup> <img placement="top" body="container" title="Coupon value"
+                                style="margin-left: 5px;" src="assets/img/info-ico.png" alt="info" /></label>
+
+                        <input (change)="setDiscountValue(discount.value)" #discount type="number" class="form-control" placeholder="Discount Value"       
+                        formControlName="couponValue" [ngModel]="promoDetails.couponValue"  />
+
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Start Date <sup>*</sup>
+                            <img placement="top" title="Start Date"
+                                ngbTooltip="Select a date to specify the validity period for the coupon."
+                                style="margin-left: 5px;" src="assets/img/info-ico.png" alt="info" />
+                        </label>
+                        <input (change)="setStartMinDate(date.value)" #date style="cursor: pointer;background-color: white;width:100%;" min="{{minDate}}" max="{{maxStartDate}}" type="date"
+                            class="form-control date1" formControlName="startDate" [ngModel]="promoDetails.startDate" />
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Start Time<sup>*</sup></label>
+                        <input (change)="setStartMinTime(time.value)" #time  type="time"
+                            class="form-control date1" formControlName="startTime" [ngModel]="promoDetails.startTime" min={{minTime}} max={{maxStartTime}} />
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>End Date <sup>*</sup>
+                            <img placement="top" title="End Date"
+                                ngbTooltip="Select a date to specify the validity period for the coupon."
+                                style="margin-left: 5px;" src="assets/img/info-ico.png" alt="info" />
+                        </label>
+                        <input (change)="setEndMinDate(endDate.value)" #endDate style="cursor: pointer;background-color: white;width:100%;" min={{minEndDate}} type="date"
+                            class="form-control date1" formControlName="endDate" [ngModel]="promoDetails.endDate" />
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>End Time<sup>*</sup></label>
+                        <input (change)="setEndMinTime(endTime.value)" #endTime  min={{minEndTime}} type="time"
+                            class="form-control date1" formControlName="endTime" [ngModel]="promoDetails.endTime" />
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="card ap-general ap-info">
+            <div class="ap-header">
+                <span>2</span> More Information
+            </div>
+            <div class="flex ap-body addCoupon-wrap" style="padding-left: 64px;">
+
+                <!-- Col -->
+                <div class="ap-body-col" *ngIf="employeePromotionType == 'allUsers'" >
+                    <div class="form-group">
+                        <label>Minimum Purchase Amount
+                            <sup>*</sup> <img placement="top" body="container" title="Minimum Purchase Amount"
+                                style="margin-left: 5px;" src="assets/img/info-ico.png" alt="info" /></label>
+
+                        <input (change)="setMinAmount(number.value)" #number appOnlyNumber type="text" class="form-control" placeholder="Minimum Purchase Amount" min={{minAmount}}
+                          max={{maxPurchaseAmount}}  formControlName="minimumPurchaseAmount" [ngModel]="promoDetails.minimumPurchaseAmount" />
+
+
+                    </div>
+                </div>
+                <!-- Col -->
+                <div class="ap-body-col" *ngIf="employeePromotionType == 'allUsers'" >
+                    <div class="form-group">
+                        <label>Maximum Purchase Amount
+                            <sup>*</sup> <img placement="top" body="container" title="MaximumPurchaseAmount"
+                                style="margin-left: 5px;" src="assets/img/info-ico.png" alt="info" /></label>
+
+                        <input (change)="setMaxAmount(maxNumber.value)" #maxNumber type="number" class="form-control" placeholder="Maximum Purchase Amount" min={{minPurchaseAmount}}
+                            formControlName="maximumPurchaseAmount" [ngModel]="promoDetails.maximumPurchaseAmount" />
+
+
+                    </div>
+                </div>
+                <!-- Col-->
+                <div class="ap-body-col" *ngIf="employeePromotionType == 'allUsers'" >
+                    <div class="form-group">
+                        <label>Coupon To Specific Customers(Email)<sup>*</sup>
+                            <img placement="top"
+                                title="Separate the Email Ids, with commas to offer coupon to specific Customers."
+                                style="margin-left: 5px;" src="assets/img/info-ico.png" alt="info" />
+                        </label>
+                        <textarea [readonly]="orderCoupanData" class="form-control" placeholder="Coupon To Specific Customers(Email)"
+                            formControlName="emailRestrictions" [ngModel]="promoDetails.emailRestrictions"></textarea>
+                            <!-- <div *ngIf="formData.controls.emailRestrictions?.pattern">Enter correct email</div> -->
+                    </div>
+                </div>
+                <!-- Col-->
+                <div class="ap-body-col" *ngIf="employeePromotionType == 'allUsers'">
+                    <div class="form-group">
+                        <label>Usage limit for the coupon<sup>*</sup>
+                            <img placement="top" ngbTooltip="Specify, up to how many customers can use this coupon." title="Specify, up to how many customers can use this coupon"
+                                style="margin-left: 5px;" src="assets/img/info-ico.png" alt="info" />
+                        </label>
+                        <input type="text" class="form-control" placeholder="Usage limit for the coupon"
+                            formControlName="maxCouponUse" appOnlyNumber  [ngModel]="promoDetails.maxCouponUse" />
+
+                    </div>
+                </div>
+
+                <!-- Col-->
+
+                <div class="ap-body-col" *ngIf="employeePromotionType == 'allUsers'">
+                    <div class="form-group">
+                        <label>No of times user can use this discount<sup>*</sup>
+                            <img placement="top" title="Specify, up to how many times a customer can use this coupon. "
+                                style="margin-left: 5px;" src="assets/img/info-ico.png" alt="info" />
+                        </label>
+                        <input type="text" class="form-control" placeholder="No of times user can use this discount" formControlName="noOfMaxCouponUsePerUser"
+                            appOnlyNumber [ngModel]="promoDetails.noOfMaxCouponUsePerUser" />
+
+                    </div>
+                </div>
+                    <!-- Col-->
+                    <div class="ap-body-col">
+                        <div class="form-group">
+                            <label>Status<sup>*</sup> </label>
+                            <ng-select placeholder="Status" [searchable]="false" formControlName="status" [ngModel]= "promoDetails.isActive">
+                                <ng-option [value]="1">Enabled</ng-option>
+                                <ng-option [value]="0">Disabled</ng-option>
+                            </ng-select>
+
+                        </div>
+                    </div>
+
+                
+            </div>
+        </div>
+    </div>
+</form>
+
+<app-popup-message [popupMessage]="popupMessage"></app-popup-message>

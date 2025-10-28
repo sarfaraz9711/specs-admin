@@ -1,0 +1,29 @@
+
+<app-feedback-layout></app-feedback-layout>
+
+<div class="flex product-wrap">
+    <!--Filter-->
+    <div class="product-table" style="width: 100%">
+        <div class="export-row flex subscription-outer-actions">
+            <button class="btn" (click)="exportAsXLSX()">Export as Excel</button>
+        </div>
+        <div class="table-responsive subscription-content-table">
+            <table class="table">
+                <thead>
+                    <tr><th scope="col">Email</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Message</th></tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let feedbackInfo of feedbackListArray; let i = i">
+                        <td>{{feedbackInfo.email}}</td>
+                        <td>{{feedbackInfo.type}}</td>
+                        <td>{{feedbackInfo.createdDate | date: 'dd-MM-yyyy, h:mm a'}}</td>
+                        <td style="word-break: break-all;">{{feedbackInfo.feedMsg}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- <button (click)="exportAsXLSX()">Export as Excel</button> -->
+        </div>
+    </div>

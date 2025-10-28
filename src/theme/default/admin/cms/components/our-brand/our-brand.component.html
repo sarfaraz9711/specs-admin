@@ -1,0 +1,123 @@
+<app-cms-header></app-cms-header>
+<form class="container-fluid bdr-btm mt-5" [formGroup]="brandNameForm" id="validateForm">
+    <div class="row" [style.background-color]="'#eee'" [style.height]="'100px'">
+        <div class="col-md-3">
+            <input type="hidden" class="form-control" formControlName="listType" [(ngModel)]="editData.listType">
+            <label>Title<sup>*</sup></label>
+            <input type="text" class="form-control" formControlName="title" [(ngModel)]="editData.title">
+        </div>
+        <div class="col-md-3">
+            <label>Image<sup>*</sup></label>
+            <!-- <div *ngIf="editId">{{editData.imagePath}}</div> -->
+            <div *ngIf="editData.imagePath && !uploadNewImage" class="editimage"><span (click)="clickClose()" class="crossimage">X</span>
+                {{editData.imagePath?editData.imagePath:"Image Name"}}</div>
+            <div *ngIf="!editData.imagePath && uploadNewImage" class="categoryimage">Image Name</div>
+
+
+            <div *ngIf="uploadNewImage" ><input type="file" formControlName="imagefile" class="form-control" (change)="uploadFile($event)">
+            <input type="hidden" class="form-control" formControlName="imagePath" [(ngModel)]="imageUploadData.image">
+            
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label>Image For<sup>*</sup></label>
+            <input class="form-control" type="text" readonly formControlName="showOn" #image (change)="selectAction(image.value)" [(ngModel)]="editData.showOn">
+            <select class="form-control d-none" formControlName="showOn" #image (change)="selectAction(image.value)" [(ngModel)]="editData.showOn">
+                <option value="">--Select--</option>
+                <option value="brand-logo">Our Brand</option>
+                <option value="left">Left Section</option>
+                <option value="right">Right Section</option>
+                <option value="banner2">Banner 2</option>
+                <option value="banner3">Banner 3</option>
+                <!-- <option value="lookbook-tabl">Lookbook Tab-1</option> -->
+                <!-- <option value="lookbook-tab2">Lookbook Tab-2</option> -->
+                <!-- <option value="lookbook-tab3">Lookbook Tab-3</option> -->
+                <option value="offerTab1">Offer Tab-1</option>
+                <option value="offerTab2">Offer Tab-2</option>
+                <option value="offerTab3">Offer Tab-3</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label>Link</label>
+            <input type="text" class="form-control" formControlName="link"  [(ngModel)]="editData.link" >
+        </div>
+
+        <!-- <div class="col-md-3" *ngIf="image.value!='brand-logo' && image.value!='banner2' && image.value!='banner3' && (image.value=='lookbook-tabl' || image.value=='lookbook-tab2' || image.value=='lookbook-tab3') && (image.value=='offerTab1' && image.value=='offerTab2' && image.value=='offerTab3')">
+            <label>Link</label>
+            <input type="text" class="form-control" formControlName="link" required>
+        </div> -->
+        <div class="col-md-3" *ngIf="image.value!='brand-logo' && image.value!='left' && image.value!='right' && image.value!='banner2' && image.value!='banner3' && (image.value=='lookbook-tabl' || image.value=='lookbook-tab2' || image.value=='lookbook-tab3')">
+            <label>Link</label>
+            <input type="text" class="form-control" formControlName="link" >
+        </div>
+        <div class="col-md-3 d-none" *ngIf="image.value!='brand-logo' && image.value!='left' && image.value!='right' && image.value!='banner2' && image.value!='lookbook-tabl' && image.value!='lookbook-tab2' && image.value!='lookbook-tab3' && image.value=='offerTab1' && image.value=='offerTab2' && image.value=='offerTab3'">
+            <label>Select Product<sup>*</sup></label>
+            <ng-select placeholder="--Select--" [items]="productList" bindLabel="name" bindValue="productId"
+                formControlName="productIds" multiple="true" [(ngModel)]="editData.productIds">
+            </ng-select>
+        </div>
+        <div class="col-md-3 d-none" *ngIf="image.value=='left' || image.value=='right' ">
+            <label>Select Product<sup>*</sup></label>
+            <ng-select placeholder="--Select--" [items]="productList" bindLabel="name" bindValue="productId"
+                formControlName="productIds" multiple="true" [(ngModel)]="editProductIds">
+            </ng-select>
+        </div>
+    </div>
+    
+    <div class=" mt-3">
+        <div class="text-center">
+            <div *ngIf="updatedSuccessfully == 1" class="alert alert-success mb-3" >Updated Successfully</div>    
+            <!-- <input type="button" value="Update" [disabled]="(!brandNameForm.value.productIds?.length  && !brandNameForm.value.link ) ||brandNameForm.invalid" class="btn btn-primary"
+                (click)="formSubmit()"> -->
+
+                <input type="button" value="Update" [disabled]="!editData.imagePath && !uploadNewImage" class="btn btn-primary"
+                (click)="formSubmit()">    
+
+                <button [disabled]="!editData.imagePath && !uploadNewImage" class="btn btn-primary ml-2" (click)="cancelForm()">Cancel</button>
+            
+        </div>
+        
+    </div>
+</form>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>List of Active</h3>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped cms-content-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Image</th>
+                    <th>Images for</th>
+                    <th>Link</th>
+                    <th>Status</th>
+                    <th class="text-center" scope="col" width="100px" [appHideIfUnauthorized]="'make-status'" >Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of allDataList">
+                    <td>{{data.title}}</td>
+                    <!-- <td>{{data.imagePath}}</td> -->
+                    <td><img *ngIf="data.imagePath" [src]="imageUrl + '?path=&name=' + data.imagePath + '&width=100&height=60'" onError="this.src='/assets/error-images/Load-icon-Products.png';" 
+                                [alt]='ddddddddddddddd'></td>
+                    <td>{{data.showOn}}</td>
+                    <td class="wordbreak">{{data.link}}</td>
+                    <!-- <td>{{data.status==1?"Active":"Inactive"}}</td> -->
+                    <td class="text-center" [appHideIfUnauthorized]="'make-status'">
+                        <div class="toggle">
+                            <input class="tgl tgl-light" type="checkbox" id="{{data.Id}}" [(ngModel)]="data.status" (change)="makeActiveInactive($event,data)" />
+                            <label class="tgl-btn" for="{{data.Id}}"></label>
+                        </div>
+                    </td>
+                    <td style="text-align: center;cursor: pointer;">
+                        <i class="fas fa-edit" (click)="updateBannerStatus($event,data)"></i>
+                        
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

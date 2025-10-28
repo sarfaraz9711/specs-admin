@@ -1,0 +1,40 @@
+
+<!-- <app-feedback-layout></app-feedback-layout> -->
+
+<div class="flex product-wrap">
+    <!--Filter-->
+    <div class="product-table" style="width: 100%">
+        <div class="export-row flex subscription-outer-actions">
+            <button class="btn" (click)="addStore()">+ Add store</button>
+            <button class="btn" (click)="exportAsXLSX()">Export as Excel</button>
+        </div>
+        <div class="table-responsive subscription-content-table">
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">Store</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Owner</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let storeInfo of storeList; let i = i" >
+                        <td>{{storeInfo.shopName}}</td>
+                        <td>{{storeInfo.address}}, {{storeInfo.storeCity}}, {{storeInfo.storeState}} {{storeInfo.pincode}}</td>
+                        <td>{{storeInfo.firstName}}</td>
+                        <td>{{storeInfo.contactNo}}</td>
+                        <td>{{storeInfo.active}}</td>
+                        <td class="cat-prd-action" width="120px">
+                            <a class="globe_icon"  (click)="editStore(storeInfo.id)">
+                                <img src="assets/img/edit.png" alt="edit" />
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- <button (click)="exportAsXLSX()">Export as Excel</button> -->
+        </div>
+    </div>

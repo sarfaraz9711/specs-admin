@@ -1,0 +1,77 @@
+<div class="set-lay-notes flex" style="padding: 0 10px 10px 10px;">
+    <h4>Note :</h4>
+    <p>If the eCommerce business only ships to a selected and particular locations within a country, then the admin can add those locations, along with the postal code in this section. This will be available for enabling the product delivery for selected
+        locations only, while adding/listing the product. </p>
+</div>
+
+<div class="setup-wrapper set-loc-wrapper">
+
+    <div class="setup-container localization-container">
+        <div class="card ap-general ap-info">
+            <div class="flex ap-body">
+                <ngb-tabset style="width:100%;">
+                    <ngb-tab>
+                        <ng-template ngbTabContent style="display: flex !important;">
+
+
+
+                            <div class="localize-header flex">
+                                <div class="loc-hdr-lft">
+                                    <!-- <p>Showing <span> 0 - 10 </span> results</p> -->
+                                    <div class="input-group">
+                                        <p>{{'Settings.Local.Resultsperpage' | translate}}</p>
+                                        <div class="select">
+                                            <select [(ngModel)]="pageSize" (change)="getLocationsList()">
+                                                <option *ngIf="pageSize!== '10' && pageSize!== '20' && pageSize!== '30'" value="{{pageSize}}">{{pageSize}}</option>
+                                                <option value="10">10</option>
+                                                <option value="20">20</option>
+                                                <option value="30">30</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button [appHideIfUnauthorized]="'add-delivery-location'" (click)=" AddeNewLocation('','add')" class="set-ad-btn"><img
+                                        src="assets/img/add-white-ico.png">{{'Settings.Local.Location.AddNewLocation' |
+                                    translate}}</button>
+                            </div>
+
+                            <div class="setup-right">
+                                <div class="table-responsive">
+                                    <table class="table" style="background: white !important;">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">{{'Settings.Local.Location.DeliveryLocation' | translate}}</th>
+                                                <th scope="col">{{'Settings.Local.Location.PinCode' | translate}}</th>
+                                                <th class="text-center" scope="col" [appHideIfUnauthorized]="" [multipleHide]="['update-delivery-location','delivery-location-delete']">{{'Settings.Local.Location.Action' | translate}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let locationlist of locationSandbox.locationList$ | async; let i=index">
+                                                <td>{{locationlist.locationName}}</td>
+                                                <td>{{locationlist.zipCode}}</td>
+                                                <td class="text-center" [appHideIfUnauthorized]="" [multipleHide]="['update-delivery-location','delivery-location-delete']">
+                                                    <div class="dropdown" ngbDropdown>
+                                                        <i class="fa fa-ellipsis-v cursor" style="padding:0 15px" ngbDropdownToggle> </i>
+                                                        <div ngbDropdownMenu class="dropdown-menu">
+                                                            <a [appHideIfUnauthorized]="'update-delivery-location'" class="dropdown-item" ngbDropdownItem href="javascript:void(0)" (click)="AddeNewLocation(locationlist,'edit')"> <img src="assets/img/edit.png" /> {{'Settings.Local.Edit' | translate}} </a>
+                                                            <a [appHideIfUnauthorized]="'delivery-location-delete'" class="dropdown-item" ngbDropdownItem href="javascript:void(0)" (click)="deleteLocation(locationlist.deliveryLocationId)"> <img src="assets/img/delete-new.png"> {{'Settings.Local.Delete' | translate}} </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <mat-paginator [length]="locationSandbox.locationPagination$ | async" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" (page)="onPageChange($event)">
+                                    </mat-paginator>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+
+                </ngb-tabset>
+            </div>
+        </div>
+    </div>
+
+
+</div>

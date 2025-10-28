@@ -1,0 +1,69 @@
+<!-- <app-freeproducts-layout></app-freeproducts-layout> -->
+<div class="row products-section products-sub-section">
+
+    <div class="col-12">
+        <div class="flex filter-row">
+            <div class="filter-lft">
+                <!-- <div class="toggle">
+                    <p>{{'catalog.coupon.Filters'| translate}}</p>
+                    <input class="tgl tgl-light" id="cb1" type="checkbox" [checked]="true" (change)="changeFilter($event)" />
+                    <label class="tgl-btn" for="cb1"></label>
+                </div>
+                <ul class="order-status">
+                    
+                    <li>
+                        <span class="active"></span>{{'catalog.coupon.Active'| translate}}
+                    </li>
+                    <li>
+                        <span class="inactive"></span>{{'catalog.coupon.In-Active'| translate}}
+                    </li>
+                </ul> -->
+            </div>
+
+            <div class="filter-nav-list promos-outer-actions">
+                <div class="bc-col-btn">
+                    <button class="btn" (click)="addFreeProductPromo()"><img src="assets/img/add-white-ico.png"
+                            alt="add Free Product Promo"> Add Free Promotion
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="flex product-wrap">
+    <!--Filter-->
+    <div class="product-table" style="width: 100%">
+        <div class="table-responsive promo-content-table">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Promotion Type</th>
+                        <th scope="col">Buy Product</th>
+                        <th scope="col">Get Product</th>
+                        <th scope="col">Active</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let freeProductPromoInfo of freeProductPromosList; let i = i">
+                    <tr *ngIf="freeProductPromoInfo.is_active==1">
+                        <td width="10%">{{freeProductPromoInfo.free_promotion_type}}</td>
+                        <td width="20%">{{freeProductPromoInfo.buy_product_name}}</td>
+                        <td width="20%">{{freeProductPromoInfo.product_name}}</td>
+                        <td>{{ freeProductPromoInfo.is_active == 1? "Enabled": "Disabled" }}</td>
+                        <td>{{freeProductPromoInfo.start_date | date: 'dd-MM-yyyy, h:mm a'}}</td>
+                        <td>{{freeProductPromoInfo.end_date  | date: 'dd-MM-yyyy, h:mm a'}}</td>
+                        <td class="cat-prd-action" width="120px">
+                            <a class="globe_icon" [routerLink]="['/promotions/freeproducts/edit', freeProductPromoInfo.promotion_id]">
+                                <img src="assets/img/edit.png" alt="edit" />
+                            </a>
+                        </td>
+                    </tr>
+                </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

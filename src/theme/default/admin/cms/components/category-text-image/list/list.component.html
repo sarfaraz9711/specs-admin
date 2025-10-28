@@ -1,0 +1,35 @@
+<app-cms-header></app-cms-header>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 d-flex justify-content-between mt-4">
+            <h3>List of Active</h3>
+            <div class="bc-col-btn">
+                <button class="btn cms-btn" (click)="addPage()" [appHideIfUnauthorized]="'create-pages'"><img
+                        src="assets/img/add-white-ico.png" alt="add"> Add New
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped cms-content-table">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Category Name</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th class="text-center" scope="col" width="100px" [appHideIfUnauthorized]="'make-status'" >Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of categoryList">
+                    <td>{{data.type}}</td>
+                    <td>{{data.categoryName}}</td>
+                    <td>{{data.description?data.description:'NA'}}</td>
+                    <td>{{data.isActive}}</td>
+                    <td><input type="button" class="btn btn-primary" value="Edit" (click)="editRecord(data.categoryId, data.type)"/></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

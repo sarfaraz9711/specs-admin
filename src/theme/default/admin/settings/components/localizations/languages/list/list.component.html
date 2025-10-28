@@ -1,0 +1,89 @@
+<div class="set-lay-notes flex" style="padding: 0 10px 10px 10px;">
+    <h4>Note :</h4>
+    <p>The admin can add different languages here, for the International Customers to choose the language of preference from the storefront. </p>
+</div>
+
+<div class="setup-wrapper set-loc-wrapper">
+    <div class="setup-container localization-container">
+        <div class="card ap-general ap-info">
+            <div class="flex ap-body">
+
+                <ngb-tabset style="width:100%;">
+                    <ngb-tab>
+                        <ng-template ngbTabContent style="display: flex !important;">
+
+                            <div class="localize-header flex">
+                                <div class="loc-hdr-lft">
+                                    <!-- <p>Showing <span> 0 - 10 </span> results</p> -->
+                                    <div class="input-group">
+                                        <p>{{'Settings.Local.Resultsperpage' | translate}}</p>
+                                        <div class="select">
+                                            <select [(ngModel)]="pageSize" (change)="languageList()">
+                                                <option *ngIf="pageSize!== '10' && pageSize!== '20' && pageSize!== '30'" value="{{pageSize}}">{{pageSize}}</option>
+                                                <option value="10">10</option>
+                                                <option value="20">20</option>
+                                                <option value="30">30</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="set-ad-btn" (click)="addLanguage('','add')" [appHideIfUnauthorized]="'create-language'"><img
+                                    src="assets/img/add-white-ico.png" alt="add">{{'Settings.Local.Language.AddNewLanguage' | translate}}</button>
+                            </div>
+
+                            <div class="setup-right">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">
+                                                    {{'Settings.Local.Language.LanguageName' | translate}}
+                                                </th>
+                                                <th scope="col">{{'Settings.Local.Language.Code' | translate}}</th>
+                                                <th scope="col">{{'Settings.Local.Language.SortOrder' | translate}}</th>
+                                                <th scope="col">{{'Settings.Local.Emailtemplate.Status' | translate}}
+                                                </th>
+                                                <th scope="col" class="text-center" [appHideIfUnauthorized]="" [multipleHide]="['edit-language','delete-langugage']">
+                                                    {{'Settings.Local.Language.Action' | translate}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let languagelist of languageSandbox.languageList$ | async;">
+                                                <td scope="row">{{languagelist.name}}</td>
+                                                <td>{{languagelist.code}}</td>
+                                                <td>{{languagelist.sortOrder}}</td>
+                                                <td>
+                                                    <div *ngIf="languagelist.isActive === 1">
+                                                        {{'Settings.Local.StockStatus.Active' | translate}}
+                                                    </div>
+                                                    <div *ngIf="languagelist.isActive === 0">
+                                                        {{'Settings.Local.StockStatus.InActive' | translate}}
+                                                    </div>
+                                                </td>
+                                                <td class="text-center" [appHideIfUnauthorized]="" [multipleHide]="['edit-language','delete-langugage']">
+                                                    <div class="dropdown" ngbDropdown>
+                                                        <i class="fa fa-ellipsis-v cursor" style="padding:0 15px" ngbDropdownToggle> </i>
+                                                        <div ngbDropdownMenu class="dropdown-menu">
+                                                            <a [appHideIfUnauthorized]="'edit-language'" class="dropdown-item" ngbDropdownItem href="javascript:void(0)" (click)="addLanguage(languagelist,'edit')"> <img src="assets/img/edit.png" alt="edit" /> {{'Settings.Local.Edit' | translate}} </a>
+                                                            <a [appHideIfUnauthorized]="'delete-language'" class="dropdown-item" ngbDropdownItem href="javascript:void(0)" (click)="deleteLanguage(languagelist.languageId)"> <img src="assets/img/delete-new.png" alt="delete"> {{'Settings.Local.Delete' | translate}} </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <mat-paginator [length]="languageSandbox.languagePagination$ | async" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" (page)="onPageChange($event)">
+                                    </mat-paginator>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+                    <!--country-->
+
+                    <!--zone-->
+                </ngb-tabset>
+            </div>
+        </div>
+    </div>
+
+</div>

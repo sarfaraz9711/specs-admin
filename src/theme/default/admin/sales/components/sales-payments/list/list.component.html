@@ -1,0 +1,198 @@
+<div class="row products-section vendor-section">
+    <!--Breadcrumbs-->
+
+    <div class="col-12">
+        <div class="flex filter-row">
+            <div class="filter-lft">
+                <div class="toggle">
+                    <p>{{'Sales.Orders.Filters'| translate}}</p>
+                    <input class="tgl tgl-light" id="cb1" type="checkbox" [checked]="true" (change)="check($event)" />
+                    <label class="tgl-btn" for="cb1"></label>
+                </div>
+                <div class="ml-2 bc-col-btn export-data">
+                    <input type="button" value="Export Data" class="btn" (click)="exportAsXLSX()">
+                </div>
+            </div>
+            <!--Lft-->
+            <!-- <div class="filter-nav-list service-nav-list">
+                <ul class="flex">
+                    <li [appHideIfUnauthorized]="'export-all-sales-payments'">
+                        <a style="border-color: #DC4D5B!important;color: #DC4D5B;" href="javascript:void(0)" (click)="exportAllExcel()">
+                            <img src="assets/img/export-ico.png" alt="export" />{{'Sales.Orders.AllExport'| translate}}
+                        </a>
+                    </li>
+                </ul>
+                <div class="dropdown" ngbDropdown [appHideIfUnauthorized]="'export-all-sales-payments'">
+                    <i class="fa fa-ellipsis-h cursor" style="padding:8px 10px;margin-left:16px;background: #f1cdcd ;" [ngClass]="{'export-color': checkedData.length!=0}" ngbDropdownToggle></i>
+                    <div ngbDropdownMenu class="dropdown-menu">
+                        <a [ngClass]="{'blur':checkedData.length==0}" [disabled]="checkedData.length==0" (click)="exportExcel()" class="dropdown-item" ngbDropdownItem href="javascript:void(0)"> <img src="assets/img/export-sm.svg" alt="export">{{'Sales.Orders.Export'| translate}} </a>
+                    </div>
+                </div>
+            </div> -->
+            <!--Right-->
+        </div>
+    </div>
+</div>
+
+<!-- filter -->
+<div class="flex product-wrap">
+    <div class="filter-details" *ngIf="filterEnable">
+        <input type="text" id="focusOut" style="height: 0; width: 0; opacity: 0;">
+        <form (ngSubmit)="onSubmit()" [formGroup]="paymentList" class="filter-form">
+            <div class="form-group">
+                <label for="firstName">Order Id</label>
+                <input type="text" type="text" class="form-control" formControlName="keywordInput" placeholder="Order Id" />
+            </div>
+            <div class="ff-date-row flex d-none">
+                <div class="form-group">
+                    <label for="fromDate">{{'Sales.Orders.FromDate'| translate}}</label>
+                    <input readonly style="cursor: pointer" type="text" class="form-control date" formControlName="fromDateInput" (dateSelect)="onDateSelect($event)" placeholder="dd/mm/yyyy" name="dp" id="cal-in" ngbDatepicker #f="ngbDatepicker" (click)="f.toggle()" [maxDate]="todaysDate"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="toDate">{{'Sales.Orders.ToDate'| translate}}</label>
+                    <input readonly style="cursor: pointer" type="text" class="form-control date" [minDate]="paymentList.value.fromDateInput" formControlName="toDateInput" placeholder="dd/mm/yyyy" name="dp" id="cal-in" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()"
+                        [maxDate]="todaysDate" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Payment mode">{{'Sales.Orders.PaymentMode'| translate}}</label>
+                <ng-select class="sol-fm" placeholder="{{'Sales.Orders.SelectPaymentMode'| translate}}" [searchable]="false" [clearable]="false" formControlName="paymentMethod">
+                    <ng-option *ngFor="let payments of sandbox.GetPaymentMode$ | async" [value]=payments.id>{{payments.pluginName}}</ng-option>
+                </ng-select>
+            </div>
+            <div class="form-group">
+                <label for="sku">{{'Sales.Orders.CustomerName'| translate}}</label>
+                <input type="text" class="form-control" formControlName="name" id="sku" placeholder="{{'Sales.SalesPlaceholder.SKUNumber'| translate}}">
+            </div>
+            <div class="form-group">
+                <label for="email">{{'Sales.Orders.Email'| translate}}</label>
+                <input type="text" class="form-control" formControlName="email" id="email" placeholder="{{'Sales.Orders.Email'| translate}}">
+            </div>
+            <div class="form-group">
+                <label for="mobileNo">{{'Sales.Orders.Mobile'| translate}}</label>
+                <input type="text" class="form-control" formControlName="mobileNo" id="mobileNo" placeholder="{{'Sales.Orders.Mobile'| translate}}">
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'Sales.Orders.DateAdded'| translate}} </label>
+                <input (change)="onStartDateSelect(startdate.value)" #startdate
+                style="cursor: pointer;width:100%;" type="date" class="form-control date1"
+                formControlName="fromDate" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'Sales.Orders.DateAddedTo'| translate}} </label>
+                <input (change)="onToDateSelect(endDate.value)" #endDate
+                style="cursor: pointer;width:100%;" type="date" class="form-control date1"
+                formControlName="todate" />
+            </div>
+            <div class="text-right filter-btns">
+                <a href="javascript:void(0)" (click)="reset()">{{'Sales.Orders.Reset'| translate}}</a>
+                <button type="submit" class="btn" style="background-color:#dc4d5b">{{'Sales.Orders.ApplyFilters'| translate}}  </button>
+            </div>
+        </form>
+    </div>
+    <!--Filter-->
+    <div class="product-table sales-content-table" [ngClass]="{ 'expand-list': !buttonActive }">
+        <div class="table-responsive">
+            <table class="table" id="myTable">
+                <thead>
+                    <tr>
+                        <th scope="col" width="5%" [appHideIfUnauthorized]="'export-all-sales-payments'">
+                            <!-- <div class="form-group">
+                                <div class="custom-control custom-checkbox mr-sm-2">
+                                    <input *ngIf="sandbox.paymentList$ | async as payments" type="checkbox" class="custom-control-input" id="checkbox1" (change)="selectAll($event, payments)" [(ngModel)]="selectedAll"/>
+                                    <label class="custom-control-label" for="checkbox1"></label>
+                                </div>
+                            </div> -->
+                        </th>
+                        <th scope="col">{{'Sales.Orders.OrderId'| translate}}</th>
+                        <th scope="col" style="text-align:center">{{'Sales.Orders.CustomerName'| translate}}</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Mobile</th>
+                        <th scope="col" style="text-align:center">{{'Sales.Orders.PaymentDate'| translate}}</th>
+                        <th scope="col" width="120px" style="text-align: center">{{'Sales.Orders.TransactionID'| translate}}</th>
+                        <th scope="col" width="100px" style="text-align: center">{{'Sales.Orders.Amount'| translate}}</th>
+                        <th scope="col" width="100px" style="text-align: center">{{'Sales.Orders.Action'| translate}}</th>
+
+                    </tr>
+                </thead>
+                <tbody class="panel">
+                    <ng-container *ngFor="let payment of sandbox.paymentList$ | async;let i = index">
+                        <tr>
+                            <th scope="row" [appHideIfUnauthorized]="'export-all-sales-payments'">
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox mr-sm-2">
+                                        <input type="checkbox" class="custom-control-input" id="{{ payment.paymentId }}" value="check" [checked]="isChecked[payment.paymentId]" (change)="checkOrder($event, payment)" />
+                                        <label class="custom-control-label" for="{{ payment.paymentId }}"></label>
+                                    </div>
+                                </div>
+                            </th>
+
+                            <td class="vendid vname name hyperlinks" style="position: relative;">
+                                <span style="cursor: pointer;" (click)="viewOrders(payment.orderId);">{{payment.orderPrefixId}}</span>
+                                <!-- <a style="cursor: pointer;" (click)="viewOrders(payment.orderId);" href="javascript:void(0)" class="lst-xpnd">
+                                    <img src='assets/img/arrow-right-ico.png'>
+
+                                </a> -->
+                            </td>
+                            <td class="name" style="text-align:center;">{{payment.shippingFirstname}}</td>
+                            <td>{{payment.email}}</td>
+                            <td>{{payment.telephone}}</td>
+                            <td style="text-align:center; ">{{payment.createdDate | date :'dd/MM/yyyy'}}</td>
+                            <td style="text-align:center; font-weight: 600;">
+                                {{payment.paymentDetails}}
+                                <span class="pay-mdt">{{payment.paymentType}}</span>
+                            </td>
+                            <td style="text-align:center; ">{{payment.total | currencysymbol: (payment.currencySymbolLeft ? {'position': 'left', symbol: payment.currencySymbolLeft} : payment.currencySymbolRight? {position: 'right' , symbol: payment.currencySymbolRight}: null)}}
+                            </td>
+                            <td class="text-center">
+                                <div class="dropdown" ngbDropdown>
+                                    <i class="fa fa-ellipsis-v cursor" style="padding:0 15px" id="dropdownMenuButton_{{ payment.orderId }}" ngbDropdownToggle>
+                  </i>
+                                    <div ngbDropdownMenu [attr.aria-labelledby]="'dropdownMenuButton_' + payment.orderId" class="dropdown-menu">
+                                        <a class="dropdown-item" ngbDropdownItem href="javascript:void(0)" (click)="downloadInvoice(payment.orderId, payment.orderPrefixId)"> <img src="assets/img/invoice.svg" alt="invoice" />{{'Sales.Orders.Invoice'| translate}} </a>
+                                        <a class="dropdown-item" ngbDropdownItem href="javascript:void(0)" (click)="archivePayment(payment)"> <img src="assets/img/archives.svg" alt="archive">{{'Sales.Orders.Archive'| translate}} </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- <tr id="demo-{{i + 1}}" class="acc-table" [ngbCollapse]="payment.isCollapsed">
+                            <td colspan="9" class="hiddenRow" [@smoothCollapse]="payment.isCollapsed?'initial':'final'">
+                                <table class="table">
+                                    <tr>
+                                        <th class="text-right" colspan="7"><a href="javascript:void(0)" (click)="payment.isCollapsed = !payment.isCollapsed" class="acc-tbl-close">x</a></th>
+                                    </tr>
+                                    <tr>
+                                        <th>{{'Sales.Orders.SubOrder ID'| translate}}</th>
+                                        <th>{{'Sales.Orders.Product'| translate}}</th>
+                                        <th>{{'Sales.Orders.Quantity'| translate}}</th>
+                                        <th>{{'Sales.Orders.Price'| translate}}</th>
+                                        <th>{{'Sales.Orders.Discount'| translate}}</th>
+                                        <th>{{'Sales.Orders.Coupon Discount'| translate}}</th>
+                                        <th>{{'Sales.Orders.Total'| translate}}</th>
+                                    </tr>
+                                    <tr *ngFor="let subOrder of payment?.subOrderDetails">
+                                        <td class="oid">#{{subOrder.orderProductPrefixId}}</td>
+                                        <td width="35%">{{subOrder.name}}</td>
+                                        <td>{{subOrder.quantity}}</td>
+                                        <td class="amt">{{(payment.currencySymbolLeft ? payment.currencySymbolLeft : '') + ' ' + subOrder.basePrice}}</td>
+                                        <td class="amt">{{(payment.currencySymbolLeft ? payment.currencySymbolLeft : '') + ' ' + (subOrder.discountAmount ? subOrder.discountAmount : 0)}}</td>
+                                        <td class="amt">{{(payment.currencySymbolLeft ? payment.currencySymbolLeft : '') + ' ' + (subOrder.couponDiscountAmount ? subOrder.couponDiscountAmount : 0)}}</td>
+                                        <td class="amt">{{(payment.currencySymbolLeft ? payment.currencySymbolLeft : '') + ' ' + subOrder.total}}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr> -->
+                    </ng-container>
+                </tbody>
+            </table>
+            <div class="no_data" *ngIf="(sandbox.paymentList$ | async)?.length == 0 && (sandbox.paymentListLoaded$ | async)">
+                <p>{{'Sales.Orders.Data Not Found'| translate}}</p>
+            </div>
+            <mat-paginator [length]="sandbox.paymentListCount$ | async" [pageSize]="pageSize" [pageIndex]="index" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" (page)="pageChange($event)">
+            </mat-paginator>
+        </div>
+    </div>
+    <!--Table-->
+</div>

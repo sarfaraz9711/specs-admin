@@ -1,0 +1,140 @@
+<form novalidate (ngSubmits)="onSubmits(user.value)" [formGroup]="user">
+
+    <div class="row products-section" style="margin:unset">
+        <div class="col-12">
+            <div class="breadcrumbs-row noborder">
+                <div class="bc-col">
+                </div>
+                <div class="bc-col-btn ap-col-btn">
+                    <button class="btn btn-save" (click)="onSubmits(user.value)" [disabled]>
+                        <img src="assets/img/tick-round-white.png" alt="save" />
+                        Save
+                    </button>
+                    
+                    <button class="btn btn-cancel" (click)="onCancel()">
+                        <img src="assets/img/close-white-ico.png" alt="cancel" />Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!--Breadcrumbs-->
+    </div>
+
+    <div class="flex addproduct-wrap">
+        <div class="card ap-general">
+            <div class="ap-header">
+                General Information
+            </div>
+            <div class="flex ap-body">
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Minimum Cart Value </label>
+                        <input (change)="setStartMinValue(number.value)" #number type="text" class="form-control" placeholder="Cart Value" formControlName="cartValue"
+                            appOnlyNumber [ngModel]="cartDetails.cartValue" min={{minValue}} max={{maxStartValue}} />
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Maximum Cart Value </label>
+                        <input (change)="setEndMaxValue(endValue.value)" #endValue type="text" class="form-control" placeholder="Cart Value" formControlName="maxCartValue"
+                            appOnlyNumber [ngModel]="cartDetails.maxCartValue" min={{minEndValue}}
+                            ng-match="maxValue" />
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Discount Type<sup>*</sup> </label>
+                        <ng-select placeholder="Select Discount Type" formControlName="discountType"
+                            [ngModel]="cartDetails?.discountType" (change)="setProduct()">
+                            <ng-option *ngFor="let cartItem of discountList" [value]="cartItem.id">
+                                {{cartItem.name}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="ap-body-col" *ngIf="!disHide">
+                    <div class="form-group">
+                        <label>Percentage Value<sup>*</sup> </label>
+                        <input placeholder="Discount value" style="cursor: pointer;background-color: white;width:100%;" min="0" max={{maxVal}}
+                            type="number" class="form-control" formControlName="discountValue"
+                            [ngModel]="cartDetails?.discountValue" required  maxlength="3" />
+                    </div>
+                </div>
+
+
+
+                <div class="ap-body-col" *ngIf="disHide">
+                    <div class="form-group">
+                        <label>Free Product<sup>*</sup> </label>
+                        <ng-select placeholder="free Product" formControlName="productId" [items]="productList"  multiple="false" bindLabel="name" bindValue="productId" (change)="selectProduct($event)" [ngModel]="cartDetails.productId"  maxSelectedItems="1">
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Start Date<sup>*</sup>
+                            <img placement="top"
+                                ngbTooltip="Select a date to specify the validity period for the coupon." />
+                            <!-- style="margin-left: 5px;" src="assets/img/info-ico.png" alt="info" -->
+                        </label>
+                        <input (change)="setStartMinDate(date.value)" #date
+                            style="cursor: pointer;background-color: white;width:100%;" min="{{minDate}}"
+                            max={{maxStartDate}} type="date" class="form-control date1" formControlName="startDate"
+                            [ngModel]="cartDetails.startDate" />
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Start Time<sup>*</sup>
+                            <img placement="top"
+                                ngbTooltip="Select a time to specify the validity period for the coupon." />
+                        </label>
+                        <input (change)="setStartMinTime(time.value)" #time style="cursor: pointer;background-color: white;width:100%;" type="time"
+                            class="form-control date1" formControlName="startTime" [ngModel]="cartDetails.startTime" min={{minTime}} max={{maxStartTime}}/>
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>End Date<sup>*</sup>
+                            <img placement="top"
+                                ngbTooltip="Select a date to specify the validity period for the coupon." />
+                            <!-- style="margin-left: 5px;" src="assets/img/info-ico.png" alt="info" -->
+                        </label>
+                        <input (change)="setEndMinDate(endDate.value)" #endDate
+                            style="cursor: pointer;background-color: white;width:100%;" min={{minEndDate}} type="date"
+                            class="form-control date1" formControlName="endDate" [ngModel]="cartDetails.endDate" />
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>End Time<sup>*</sup>
+                            <img placement="top"
+                                ngbTooltip="Select a date to specify the validity period for the coupon." />
+                        </label>
+                        <input (change)="setEndMinTime(endTime.value)" #endTime style="cursor: pointer;background-color: white;width:100%;" type="time" min={{minEndTime}}
+                            class="form-control date1" formControlName="endTime" [ngModel]="cartDetails.endTime" />
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Status<sup>*</sup> </label>
+                        <ng-select placeholder="Status" formControlName="status" [ngModel]="cartDetails.isActive">
+                            <ng-option [value]="1">Active</ng-option>
+                            <ng-option [value]="0">Disable</ng-option>
+                        </ng-select>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<app-popup-message [popupMessage]="popupMessage"></app-popup-message>

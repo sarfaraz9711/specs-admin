@@ -1,0 +1,60 @@
+<div class="setup-wrapper setup-personalize">
+    <div class="setup-container flex">
+
+        <div class="setup-right col-md-12">
+            <form (ngSubmit)="onSubmit()" [formGroup]="facilityForm" class="form-horizontal">
+                <input type="hidden" [(ngModel)]="facilityData.id" class="form-control" formControlName="id" />
+              <div class="row">
+                <div class="col-md-4">
+                    <label>Facility Name</label>
+                    <input type="text" [(ngModel)]="facilityData.facilityName" class="form-control" formControlName="facilityName" />
+                </div>
+              
+              <div class="col-md-4">
+                  <label>Facility Code</label>
+                  <input type="text" [(ngModel)]="facilityData.facilityCode" class="form-control" formControlName="facilityCode" />
+              </div>
+            
+              <div class="col-md-4">
+                <label>Pin Code</label>
+                <input type="number" [(ngModel)]="facilityData.pincode" class="form-control" formControlName="pincode" />
+            </div>
+            <div class="col-md-4">
+                <label>Status</label>
+                <select class="form-control" formControlName="status" [(ngModel)]="facilityData.status">
+                    <option value="">--Select--</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </div>
+          
+<div class="col-md-12 text-center mt-3 mb-3">
+          <input type="submit" value="Submit" [disabled]="facilityForm?.invalid" class="btn btn-primary"/>
+        </div>
+        </div>
+            </form>
+        </div>
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Facility Name</th>
+                        <th>Facility Code</th>
+                        <th>Pincode</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of facilityDataList">
+                        <td>{{data.facilityName}}</td>
+                        <td>{{data.facilityCode}}</td>
+                        <td>{{data.pincode}}</td>
+                        <td>{{data.status}}</td>
+                        <td><input type="button" value="Edit" class="btn btn-primary" (click)="updateData(data)"/></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

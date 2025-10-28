@@ -1,0 +1,85 @@
+<div class="set-lay-notes flex" style="padding: 0 10px 10px 10px;">
+    <h4>Note :</h4>
+    <p>Variants are different options that will be available for the Customer to choose from the same product range. For example, T-shirts in different colours and sizes. The admin can create the master list of variants and add values under them. For example,
+        under size – different values can be large, extra large and so on. </p>
+</div>
+
+<div class="setup-wrapper set-loc-wrapper">
+
+    <div class="setup-container localization-container">
+        <div class="card ap-general ap-info">
+            <div class="flex ap-body">
+
+                <div class="settings-right-wrapper">
+
+                    <div class="localize-header flex">
+                        <div class="loc-hdr-lft">
+                            <!-- <p>Showing <span> 0 - 10 </span> results</p> -->
+                            <div class="input-group">
+                                <p>{{'Settings.Local.Resultsperpage' | translate}}</p>
+                                <div class="select">
+                                    <select [(ngModel)]="pageSize" (change)="pageLength()">
+                                        <option *ngIf="pageSize!== '10' && pageSize!== '20' && pageSize!== '30'" value="{{pageSize}}">{{pageSize}}</option>
+                                        <option>10</option>
+                                        <option>20</option>
+                                        <option>30</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="set-ad-btn" (click)=" addNewVariant('','add')" [appHideIfUnauthorized]="'variant-add'"><img
+                            src="assets/img/add-white-ico.png" alt="add">{{'Settings.SiteSettings.variants.AddVariant' | translate}}</button>
+                    </div>
+
+                    <!--Filter-->
+                    <div class="setup-right">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+
+                                        <th scope="col">{{'Settings.SiteSettings.variants.VariantName' | translate}}</th>
+                                        <th scope="col">DisplayName</th>
+                                        <th scope="col" class="text-center">{{'catalog.productOption.SortOrder'| translate}}</th>
+                                        <th class="text-center" scope="col" [appHideIfUnauthorized]="" [multipleHide]="['variant-delete','variant-edit']">{{'catalog.productOption.Action'| translate}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let options of sandbox.productOptionsList$ | async; let i=index">
+                                    <tr>
+
+                                        <td> {{options.name}} </td>
+                                        <td> {{options.varientDisplayName}} </td>
+                                        <td class="text-center">{{options.sortOrder}}</td>
+                                        <td class="text-center" [appHideIfUnauthorized]="" [multipleHide]="['variant-delete','variant-edit']">
+                                            <div class="dropdown" ngbDropdown>
+                                                <i class="fa fa-ellipsis-v cursor" style="padding:0 15px" ngbDropdownToggle> </i>
+                                                <div ngbDropdownMenu class="dropdown-menu">
+                                                    <a [appHideIfUnauthorized]="'variant-edit'" class="dropdown-item" ngbDropdownItem href="javascript:void(0)" (click)="addNewVariant(options,'edit')"> <img src="assets/img/edit.png" alt="edit" /> {{'Settings.Local.Edit' | translate}} </a>
+                                                    <a [appHideIfUnauthorized]="'variant-delete'" class="dropdown-item" ngbDropdownItem href="javascript:void(0)" (click)="deleteOptions(options.id)"> <img src="assets/img/delete-new.png" alt="delete"> {{'Settings.Local.Delete' | translate}} </a>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <div class="no_data" *ngIf="(sandbox.productOptionsList$ | async)?.length==0">
+                                <p>{{'Sales.Orders.datanotfound'| translate}}</p>
+                            </div>
+                            <mat-paginator [length]="sandbox.getProductOptionsListCount$ | async" [pageSize]="pageSize" [pageIndex]="index" [pageSizeOptions]="[pageSize]" (page)="onPageChange($event)">
+                            </mat-paginator>
+
+                        </div>
+                    </div>
+                    <!--Table-->
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

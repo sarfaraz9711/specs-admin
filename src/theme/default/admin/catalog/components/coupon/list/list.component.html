@@ -1,0 +1,130 @@
+<div class="row products-section products-sub-section">
+
+    <div class="col-12">
+        <div class="flex filter-row">
+            <div class="filter-lft">
+                <div class="toggle">
+                    <p>{{'catalog.coupon.Filters'| translate}}</p>
+                    <input class="tgl tgl-light" id="cb1" type="checkbox" [checked]="true" (change)="changeFilter($event)" />
+                    <label class="tgl-btn" for="cb1"></label>
+                </div>
+                <ul class="order-status">
+                    <!-- <p>{{'Sales.Orders.Status'| translate}}</p> -->
+                    <li>
+                        <span class="active"></span>{{'catalog.coupon.Active'| translate}}
+                    </li>
+                    <li>
+                        <span class="inactive"></span>{{'catalog.coupon.In-Active'| translate}}
+                    </li>
+                </ul>
+            </div>
+            <!--Lft-->
+            <div class="filter-nav-list">
+                <div class="bc-col-btn">
+                    <button class="btn" (click)="addCoupon()" [appHideIfUnauthorized]="'create-coupon'"><img
+                            src="assets/img/add-white-ico.png"alt="add coupon">{{'catalog.coupon.AddCoupon'| translate}}
+                    </button>
+                </div>
+                <div class="bc-col-btn">
+                    <ul class="flex">
+                        <li>
+                            <a style="border-color:#fd5126!important;color:#fd5126!important;" href="javascript:void(0)" (click)="exportAllCoupon()">
+                                <img src="assets/images/exportall_category.svg" alt="export" height="16px" width="16px" />{{'catalog.product.All Export'| translate}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dropdown" ngbDropdown [appHideIfUnauthorized]="undefined" [multipleHide]="['delete-coupon','export-coupon']">
+                    <i class="fa fa-ellipsis-h cursor" style="padding:8px 10px;margin-left:16px;background:#ffa17d;" [ngClass]="{'export-data': filterDataId.length !=0}" ngbDropdownToggle> </i>
+                    <div ngbDropdownMenu class="dropdown-menu">
+                        <a [ngClass]="{'blur':filterDataId.length==0}" [disabled]="filterDataId.length==0" [appHideIfUnauthorized]="'export-coupon'" (click)="exportCoupon()" class="dropdown-item" ngbDropdownItem href="javascript:void(0)"> <img src="assets/img/export-sm.svg" alt="export"> {{ 'catalog.product.Export' | translate }}</a>
+                        <a [ngClass]="{'blur':filterDataId.length==0}" [disabled]="filterDataId.length==0" [appHideIfUnauthorized]="'delete-coupon'" class="dropdown-item" ngbDropdownItem href="javascript:void(0)" (click)="bulkDelete()"> <img src="assets/img/delete-sm.svg" alt="delete"> {{ 'catalog.nav.Delete' | translate }} </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="flex product-wrap example-full-width">
+    <div *ngIf="buttonCheck == true" class="filter-section">
+        <div class="w3-container">
+            <app-spurt-catalog-coupon-filter (progressEmit)="receiveProgress($event)">
+            </app-spurt-catalog-coupon-filter>
+        </div>
+    </div>
+
+    <!--Filter-->
+    <div class="product-table" [ngClass]="{'changesize': buttonCheck == true }">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" width="5%">
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox mr-sm-2" style="top:0px">
+                                    <input class="text-center" type="checkbox" class="custom-control-input" id="checkbox1" [(ngModel)]="selectedAll" (change)="selectAll()" />
+                                    <label class="custom-control-label" for="checkbox1"></label>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" width="20%">{{'catalog.coupon.CouponName'| translate}}</th>
+                        <th scope="col">{{'catalog.coupon.couponCode'| translate}}</th>
+                        <th scope="col">{{'catalog.coupon.DiscountValue'| translate}}</th>
+                        <th scope="col">{{'catalog.coupon.StartDate'| translate}}</th>
+                        <th scope="col">{{'catalog.coupon.EndDate'| translate}}</th>
+                        <th scope="col">{{'catalog.coupon.DateLeft'| translate}}</th>
+                        <th scope="col">{{'catalog.coupon.Orders'| translate}}</th>
+                        <th class="text-center" scope="col" width="100px" class="text-center">{{'catalog.product.Status'| translate}}
+                        </th>
+                        <th scope="col" [appHideIfUnauthorized]="" [multipleHide]="['edit-coupon','delete-coupon']">{{'catalog.coupon.Action'| translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--response from coupon list or coupon filter list-->
+                    <tr *ngFor="let data of couponListArray;let i=index">
+                        <th scope="row">
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox mr-sm-2" style="top:0px">
+                                    <input type="checkbox" class="custom-control-input" id={{data.vendorCouponId}} value="check" [(ngModel)]="data.selected" (change)="checkIfAllSelected()">
+                                    <label class="custom-control-label" for={{data.vendorCouponId}}></label>
+                                </div>
+                            </div>
+                        </th>
+                        <td class="name">{{data?.couponName}}</td>
+                        <td class="name">{{data?.couponCode}}</td>
+                        <td>{{data.discount}}</td>
+                        <td>{{data.startDate | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{data.endDate | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{data.leftDays}}</td>
+                        <td class="text-center">{{data.orders}}</td>
+                        <td class="text-center">
+                            <div *ngIf="data.isActive == 1">
+                                <span class="tag-active">{{'Settings.Role.Active'| translate}}</span>
+                            </div>
+                            <div *ngIf="data.isActive == 0">
+                                <span class="tag-inactive">{{'Settings.Role.InActive'| translate}}</span>
+                            </div>
+                        </td>
+                        <td class="text-center" [appHideIfUnauthorized]="" [multipleHide]="['edit-coupon','delete-coupon']">
+                            <div class="dropdown" ngbDropdown>
+                                <i class="fa fa-ellipsis-v cursor" style="padding:0 15px" ngbDropdownToggle>
+                                </i>
+                                <div ngbDropdownMenu class="dropdown-menu">
+                                    <a [appHideIfUnauthorized]="'edit-coupon'" class="dropdown-item" ngbDropdownItem href="javascript:void(0)" (click)="editCoupon(data)"> <img src="assets/img/edit.png" alt="edit"> {{'catalog.coupon.Edit'| translate}} </a>
+                                    <a [appHideIfUnauthorized]="'delete-coupon'" class="dropdown-item" ngbDropdownItem href="javascript:void(0)" (click)="deleteCoupon(data.vendorCouponId)"> <img src="assets/img/delete-sm.svg" alt="delete"> {{'catalog.coupon.Delete'| translate}} </a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="no_data" *ngIf="(couponSandbox.getCouponList$ | async)?.length==0">
+                <p>{{'Sales.Orders.datanotfound'| translate}}</p>
+            </div>
+            <mat-paginator #paginator [length]="couponSandbox.getCouponListCount$ | async" [pageSize]="pageSize" [pageIndex]="index" [pageSizeOptions]="[pageSize]" (page)="onPageChange($event)">
+            </mat-paginator>
+        </div>
+    </div>
+    <!--Table-->
+</div>

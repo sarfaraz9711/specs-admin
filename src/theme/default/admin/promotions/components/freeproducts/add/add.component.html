@@ -1,0 +1,131 @@
+<form novalidate  [formGroup]="user">
+    <div class="row products-section" style="margin:unset">
+        <div class="col-12">
+            <div class="breadcrumbs-row noborder">
+                <div class="bc-col">
+                </div>
+                <div class="bc-col-btn ap-col-btn">
+                    <button class="btn btn-save" [disabled]="user.invalid" (click)="onSubmits()">
+                        <img src="assets/img/tick-round-white.png" alt="save" />
+                        Save
+                    </button>
+                    <button class="btn btn-cancel" (click)="onCancel()">
+                        <img src="assets/img/close-white-ico.png" alt="cancel" />Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!--Breadcrumbs-->
+    </div>
+
+
+    <div class="flex addproduct-wrap">
+        <div class="card ap-general">
+            <div class="ap-header">
+                General Information
+            </div>
+            <div class="flex ap-body">
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Promotion type<sup>*</sup> </label>
+                        <ng-select placeholder="Select Promotion" formControlName="promoName" [ngModel]= "promoDetails?.free_promotion_type" (change)="setXProduct(1, null)">
+                            <ng-option *ngFor="let promoItem of promotionsList" [value]="promoItem.id">
+                                {{promoItem.name}}</ng-option>
+
+                        </ng-select>
+
+                    </div>
+                </div>
+
+                <div class="ap-body-col" *ngIf="isPercentage">
+                    <div class="form-group">
+                        <label>Percentage<sup>*</sup> </label>
+                        <input (change)="setPercentageValue(percentage.value)" #percentage type="number" min="0" max={{maxVal}} class="form-control" placeholder="Percentage of discount" formControlName="percentageDiscount" [ngModel]= "promoDetails?.promotion_percentage_discount" />
+
+                    </div>
+                </div>
+                <div class="ap-body-col" *ngIf="isAmountDiscount">
+                    <div class="form-group">
+                            <label>Discount Amount<sup>*</sup> </label>
+                        <input type="number" class="form-control" placeholder="Discouct Amount" formControlName="discouctAmount" [ngModel]= "promoDetails?.promotion_discount_Amount"/>
+
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Start Date<sup>*</sup>
+                            <img placement="top"
+                                ngbTooltip="Select a date to specify the validity period for the coupon."
+                                />
+                                <!-- style="margin-left: 5px;" src="assets/img/info-ico.png" alt="info" -->
+                        </label>
+                        <input (change)="setStartMinDate(date.value)" #date style="cursor: pointer;background-color: white;width:100%;" min="{{minDate}}" max="{{maxStartDate}}" type="date"
+                            class="form-control date1" formControlName="startDate" [ngModel]="promoDetails.start_date" />
+                    </div>
+                </div>
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Start Time<sup>*</sup></label>
+                        <input (change)="setStartMinTime(time.value)" #time  type="time"  min={{minTime}} max={{maxStartTime}}
+                            class="form-control date1" formControlName="startTime" [ngModel]="promoDetails.startTime" />
+                    </div>
+                </div>
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>End Date<sup>*</sup>
+                            <img placement="top"
+                                ngbTooltip="Select a date to specify the validity period for the coupon."
+                                />
+                                <!-- style="margin-left: 5px;" src="assets/img/info-ico.png" alt="info" -->
+                        </label>
+                        <input (change)="setEndMinDate(endDate.value)" #endDate style="cursor: pointer;background-color: white;width:100%;" min={{minEndDate}} type="date"
+                            class="form-control date1" formControlName="endDate" [ngModel]="promoDetails.end_date" />
+                    </div>
+                </div>
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>End Time<sup>*</sup></label>
+                        <input (change)="setEndMinTime(endTime.value)" #endTime  type="time"
+                            class="form-control date1" formControlName="endTime" [ngModel]="promoDetails.endTime"  min={{minEndTime}}/>
+                    </div>
+                </div>
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Status<sup>*</sup> </label>
+                        <ng-select placeholder="Status" formControlName="status" [ngModel]= "promoDetails.is_active">
+                            <ng-option [value]="1">Active</ng-option>
+                            <ng-option [value]="0">Disable</ng-option>
+                        </ng-select>
+
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Buy Product<sup>*</sup> </label>
+                        <ng-select [items]="productList" bindLabel="productNameUpc" bindValue="productId"
+                            formControlName="selectedBuyProducts" [ngModel]= "promoDetails.buy_product_id" multiple="true" maxSelectedItems="{{maxSelectedItems}}" (change)="setXProduct(2, $event)">
+                        </ng-select>
+
+                    </div>
+                </div>
+                <div class="ap-body-col" [ngClass]="{'d-none': isNotOffer}">
+                    <div class="form-group">
+                        <label>Offer Products<sup>*</sup> </label>
+
+                        <ng-select [items]="productList" bindLabel="productNameUpc" bindValue="productId"
+                            formControlName="selectedOfferProducts" [ngModel]= "promoDetails.get_product_id" multiple="true" (change)="setXProduct(3, $event)" maxSelectedItems="1">
+                        </ng-select>
+                        <!-- <span *ngIf="user.get('selectedOfferProducts').error?.required">Please fill the field</span> -->
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</form>
+
+<app-popup-message [popupMessage]="popupMessage"></app-popup-message>

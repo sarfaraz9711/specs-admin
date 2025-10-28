@@ -1,0 +1,107 @@
+/*
+Template Name: Admin Template
+Author: Niravjoshi / Wrappixel
+File: scss
+*/
+
+//(Required file)
+@import 'variable';
+// Import Bootstrap source files (Required file)
+// @import "../../../node_modules/bootstrap/scss/bootstrap";
+
+@import "~bootstrap/dist/css/bootstrap.css";
+
+
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/mixins";
+//This is for the components (Required file)
+@import 'components';
+//This is for the pages (if you are not using some pages you can remove that style from pages folder)
+@import 'pages';
+//This is for the widgets (Required file)
+@import 'widgets/widgets';
+//This is for the horizontal version if you are not using horizontal version you can remove this
+@import 'horizontal/horizontal';
+//This is for the responsive (Required file)
+@import 'responsive';
+//In This scss you can write your scss
+@import 'custom';
+//This is for the icons (Required file)
+@import 'icons/font-awesome/css/fontawesome-all.css';
+@import 'icons/simple-line-icons/css/simple-line-icons.css';
+@import 'icons/weather-icons/css/weather-icons.min.css';
+@import 'icons/themify-icons/themify-icons.css';
+@import 'icons/flag-icon-css/flag-icon.min.css';
+@import "icons/material-design-iconic-font/css/materialdesignicons.min.css";
+@import "icons/crypto-icons/cryptocoins.css";
+// this is for the perfect scrollbar
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600');
+.invalid {
+    border: 1px solid #f62d51 !important;
+}
+.editimage{
+    background-color: #d5d77b;
+    position: absolute;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    padding-right: 19px;
+}
+.crossimage{
+    position: relative;
+    right: 0px;
+    left: 268px;
+    top: -11px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.categoryimage{
+    background-color: #d5d77b;
+    position: absolute;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 19px;
+}
+.imageformettext{
+    font-size: 12px;
+}
+.wordbreak{
+    word-break: break-all;
+}
+.order-view-col .doc-col{width: 44% !important;}
+.order-view-col .action-col{width: 12% !important;}
+
+.bdr-top{border-top: 1px solid #000}
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option{white-space: pre-wrap !important; border-bottom: 1px solid #ddd;}
+.blogdescrpition{
+    text-overflow: ellipsis !important;
+    width: 1000px !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    display: inline-block;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+.product-update-box{border: 2px solid #000; padding: 16px;}
+.ucStatus{
+    cursor: pointer;
+    color: red !important;
+    font-weight: 500;
+}
+.ucStatus:hover{
+    text-decoration: underline;
+}
+.sentucStatus{
+    color: green !important;
+    font-weight: 500;
+}
+.cke_notification.cke_notification_warning{display: none;}
+.cancel-popup .cancel-popup-box{border: 1px solid #ddd; padding: 10px;}
+.modal{overflow: auto;}
+.no-wrap{white-space: nowrap;}
+.return-td hr:last-child{display: none;}

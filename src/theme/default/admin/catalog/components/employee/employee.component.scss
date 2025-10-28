@@ -1,0 +1,25 @@
+.add-empolyee{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    list-style: none;
+    margin-bottom: 0;
+    padding: 16px;
+}
+.all-btn{
+    gap: 10px;
+}
+
+.all-btn button{
+    background-color: #ed571f !important;
+    color: #fff;
+    border: #ed571f;
+    height: 33px;
+}
+.validateForm{
+    padding: 5px !important;
+}
+

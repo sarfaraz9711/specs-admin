@@ -1,0 +1,200 @@
+<div class="row products-section products-sub-section cancel-order-list">
+
+    <!--Breadcrumbs-->
+    <div class="col-12">
+        <div class="flex filter-row">
+            <div class="filter-lft">
+                <div class="toggle">
+                    <p>{{'Sales.Orders.Filters'| translate}}</p>
+                    <input class="tgl tgl-light" id="cb1" (change)="changeFilter($event)" [checked]="true" type="checkbox" />
+                    <label class="tgl-btn" for="cb1"></label>
+                </div>
+
+            </div>
+            <!--Lft-->
+            <div class="filter-nav-list">
+                <ul class="flex" style="align-items: center;">
+                    <li *ngIf="checkedData.length > 0" [appHideIfUnauthorized]="'update-cancel-request-status'">
+                        <mat-radio-group aria-label="Select an option">
+                            <mat-radio-button value="1" (change)="changeBulkStatus($event)">{{'Sales.Orders.Accept'| translate}}</mat-radio-button>
+                            <mat-radio-button value="2" (change)="changeBulkStatus($event)">{{'Sales.Orders.Reject'| translate}}</mat-radio-button>
+                        </mat-radio-group>
+                    </li>
+
+                    <!-- <li [appHideIfUnauthorized]="'cancel-request-export-list'">
+                        <a style="border-color: #DC4D5B!important;color: #DC4D5B;" (click)="exportAllExcel()" placement="top-right"> <img src="assets/img/export-ico.png" alt="export">{{'Sales.Orders.AllExport'| translate}} </a>
+                    </li> -->
+                </ul>
+                <!-- <div class="dropdown" ngbDropdown [appHideIfUnauthorized]="'cancel-request-export-list'">
+                    <i class="fa fa-ellipsis-h cursor" style="padding:8px 10px;margin-left:16px;background: #f1cdcd;" [ngClass]="{'export-color': checkedData.length!=0}" ngbDropdownToggle>
+                    </i>
+                    <div ngbDropdownMenu class="dropdown-menu">
+                        <a [ngClass]="{'blur':checkedData.length==0}" [disabled]="checkedData.length==0" (click)="exportExcel()" class="dropdown-item" ngbDropdownItem href="javascript:void(0)"> <img src="assets/img/export-sm.svg" alt="export"> {{'catalog.product.Export'| translate}} </a>
+                    </div>
+                </div> -->
+            </div>
+            <!--Right-->
+        </div>
+    </div>
+</div>
+<div class="d-flex">
+<!-- <div class="col-md-6 mb-3 d-flex">
+   <div>
+    <select class="form-control" #req (change)="getOrderList(req.value)">
+        <option value="Pending">Pending Cancel Requests</option>
+        <option value="Approved">Approved Cancel Requests</option>
+        <option value="Rejected">Rejected Cancel Requests</option>
+        <option value="CancelledCODOrder">COD Cancelled Order</option>
+
+    </select>
+   </div>
+    <div class="search-item">
+        
+        <input  type="text" #search class="form-control" formControlName="searchField" placeholder="Search by OrderId"/>
+        <button class="search-btn" (click)="searchcancel(search.value, 1)">search</button>
+        <button class="search-btn" (click)="searchcancel(search.value, 2)">Reset</button>
+    
+    </div>
+</div> -->
+<div class="export-row flex subscription-outer-actions col-md-12">
+    <button class="btn" (click)="exportAsXLSX()">Export as Excel</button>
+</div>
+</div>
+<div class="flex product-wrap example-full-width">
+    <!-- <div *ngIf="buttonCheck == true" class="filter-section border-right">
+
+
+        <div class="w3-container">
+
+            <app-sales-cancel-order-filter (salesEmit)="receiveProgress($event)"></app-sales-cancel-order-filter>
+
+        </div>
+    </div> -->
+    <!--Filter-->
+    <div class="filter-details" *ngIf="filterEnable" >
+        <input type="text" id="focusOut" style="height: 0; width: 0; opacity: 0;">
+        <form (ngSubmit)="onSubmit()" [formGroup]="paymentList" class="filter-form">
+            <div class="form-group">
+                <label for="firstName">Order Id</label>
+                <input type="text" type="text" class="form-control" formControlName="keywordInput" placeholder="Order Id" />
+            </div>
+            <div class="form-group">
+                <label for="sku">{{'Sales.Orders.CustomerName'| translate}}</label>
+                <input type="text" class="form-control" formControlName="name" id="sku" placeholder="{{'Sales.SalesPlaceholder.SKUNumber'| translate}}">
+            </div>
+            <div class="form-group">
+                <label for="email">{{'Sales.Orders.Email'| translate}}</label>
+                <input type="text" class="form-control" formControlName="email" id="email" placeholder="{{'Sales.Orders.Email'| translate}}">
+            </div>
+            <div class="form-group">
+                <label for="mobileNo">{{'Sales.Orders.Mobile'| translate}}</label>
+                <input type="text" class="form-control" formControlName="mobileNo" id="mobileNo" placeholder="{{'Sales.Orders.Mobile'| translate}}">
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'Sales.Orders.DateAdded'| translate}} </label>
+                <input (change)="onStartDateSelect(startdate.value)" #startdate
+                style="cursor: pointer;width:100%;" type="date" class="form-control date1"
+                formControlName="fromDate" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'Sales.Orders.DateAddedTo'| translate}} </label>
+                <input (change)="onToDateSelect(endDate.value)" #endDate
+                style="cursor: pointer;width:100%;" type="date" class="form-control date1"
+                formControlName="todate" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">status </label>
+            <select class="form-control" #req (change)="getOrderList(req.value)">
+                <option value="Pending">Pending Cancel Requests</option>
+                <option value="Approved">Approved Cancel Requests</option>
+                <option value="Rejected">Rejected Cancel Requests</option>
+                <option value="CancelledCODOrder">COD Cancelled Order</option>
+        
+            </select>
+            </div>
+
+            <div class="text-right filter-btns">
+                <a href="javascript:void(0)" (click)="reset()">{{'Sales.Orders.Reset'| translate}}</a>
+                <button type="submit" class="btn" style="background-color:#dc4d5b">{{'Sales.Orders.ApplyFilters'| translate}}  </button>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="product-table sales-content-table"  [ngClass]="{ 'expand-list': !buttonActive }">
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <!-- <th scope="col" width="5%">
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox mr-sm-2">
+                                </div>
+                            </div>
+                        </th> -->
+                        <th></th>
+                        <th scope="col" class="text-center">Order Id</th>
+                        <!-- <th width="30%">{{'Sales.Orders.Product'| translate}}</th> -->
+                        <th scope="col">Customer Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Mobile</th>
+                        <th scope="col">{{'Sales.Orders.Reason'| translate}}</th>
+                        <th scope="col">{{'Sales.Orders.Remarks'| translate}}</th>
+                        <th scope="col">Date</th>
+                        <th *ngIf="showAction" scope="col" class="text-center" [appHideIfUnauthorized]="'update-cancel-request-status'">{{'Sales.Orders.Action'| translate}}</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let orderList of orderList; let i= index">
+                        <!-- <th scope="row">
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox mr-sm-2" [appHideIfUnauthorized]="'cancel-request-export-list' || 'update-cancel-request-status'">
+                                    <input type="checkbox" class="custom-control-input" (click)="selectChkBox($event, orderList.orderProductId)" id={{orderList.orderProductId}} [checked]="checkCondition[orderList.orderProductId]" [ngModelOptions]="{standalone: true}" [(ngModel)]="checkmodules[orderList.orderProductId]">
+                                    <label class="custom-control-label" for={{orderList.orderProductId}}></label>
+                                </div>
+                            </div>
+                        </th> -->
+                        <td><div class="form-group">
+                            <div class="custom-control custom-checkbox mr-sm-2" [appHideIfUnauthorized]="" [multipleHide]="['export-order','delete-order']">
+                                <input type="checkbox" class="custom-control-input" id={{orderList.orderId}} [ngModelOptions]="{standalone: true}" [(ngModel)]="orderList.selected" (change)="checkOrder($event, orderList)">
+                                <label class="custom-control-label" for={{orderList.orderId}}></label>
+        
+                            </div>
+                        </div></td>
+                        <td scope="row" style="text-align: center; cursor: pointer" class="hyperlinks" (click)="viewOrders(orderList.orderId);" ><b>{{orderList.orderPrefixId}}</b>
+                        </td>
+                        <td class="name">{{orderList.shippingFirstname}}</td>
+                        <td>{{orderList.email}}</td>
+                        <td>{{orderList.mobile}}</td>
+                        <td>{{orderList.orderCancelReson}}</td>
+                        <td class="td-word-wrap">{{orderList.orderCancelRemark}}</td>
+                        <td style="white-space: nowrap;">{{orderList.createdDate | date:'dd-MM-yyyy h:mm a'}}</td>
+                        <!-- <td width="200px" class="name" [appHideIfUnauthorized]="'update-cancel-request-status'">
+                            <mat-radio-group aria-label="Select an option" *ngIf="orderList.orderStatusId!=9 && orderList.orderStatusId!=10; else status" >
+                                <mat-radio-button value="1" [checked]="orderList.orderStatusId === 9" (change)="checkStatusOnUc(orderList,1)">{{orderList.orderStatusId === 9? 'Accepted' : 'Accept'}}</mat-radio-button>
+                                <mat-radio-button value="2" [checked]="orderList.orderStatusId === 10" (change)="checkStatusOnUc(orderList,2)">{{orderList.orderStatusId === 10? 'Rejected' : 'Reject'}}</mat-radio-button>
+                            </mat-radio-group>
+                            <ng-template #status>
+                                {{(orderList.createCoupan==null && orderList.orderStatusId === 9)? 'Accepted' : ''}}
+                                {{(orderList.createCoupan==null && orderList.orderStatusId === 10)? 'Rejected' : ''}}
+                                {{orderList.createCoupan!=null? 'Credit Note Sent' : ''}}
+                                <input *ngIf="orderList.orderStatusId==9 && orderList.createCoupan==null" type="button" class=" ml-2 btn btn-primary btn-sm" value="Credit Note" (click)="createCreditNote(orderList)"/>
+                            </ng-template>
+                        </td> -->
+                        <td *ngIf="showAction" align="center"><span class="cn-sent">{{orderList.cnCreated!=null? 'Credit Note Sent' : ''}}</span><button class="btn btn-primary" (click)="gotoOrderDetailPage(orderList)" value="View Order Details"><i class="fa fa-eye"></i> </button></td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <div class="no_data" *ngIf="orderList?.length==0">
+                <p>No Record Found</p>
+            </div>
+            <mat-paginator [length]="sandbox.cancelOrderListCount$ | async" [pageSize]="pageSize" [pageIndex]="index" [pageSizeOptions]="[pageSize]" (page)="onPageChange($event)">
+            </mat-paginator>
+
+        </div>
+    </div>
+    <!--Table-->
+</div>

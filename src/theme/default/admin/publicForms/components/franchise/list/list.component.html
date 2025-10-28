@@ -1,0 +1,53 @@
+
+<!-- <app-feedback-layout></app-feedback-layout> -->
+<div class="row products-section products-sub-section">
+
+    <div class="col-12">
+        <div class="flex filter-row">
+            <div class="filter-lft">
+            </div>
+
+            <div class="filter-nav-list">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="flex product-wrap">
+    <!--Filter-->
+    <div class="product-table" style="width: 100%">
+        <div class="export-row flex subscription-outer-actions">
+            <button class="btn" (click)="exportAsXLSX()">Export as Excel</button>
+        </div>
+        <div class="table-responsive subscription-content-table">
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Mobile</th>
+                    
+                    <th scope="col">Occupation</th>
+                    <th scope="col">Showroom Location</th>
+                    <th scope="col">Showroom Frontage</th>
+                    <th scope="col">Showroom Area</th>
+                    <th scope="col">Comment</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let franchiseInfo of franchiseList; let i = i" >
+                        <td>{{franchiseInfo.Name}}</td>
+                        <td>{{franchiseInfo.Email}}</td>
+                        <td>{{franchiseInfo.Mobile_no}}</td>
+                        
+                        <td>{{franchiseInfo.Occupation}}</td>
+                        <td>{{franchiseInfo.Showroom_location}}, {{franchiseInfo.City}}, {{franchiseInfo.State}}</td>
+                        <td>{{franchiseInfo.Showroom_frontage}}</td>
+                        <td>{{franchiseInfo.Showroom_area}}</td>
+                        <td>{{franchiseInfo.Comment}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- <button (click)="exportAsXLSX()">Export as Excel</button> -->
+        </div>
+    </div>

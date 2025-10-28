@@ -1,0 +1,39 @@
+<div>
+    <div class="adddiscount">
+        <button class="deletebtn" (click)="addDiscount()"><img src="assets/img/add-white-ico.png"
+                alt="add Free Product Promo"> Add Discount
+        </button>
+    </div>
+    <div class="flex product-wrap">
+    <div class="product-table" style="width: 100%">
+        <div class="table-responsive promo-content-table">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th width="100px">S.No</th>
+                        <th width="140px">Start Date</th>
+                        <th width="140px">End Date</th>
+                        <th >Url</th>
+                        <!-- <th width="40px"></th> -->
+                        <th width="100px">Percentage</th>
+                        <th width="100px">Action</th>
+                    </tr>
+                   </thead>
+                   <tbody>
+                    <tr *ngFor="let p of DisProductList; let i = index">
+                        <td>{{i+1}}</td>
+                        <td>{{p.startDate | date: 'dd-MM-yyyy'}}</td>
+                        <td>{{p.endDate | date: 'dd-MM-yyyy'}}</td>
+                        <td style="word-break: break-all;">{{p.url}}</td>
+                        <!-- <td><span class="tooltip-text" [id]="'tooltip-' + i"> !Copied</span>  <i class="fas fa-copy" (click)="copyTextToClipboard(p.url, i)" [attr.data-tooltip-id]="'tooltip-' + i" style="cursor: pointer;"></i> </td> -->
+                        <td class="text-center">{{p.discount}}</td>
+                        <td>
+                            <input class="deletebtn" type="button" (click)="onStatusChange(p.id)" value="Delete" />
+                        </td>
+                    </tr>
+                   </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+</div>

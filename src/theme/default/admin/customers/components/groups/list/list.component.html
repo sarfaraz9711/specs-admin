@@ -1,0 +1,121 @@
+<div class="row products-section products-sub-section">
+    <!--Breadcrumbs-->
+    <div class="col-12">
+        <div class="flex filter-row">
+            <div class="filter-lft">
+                <div class="toggle">
+                    <p>{{'Sales.Orders.Filters'| translate}}</p>
+                    <input class="tgl tgl-light" id="cb1" type="checkbox" [checked]="true" (change)="check($event)" />
+                    <label class="tgl-btn" for="cb1"></label>
+                </div>
+                <ul class="order-status">
+                    <li>
+                        <span class="active"></span>{{'CMS.Pages.Active'| translate}}
+                    </li>
+                    <li>
+                        <span class="inactive"></span>{{'CMS.Blog.Inactive'| translate}}
+                    </li>
+                </ul>
+            </div>
+            <div class="filter-nav-list">
+                <div class="bc-col-btn">
+                    <button class="btn customer-btn" (click)="addCustomerGroup()" [appHideIfUnauthorized]="'create-customer-group'">
+            <img src="assets/img/add-white-ico.png"alt="add" />
+            {{'Customers.Customer.AddCustomerGroup'| translate}}
+          </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="flex product-wrap example-full-width">
+    <div *ngIf="buttonCheck == true" class="filter-section border-right">
+        <div class="w3-container">
+            <app-customer-filter (progressEmits)="receiveProgress($event)"></app-customer-filter>
+        </div>
+        <!--Filter-->
+    </div>
+
+    <div class="product-table customer-content-table" [ngClass]="{ changesize: buttonCheck == true }">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" width="5%">
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox mr-sm-2"></div>
+                            </div>
+                        </th>
+                        <th scope="col">{{'CMS.PageGroup.GroupName'|translate}}</th>
+                        <th scope="col">{{'CMS.Blog.Description'|translate}}</th>
+                        <th scope="col">{{'Customers.Group.ColorCode'|translate}}</th>
+                        <th>{{'Customers.Group.IsActive'|translate}}</th>
+                        <th class="text-center" [appHideIfUnauthorized]="" [multipleHide]="['delete-customer-group','edit-customer-group']">{{'CMS.Pages.Action'|translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let customersGrouplist of sandbox.getCustomersGroupList$ | async">
+                        <th scope="row">
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox mr-sm-2">
+
+                                </div>
+                            </div>
+                        </th>
+
+                        <td class="td_css name">
+                            <span style="padding:6px; font-size: 1px ;margin-right: 5px;display: inline-block;" [ngStyle]="{
+                  color: 'white',
+                  background: customersGrouplist.colorCode
+                }">
+              </span> {{ customersGrouplist.name }}
+                        </td>
+                        <td>{{ customersGrouplist.description }}</td>
+                        <td>{{ customersGrouplist.colorCode }}</td>
+
+
+                        <td>
+                            <div *ngIf="customersGrouplist.isActive === 1">
+                                <span class="tag-active">{{ 'Settings.Role.Active' | translate }}</span
+                >
+              </div>
+              <div *ngIf="customersGrouplist.isActive === 0">
+                <span  class="tag-inactive">{{ 'Settings.Role.InActive' | translate }}</span
+                >
+              </div>
+            </td>
+            <td class="text-center" [appHideIfUnauthorized]="" [multipleHide]="['delete-customer-group','edit-customer-group']">
+              <div class="dropdown" ngbDropdown>
+                  <i class="fa fa-ellipsis-v cursor" style="padding:0 15px" ngbDropdownToggle>
+                  </i>
+                  <div ngbDropdownMenu class="dropdown-menu">
+                      <a [appHideIfUnauthorized]="'edit-customer-group'" class="dropdown-item" ngbDropdownItem href="javascript:void(0)" (click)="editGroup(customersGrouplist)"> <img src="assets/img/export-sm.svg">{{'CMS.Pages.Edit'| translate}} </a>
+                      <a [appHideIfUnauthorized]="'delete-customer-group'" class="dropdown-item" ngbDropdownItem href="javascript:void(0)" (click)="deleteCustomerGroup(customersGrouplist.groupId)"> <img src="assets/img/delete-sm.svg">{{'CMS.Pages.Delete'| translate}} </a>
+
+                  </div>
+              </div>
+            </td>
+
+
+          </tr>
+        </tbody>
+      </table>
+
+    <div
+      class="no_data"
+      *ngIf="(sandbox.getCustomersGroupList$ | async)?.length == 0"
+    >
+      <p>{{ 'Sales.Orders.datanotfound' | translate }}</p>
+    </div>
+    <mat-paginator
+      #paginator
+      [length]="sandbox.getpagination$ | async"
+      [pageIndex]="index"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[pageSize]"
+      (page)="onPageChange($event)"
+    >
+    </mat-paginator>
+  </div>
+</div>

@@ -1,0 +1,1200 @@
+
+<div class="row vieworder-wrap" *ngIf="(orderSandbox.viewOrderDetails$ | async) as detail">
+
+    <div class="vs-order-detail" *ngIf="(orderSandbox.viewOrderDetails$ | async) as detail">
+
+
+        <!--Head-->
+
+
+        <!--vs-detail-->
+
+    </div>
+    <!-- Order Wrap -->
+
+    <div class="details-order-wrap" *ngIf="(orderSandbox.viewOrderDetails$ | async) as detail">
+        <div class="alert alert-danger text-center" *ngIf="paymentRemark">
+            {{paymentRemark}}
+        </div>
+        <div class="details-order-card flex order-view-col">
+            <div class="doc-col">
+                <h3>{{'Sales.Orders.Detailsoforder'| translate}}</h3>
+                <div class="docc-content">
+                    <h4> <span>{{'Sales.Orders.OrderId'| translate}}</span> <b>&nbsp;&nbsp;&nbsp;{{detail.orderPrefixId}}</b> </h4>                    
+                    <h4><span>{{'Order Created Date & Time'| translate}}</span> &nbsp;&nbsp;&nbsp; {{detail.createdDate| date: 'dd/MM/YYY
+                        hh:mm aa'}}  </h4>
+                    <h4><span>Total Items quantity</span>&nbsp;&nbsp;&nbsp;{{detail?.itemQuantity}}</h4>
+                    <!-- <h4 *ngIf="detail.discountAmount!=null"><span>{{'Sales.Orders.Totalvalue'| translate}}</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;{{detail.currencySymbolLeft}} {{detail?.totalAmount}}</h4>
+                    <h4 *ngIf="detail.discountAmount!=null"><span>{{'Sales.Orders.DiscountValue'|
+                            translate}}</span>&#8211; {{detail.currencySymbolLeft}} {{detail.discountAmount}}</h4>
+                    <h4 [ngClass]="{'order-view-bdr-top':detail.discountAmount!=null}">
+                        <span>{{'Sales.Orders.Ordervalue'| translate}}</span> <span><span
+                                *ngIf="detail.discountAmount!=null">&nbsp;&nbsp;&nbsp;&nbsp;</span>{{detail.currencySymbolLeft}}
+                            {{detail.total}}</span></h4> -->
+
+            <div>
+                <h4><strong>Order Summary</strong></h4>
+                <table>
+                    <tr>
+                        <td style="width: 300px;">Items Price:</td>
+                        <td>{{detail.currencySymbolLeft}} {{orderDetailsView.itemsBasePriceTotal}}</td>
+                    </tr>
+                    <tr>
+                        <td>Tax:</td>
+                        <td>{{detail.currencySymbolLeft}} {{orderDetailsView.itemsTotalTax}}</td>
+                    </tr>
+                    <tr class="bdr-top">
+                        <td>MRP(Inclusive All Taxes):</td>
+                        <td>{{detail.currencySymbolLeft}} {{orderDetailsView.itemsBasePriceTotal + orderDetailsView.itemsTotalTax}}</td>
+                    </tr>
+                    <tr class="bdr-top" *ngIf="orderDetailsView.productTotalDiscount>0">
+                        <td>Product(s) discount:</td>
+                        <td>{{detail.currencySymbolLeft}} {{orderDetailsView.productTotalDiscount}}</td>
+                    </tr>
+                    <tr *ngIf="orderDetailsView.productPromotionDiscountTotal>0">
+                        <td>Product(s) promotion:</td>
+                        <td>{{detail.currencySymbolLeft}} {{orderDetailsView.productPromotionDiscountTotal}}</td>
+                    </tr>
+                    <tr *ngIf="orderDetailsView.cartValueBasedPromoDiscountTotal>0">
+                        <td>Cart value promotion:</td>
+                        <td>{{detail.currencySymbolLeft}} {{orderDetailsView.cartValueBasedPromoDiscountTotal}}</td>
+                    </tr>
+                    <tr *ngIf="orderDetailsView.CouponBasedPromoDiscountTotal>0">
+                        <td>Coupon promotion:({{orderDetailsView.couponCode}})</td>
+                        <td>{{detail.currencySymbolLeft}} {{orderDetailsView.CouponBasedPromoDiscountTotal}}</td>
+                    </tr>
+                    <tr *ngIf="orderDetailsView.creditNoteDiscount>0">
+                        <td><span *ngIf="orderDetailsView.cnName=='CB'">Claim Based </span>Credit Note:({{orderDetailsView.creditNoteCode}})</td>
+                        <td>{{detail.currencySymbolLeft}} {{orderDetailsView.creditNoteDiscount}}</td>
+                    </tr>
+                    <tr *ngIf="orderDetailsView.loyaltyPointPromoDiscount>0">
+                        <td>Loyalty Point:</td>
+                        <td>{{detail.currencySymbolLeft}} {{orderDetailsView.loyaltyPointPromoDiscount}}</td>
+                    </tr>
+                    <tr *ngIf="orderDetailsView.prepaidOrderDiscount>0">
+                        <td>100 Rs Off on prepaid order:</td>
+                        <td>{{detail.currencySymbolLeft}} {{orderDetailsView.prepaidOrderDiscount}}</td>
+                    </tr>
+                    <tr class="bdr-top">
+                        <td>Total Discount:</td>
+                        <td>{{detail.currencySymbolLeft}} {{orderDetailsView.totalDiscount}}</td>
+                    </tr>
+                    <tr class="bdr-top">
+                        <td>Shipping:</td>
+                        <td>{{detail.currencySymbolLeft}} {{orderDetail.shippingCharges}}</td>
+                    </tr>
+                    <tr class="bdr-top">
+                        <td>Order Total:</td>
+                        <td>{{detail.currencySymbolLeft}} {{orderDetail.total}}</td>
+                    </tr>
+                </table>
+            </div>
+                </div>
+            </div>
+            <!-- col -->
+
+            <div class="doc-col">
+                <h3>{{'Sales.Orders.Customerdetails'| translate}}</h3>
+                <div class="docc-content">
+                <h6 class="customerHeading">Customer Profile</h6>
+                <h4><span>Name </span> {{customerDetail.firstName}}</h4>
+                <h4><span>Email</span> {{customerDetail.email}}</h4>
+                <h4><span>Mobile</span> {{customerDetail.mobileNumber}}</h4>
+                </div>
+
+                <!-- <h4> <b>{{detail.customerId}}</b> </h4> -->
+                <div class="docc-content">
+                <h6 class="customerHeading">Order Delivery Customer Detail</h6>
+
+                    <h4><span>Name</span> {{detail.shippingFirstname}} </h4>
+                    <h4><span>{{'Sales.Orders.Email'| translate}}</span> {{detail.email}}</h4>
+                    <h4><span>{{'Sales.Orders.Mobile'| translate}}</span> {{detail.telephone}}</h4>
+                </div>
+                <div class="docc-content">
+                    <h4> <b>{{'Sales.Orders.Deliveryaddress'| translate}}</b></h4>
+                    <p>{{detail.shippingAddress1}}</p>
+                    <p>{{detail.shippingAddress2}}</p>
+                    <p>{{detail.shippingCity}}</p>
+                    <p>{{detail.shippingZone}}</p>
+                    <p>{{detail.shippingPostcode}}</p>
+                </div>
+                
+            </div>
+            
+            <!-- col -->
+
+            <!-- <div class="doc-col d-none" *ngIf="!isReplaceOrder">
+                <h3>{{'Sales.Orders.ChangePaymentStatus'| translate}}</h3>
+                <div class="docc-content">
+                    <div class="toggle products-section">
+                        <p>{{'Sales.Orders.Receivedpayment'| translate}}</p>
+                        <input class="tgl tgl-light" id="cb1" type="checkbox" (change)="changePayment($event)"
+                            [(ngModel)]="selectedPaidValue" />
+                        <label class="tgl-btn" for="cb1"></label>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="doc-col action-col">
+                <h3>Action</h3>
+                <div class="docc-content">
+                    <span class="cursor" *ngIf="(orderSandbox.settingDetail$ | async) as setting"
+                        (click)="downloadInvoiceDetail(detail, setting)">
+                        <img src="assets/img/download-dark.svg">
+                        <a>{{'Sales.Orders.Download'| translate}} Invoice</a>
+                    </span>
+
+                </div>
+<hr/>
+                <div class="mt-4">
+                    <div class="row old-order-item-cancel"><input type="button" class="cancelorder" value="Cancel order" [appHideIfUnauthorized]="'update-order-status'" (click)="adminCancelOrder(true)"></div>
+                </div>
+<hr/>
+                <div class="docc-content">
+                    <h4><b>Payment Mode</b></h4>
+                    <div class="toggle products-section">
+                        <p *ngIf="detail.paymentMethod==2">Cash on Delivery</p>
+                        <p *ngIf="detail.paymentMethod==8">Online Paytm</p>
+                        <p *ngIf="detail.paymentMethod==9">Online Ingenico</p>
+                    </div>
+                </div>
+             
+                <div class="docc-content d-none" [appHideIfUnauthorized]="'update-order-status'">
+                    <h4><b>Order Delivery Status</b></h4>
+                    <select class="form-control" #req (change)="sendCheckedOrderStatus(req.value,detail.orderId)">
+                        <option value="">--Select--</option>
+                        <option *ngFor="let data of orderStatusSandbox.getOrderstatuslist$ | async" [value]="data.orderStatusId">{{data.name}}</option>
+                    </select>
+                    <div [appHideIfUnauthorized]="'update-order-status'">
+                        <Button  (click)="modelOpenStatus(true)" class="btn btn-primary ml-2 mt-2">Update</Button>
+                        </div>
+                   </div>
+
+                    
+                   
+
+
+            </div>
+            <!-- col -->
+
+        </div>
+
+    </div>
+
+    <div class="order-detail-list">
+
+        
+        <div class="odl-row flex" *ngFor="let subArray of detail?.productList">
+            <div class="odlr-lft">
+                <div class="odlrl-top flex">
+                    <div class="odlrl-top-img">
+                        <img style="max-width: 100%;
+                              max-height: 100%;" [src]="
+                                imageUrl +
+                                '?path=' +
+                                subArray.containerName +
+                                '&name=' +
+                                subArray.image +
+                                '&width=100&height=100'
+                              " onError="this.src='/assets/error-images/Load-icon-Products.png';" class="vendor-img"
+                            [alt]="subArray.name" />
+                            <span *ngIf="(subArray.orderStatusId==1 || subArray.orderStatusId==16 || subArray.orderStatusId==34) && orderDetailsView.creditNoteDiscount==0 && orderDetailsView.productPromotionDiscountTotal==0 && detail?.productList?.length>1">
+                            <input type="checkbox" (click)="selectForCancelOrder($event, subArray)"/>
+                            select for Cancel
+                            </span>
+                    </div>
+                    <div class="odlrl-content">
+                        <h3>{{subArray?.name}}</h3>
+                        <h5>UPC: {{subArray?.upc}}</h5>
+                        <h5>SKU Name: {{subArray?.skuName}}</h5>
+                        <h5>Varient Name: {{subArray?.varientName}}</h5>
+                        <h5>Facility Name: {{subArray?.facilityName}} ({{subArray?.facilityCode}})</h5>
+
+                        <div class="flex odlrl-cont-list">
+                            <div class="odlrl-cl-col">
+                                <p>{{'Sales.Orders.QTY'| translate}}</p>
+                                <h4>{{subArray?.quantity}}</h4>
+                            </div>
+                            
+                            <div class="odlrl-cl-col">
+                                <p>MRP</p>
+                                <h4>{{detail.currencySymbolLeft}} {{subArray.productMrp}}</h4>
+                            </div>
+                            <div class="odlrl-cl-col">
+                                <p>Unit Selling Price</p>
+                                <h4>{{detail.currencySymbolLeft}} {{subArray.productSellingPrice}}</h4>
+                            </div>
+                            <div class="odlrl-cl-col">
+                                <p>Refundable Price</p>
+                                <h4>{{detail.currencySymbolLeft}} {{subArray.refundAmount}}</h4>
+                            </div>
+                            <div class="odlrl-cl-col d-none">
+                                <p>{{'Sales.Orders.Discount'| translate}}</p>
+                                <h4 *ngIf="subArray.discountAmount!=='0.00'">{{detail.currencySymbolLeft}}
+                                    {{subArray.discountAmount}} {{detail.currencySymbolRight}}</h4>
+                                <h4 *ngIf="subArray.discountAmount==='0.00' || subArray.discountAmount===null">-</h4>
+                            </div>
+                            <div class="odlrl-cl-col d-none">
+                                <p>{{'Sales.Orders.Tax'| translate}}</p>
+                                <h4 *ngIf="subArray?.taxType === 2">{{subArray?.taxValue}}%</h4>
+                                <h4 class="quantity" *ngIf="subArray?.taxType !== 2">{{detail.currencySymbolLeft}}
+                                    {{subArray?.taxValue}} {{detail.currencySymbolRight}}</h4>
+                            </div>
+                            <div class="odlrl-cl-col d-none">
+                                <p>{{'Sales.Orders.Coupon Discount'| translate}}</p>
+                                <h4 *ngIf="subArray.couponDiscountAmount!==null">{{detail.currencySymbolLeft}}
+                                    {{subArray.couponDiscountAmount}} {{detail.currencySymbolRight}}</h4>
+                                <h4
+                                    *ngIf="subArray.couponDiscountAmount=='0.00' || subArray.couponDiscountAmount===null">
+                                    -</h4>
+                            </div>
+                            <div class="odlrl-cl-col d-none">
+                                <p>{{'Sales.Orders.Total'| translate}}</p>
+                                <h4>{{detail.currencySymbolLeft}} {{subArray?.total}} {{detail.currencySymbolRight}}
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="odlrl-btm" *ngIf="!isReplaceOrder">
+                    <a href="javascript:void(0)"> {{'Sales.Orders.OrderStatusHistory'| translate}} <img
+                            src="assets/img/edit.png" alt="" width="12px" (click)="ordersstatushistory(subArray)"
+                            class="cursor"> </a>
+                </div> -->
+            </div>
+            <!-- lft -->
+            <div class="odlr-stat" *ngIf="subArray.replacementProduct">
+                <h5> {{'Sales.Orders.OrderStatus'| translate}}</h5>
+                <h3>{{subArray?.orderStatusName}}</h3>
+                <!-- <p><i>{{(subArray?.deliveredDate!==null?subArray?.deliveredDate:detail?.createdDate) | date: '(dd/MM/YYY
+                        hh:mm aa)'}}</i></p> -->
+                        <p><i>{{subArray.modifiedOrderDateTime}}</i></p>
+
+                <div class="odlr-stat-mod" *ngIf="orderstatusmodel===subArray">
+                    <a> <img src="assets/img/close.svg" class="cursor" alt="" (click)="closeorderstatus()"> </a>
+                    <p> {{'Sales.Orders.ChangeorderStatus'| translate}}</p>
+                    <ng-select style="width:100% !important" appendTo="body" placeholder="- -Select Customer Group- -"
+                        [clearable]="false" [searchable]="false" [(ngModel)]="productDetail.orderStatusId">
+                        <ng-option *ngFor="let data of orderStatusSandbox.getOrderstatuslist$ | async"
+                            [value]="data.orderStatusId">{{data.name}}</ng-option>
+
+                    </ng-select>
+                    <form [formGroup]="shippingForm">
+                    <input type="text" placeholder="Tracking ID" formControlName="id"
+                        [ngClass]="{'error-field' : (shippingForm.controls['id'].hasError('required') && shippingForm.controls['id'].touched)}">
+                    <input type="text" placeholder="URL" formControlName="url"
+                        [ngClass]="{'error-field' : (shippingForm.controls['url'].hasError('required') && shippingForm.controls['url'].touched)}">
+                    <input type="hidden" placeholder="actionTypeId" [(ngModel)]="productDetail.orderStatusId"
+                        formControlName="actionTypeId">
+                        <button (click)="updateShippingInfo(productDetail.orderStatusId, productDetail.orderProductId)">Save</button>
+                    <!-- <button *ngIf="!isReplaceOrder" style="margin-top: 14px;"
+                        (click)="onItemProductChange(productDetail.orderStatusId, productDetail.orderProductId)">Save</button> -->
+                    </form>
+                </div>
+            </div>
+            <div>
+            <div class="docc-content d-none" *ngIf="detail.productList.length > 1">
+                <h6><b>Order Product Delivery Status</b></h6>
+                <select class="form-control" #req (change)="sendCheckedOrderProductStatus(req.value,subArray.orderId,subArray.orderProductId)">
+                    <option value="">--Select--</option>
+                    <option *ngFor="let data of orderStatusSandbox.getOrderstatuslist$ | async" [value]="data.orderStatusId">{{data.name}}</option>
+                </select>
+                 <div>
+                <Button  (click)="modelOpenStatus(true)" class="btn btn-primary ml-2 mt-2">Update</Button>
+                </div>
+            </div>
+            <div [appHideIfUnauthorized]="'update-order-status'">
+            <h6>Update Facility</h6>
+            <div class="d-flex align-items-center">
+            <select class="form-control" (change)="selectFacility($event)">
+                <option *ngFor="let data of facilityDataList" [value]="data.facilityCode">{{data.facilityName}}</option>
+            </select>
+            <input type="button" value="Update" (click)="updateFacility(subArray.orderProductId)" class="btn btn-primary ml-1" />
+        </div>
+    </div>
+        <div *ngIf="subArray.trackingNo" class="mt-3">
+            <a href="{{subArray.trackingUrl}}{{subArray.trackingNo}}" target='_blank' class="btn btn-primary">Track Order Item</a>
+        </div>
+        <div class="mt-3">
+            <input type="button" value="View History" class="btn btn-primary" (click)="viewOrderHistory(subArray.orderProductId, true)"/>
+        </div>
+
+        </div>
+
+
+            <!-- status -->
+            <div class="odlr-ship-info d-none" >
+                <h3>{{'Sales.Orders.ShippingInformation'| translate}}</h3>
+                <p>{{'Sales.Orders.TrackingID'| translate}} : {{subArray?.trackingNo}}</p>
+                <p> {{'Sales.Orders.URL'| translate}} : <span style="color:blue">{{subArray?.trackingUrl}}</span></p>
+                <a *ngIf="!isReplaceOrder" class="odlr-edit"> <img src="assets/img/edit.png" class="cursor" alt=""
+                        (click)="shipping(subArray)"> </a>
+                <form [formGroup]="shippingForm">
+                    <div class="odlr-stat-mod" *ngIf="shippingmodel===subArray">
+                        <a> <img src="assets/img/close.svg" alt="" class="cursor" (click)="shippingclose()"> </a>
+                        <p> <b> {{'Sales.Orders.ShippingInformation'| translate}} </b> </p>
+                        <input type="text" placeholder="Tracking ID" formControlName="id"
+                            [ngClass]="{'error-field' : (shippingForm.controls['id'].hasError('required') && shippingForm.controls['id'].touched)}">
+                        <input type="text" placeholder="URL" formControlName="url"
+                            [ngClass]="{'error-field' : (shippingForm.controls['url'].hasError('required') && shippingForm.controls['url'].touched)}">
+                        <input type="hidden" placeholder="actionTypeId" [(ngModel)]="productDetail.orderStatusId"
+                            formControlName="actionTypeId">
+                        <button (click)="updateShippingInfo()">Save</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Ship -->
+            <div class="odh-mod" *ngIf="ordershistory===subArray">
+                <a class="closemod"> <img src="assets/img/close.svg" class="cursor" alt=""
+                        (click)="closeorderhistory()"> </a>
+                <h3>{{'Sales.Orders.OrderStatusHistory'| translate}} >{{subArray?.name}}</h3>
+                <div class="odh-stat flex">
+                    <a href="javascript:void(0)" class="arr-prev"> <img
+                            src="assets/img/icon-keyboard-arrow-left-sharp.svg" alt=""> </a>
+                    <a href="javascript:void(0)" class="arr-nxt"> <img
+                            src="assets/img/icon-keyboard-arrow-left-sharp.svg" alt=""> </a>
+                    <div style="padding-top:24px" class="odh-stat-col"
+                        *ngFor="let log of (orderSandbox.getOrderLogValue$ | async)"
+                        [ngClass]="{'odh-stat-col-completed' : log.createdDate !== ''}">
+                        <h4>{{log?.name}}</h4>
+                        <p><i>{{log?.createdDate | date: '(dd/MM/YYY hh:mm aa)'}}</i></p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- row -->
+    </div>
+
+    <div class="row" style="width: 100%;" *ngIf="performAction == 'FULL_ORDER_RETURN' && visibleFullOrderReturnSection" >
+        <div class="col-md-12">
+            <div [appHideIfUnauthorized]="'reject-request'" class="row reject-return-request"><input type="button" [disabled]="isCancelled" class="btn btn-primary col-md-3" value="Reject return request"
+                (click)="showRejectReturnRequestModal(true)">
+            </div>
+            
+        <div [appHideIfUnauthorized]="'accept-request'" class="row old-order-item-cancel"><p class="col-md-6">For refund/CN the products you have to cancel that products from Old order. </p><input type="button" [disabled]="isCancelled" class="btn btn-primary col-md-3" value="Ok! Cancel Ordered Item"
+                (click)="showCancelItemFromOldOrderModal(true)"></div>
+
+
+        </div>    
+
+        
+        <div class="col-md-12 mt-5 d-flex">
+
+                    
+
+                    
+                    <input [appHideIfUnauthorized]="'refund-access'" type="button" class="btn btn-primary" [disabled]="!isCancelled" value="Refund"
+                    (click)="showRefundInfoForOrderReturn(true)">
+
+                                
+                    <input [appHideIfUnauthorized]="'credit-note-access'" type="button" class="btn btn-primary" [disabled]="!isCancelled" value="Credit Note"
+                    (click)="showCnModalForReturnItem('CN')">
+        </div>
+        
+    </div>
+
+    
+    <div class="row" style="width: 100%;" *ngIf="isReplaceOrder && performAction == 'REPLACE_PRODUCT' && visibleReturnOrderSection" >
+        <div class="col-md-12">
+            <div [appHideIfUnauthorized]="'reject-request'" class="row reject-return-request"><input type="button" [disabled]="isCancelled" class="btn btn-primary col-md-3" value="Reject return request"
+                (click)="showRejectReturnRequestModal(true)">
+            </div>
+            
+        <div [appHideIfUnauthorized]="'accept-request'" class="row old-order-item-cancel"><p class="col-md-8">For replacing/refund/CN the product you have to cancel that product from Old order. </p><input type="button" [disabled]="isCancelled" class="btn btn-primary col-md-3" value="Ok! Cancel Ordered Item"
+                (click)="showCancelItemFromOldOrderModal(true)"></div>
+        </div>    
+        <div class="col-md-12">
+                    
+            <input type="button" class="btn btn-primary" [disabled]="!isCancelled" value="Replacement Order" (click)="createOrderPopup(true)">
+            <input [appHideIfUnauthorized]="'refund-access'" type="button" class="btn btn-primary" [disabled]="!isCancelled" value="Refund"
+            (click)="showRefundInfoForOrderReturn(true)">
+
+                        
+            <input [appHideIfUnauthorized]="'credit-note-access'" type="button" class="btn btn-primary" [disabled]="!isCancelled" value="Credit Note"
+            (click)="showCnModalForReturnItem('CN')">
+
+        </div>
+        <div class="col-md-4 mt-3" *ngIf="refundActive">
+        <div class="col-md-12">
+            <label>Enter Refund Amount</label>
+            <input type="number" placeholder="Enter Refund Amount" class="form-control" #refund>
+        </div>
+        <div class="col-md-12 text-right mt-3">
+            <input type="button" class="btn btn-primary" value="Submit" (click)="refundSubmit(refund.value)">
+        </div>
+    </div>
+    </div>
+
+
+
+    <div class="row" style="width: 100%;" *ngIf="isReplaceOrder && performAction == 'RETURN_ORDER' && visibleReturnOrderSection" >
+        <div class="col-md-12">
+            <div [appHideIfUnauthorized]="'reject-request'" class="row reject-return-request"><input type="button" [disabled]="isCancelled" class="btn btn-primary col-md-3 working" value="Reject return request"
+                (click)="showRejectReturnRequestModal(true)">
+            </div>
+            
+        <div [appHideIfUnauthorized]="'accept-request'" class="row old-order-item-cancel"><p class="col-md-7">For replacing/refund/CN the product you have to cancel that product from old order. </p><div class="col-md-5"><input type="button" [disabled]="isCancelled" class="btn btn-primary working" value="Ok! Cancel Ordered Item" (click)="showCancelItemFromOldOrderModal(true)">
+            <input *ngIf="isCancelled" type="button" class="btn btn-primary" value="Cancel Reverse Pickup" (click)="cancelledReversePickupPopup(true)"/>
+        </div>
+        </div>
+        </div>    
+        <div *ngIf="!markAsRefundBtn" class="col-md-12">
+                    
+                    <input [appHideIfUnauthorized]="'refund-access'" *ngIf="orderDetail.paymentMethod!=2" type="button" class="btn btn-primary working" [disabled]="!isCancelled" value="Refund"
+                    (click)="showRefundInfoForOrderReturn(true)">
+
+                                
+                    <input [appHideIfUnauthorized]="'credit-note-access'" type="button" class="btn btn-primary working" [disabled]="!isCancelled" value="Credit Note"
+                    (click)="showCnModalForReturnItem('CN')">
+
+                    <!-- <input [appHideIfUnauthorized]="'refund-access'" *ngIf="orderDetail.paymentMethod==2" type="button" class="btn btn-primary" [disabled]="!isCancelled" value="Send Email"
+                    (click)="sendEmailToCustomerPopUp(true)">    -->
+
+        </div>
+        <div *ngIf="markAsRefundBtn" class="col-md-12">
+        <input type="button" class="btn btn-primary" value="Mark as Refund" (click)="markAsRefund()">
+    </div>
+        <div class="col-md-4 mt-3" *ngIf="refundActive">
+        <div class="col-md-12">
+            <label>Enter Refund Amount</label>
+            <input type="number" placeholder="Enter Refund Amount" class="form-control" #refund>
+        </div>
+        <div class="col-md-12 text-right mt-3">
+            <input type="button" class="btn btn-primary" value="Submit" (click)="refundSubmit(refund.value)">
+        </div>
+    </div>
+    </div>
+
+
+    <!-- <input [appHideIfUnauthorized]="'refund-access'" *ngIf="orderDetail.paymentMethod!=2" type="button" class="btn btn-primary" [disabled]="!isCancelled" value="Send Email"
+                    (click)="sendEmailToCustomerPopUp(true)"> -->
+
+    
+        <div class="col-md-12 cn-details" *ngIf="performAction == 'CANCEL_ORDER' && visibleAppliedCancelledOrder && visibleGivenCNInfoSection ">
+                     
+           <div class="row">
+            <div class="col-md-12"><h3>Credit Note Details</h3></div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-3">
+                        <p>Given CN:</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>{{detail.cnDetails.cnCreated}}</h4>
+                    </div>
+                </div>
+            </div>
+            
+           </div>
+
+           <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-3">
+                        <p>CN amount:</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>₹ {{detail.cnDetails.cnAmount}}</h4>
+                    </div>
+                </div>
+            </div>
+           </div>
+
+
+        </div>
+        <div class="col-md-12 cn-details" *ngIf="performAction == 'CANCEL_ORDER' && visibleAppliedCancelledOrder && visibleGivenBankRefundInfoSection ">
+                     
+            <div class="row">
+             <div class="col-md-12"><h3>Refund Details</h3></div>
+             <div class="col-md-6">
+                 <div class="row">
+                     <div class="col-md-3">
+                         <p>Refund amount:</p>
+                     </div>
+                     <div class="col-md-6">
+                         <h4>{{detail.refundDetails.refundAmount}}</h4>
+                     </div>
+                 </div>
+             </div>
+             
+            </div>
+ 
+ 
+ 
+         </div>
+        
+            <div class="col-md-12" *ngIf="performAction == 'CANCEL_ORDER' && visibleCancelOrderSection;">
+                <input [appHideIfUnauthorized]="'credit-note-access'" *ngIf="paymentMethod != '2'" type="button" class="btn btn-primary credit-note1" value="Create credit note"
+                (click)="showCreditNoteModal(true)">
+    
+                <input [appHideIfUnauthorized]="'refund-access'" type="button" *ngIf="paymentMethod != '2'" class="btn btn-primary" value="Refund" data-target="#myModal"
+                (click)="showRefund()">
+                <input [appHideIfUnauthorized]="'refund-access'" type="button" class="btn btn-primary cancel-request-1" value="Reject Request"
+                (click)="showRejectRequestModal(true)">
+                <input  [appHideIfUnauthorized]="'refund-access'" *ngIf="paymentMethod == '2'"  type="button" class="btn btn-primary" value="Cancel order"
+                (click)="showCancelOrderModal(true)">    
+            </div>
+        
+          <div *ngIf="visibleSuccessMessage" class="alert alert-success">Process completed successfully</div>  
+      <div  [appHideIfUnauthorized]="'update-order-status'">
+          <div class="d-flex mt-2 d-none" *ngIf="performAction == 'REFUND' ||performAction == 'RETURN_ORDER' || performAction == 'FULL_ORDER_RETURN' || performAction == 'REPLACE_PRODUCT'">
+          <div>
+                <select class="form-control" #req (change)="checkRequest(req.value, detail.orderId)">
+                <option value="none">-Select Status-</option>
+                <option value="1">Pending Return Request</option>
+                <option value="2">Approved Return Request</option>
+                <option value="3">Rejected Return Requests</option>
+
+            </select>
+        </div>
+        <div>
+            <Button  (click)="UpdateReturnStatus(detail.orderId)" class="btn btn-primary ml-2" [disabled]="req.value == 'none'">Update</Button>
+            </div>
+    </div></div>
+  
+
+    <div class="row" style="width: 100%;">
+        <div class="col-md-12">
+            <div class="row"  style="float: right;">
+                <input class="btn btn-primary" type="button" value="Old Order Source Id" (click)="orderCnIdPopup(true)"/>
+                <input [appHideIfUnauthorized]="'refund-access'"  type="button" class="btn btn-primary" [disabled]="!isCancelled" value="Send Email For COD"
+                          (click)="showCnModalForReturnItem('email')">
+            </div>
+        </div>
+        <div class="col-md-12">
+        <h5>Remark</h5>
+        <div class="remarks row w-100">
+            <div class="col-md-10"><input type="text" id="remarkTag" class="form-control" #remark/></div>
+            <div class="col-md-2"><input type="button" class="btn btn-primary" value="Add Remark" (click)="addRemark(remark.value)"/> </div>
+        </div>
+    </div>
+</div>
+    <div class="row w-100 mt-5" *ngIf="remarkData.length>0">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between">
+            <h5>Remarks List</h5>
+            <div>
+                    <input type="button" value="Export Data" class="btn btn-primary mb-2" (click)="exportAsXLSX()">
+                </div>
+            </div>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S. No.</th>
+                        <th>User Name</th>
+                        <th>Email</th>
+                        <th>Remark</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let r of remarkData; let i = index">
+                        <td>{{i+1}}</td>
+                        <td>{{r.userName}}</td>
+                        <td>{{r.email}}</td>
+                        <td>{{r.remarks}}</td>
+                        <td>{{r.createdDate | date:'dd-MM-YYY, hh:mm aa'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+        <div id="refundModal" class="modal show pop-show" *ngIf="showRefundInfoPopup && selectedPaidValue" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Refund information - Order Id {{orderDetail.orderPrefixId}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            (click)="closeRefundInfoPopup()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">SKU Name</th>
+                                    <th scope="col" align="right">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+        
+                                <tr *ngFor="let refundRec of allPendingCancelRequest">
+                                    <td>{{refundRec.name}}</td>
+                                    <td>{{refundRec.skuName}}</td>
+                                    <td>{{refundRec.refundAmount}}</td>
+                                </tr>
+                                <tr *ngIf="refundInfoRecords.totalRefundAmount>0">
+                                    <td colspan="2" align="right"><b>Total Refundable Amount</b></td>
+                                    <td align="left"><b>{{refundInfoRecords.totalRefundAmount.toFixed(2)}}</b></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h5 class="">Orders Bank Transaction Details</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Order Id</th>
+                                    <th scope="col">Bank Name</th>
+                                    <th scope="col">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+        
+                                <tr *ngFor="let refundRec of allBankTransaction">
+                                    <td>{{refundRec.orderPrefixId}}</td>
+                                    <td>{{refundRec.paymentMethod}}</td>
+                                    <td>{{refundRec.total}}</td>
+                                </tr>
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer flex-space-between">
+                        <div class="alert alert-danger">COD amount will not be refundable online.</div>
+                        
+                        <button type="button" *ngIf="refundInfoRecords.totalRefundAmount>0" class="btn btn-primary"
+                            (click)="refundSubmit()">Refund</button>
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="rejectRequestModal" class="modal show pop-show" *ngIf="showRejectRequestPopup" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Reject request</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            (click)="showRejectRequestModal(false)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body alert alert-warning cancel-request-1">
+                        Are you sure to reject the request?
+                    </div>
+                    <div class="modal-footer">
+                        
+                        <button type="button" class="btn btn-primary"
+                            (click)="modelCacnelPopup(true)">Reject request</button>
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal show pop-show" *ngIf="reverseReturnPopup" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Cancel Reverse Pickup</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            (click)="cancelledReversePickupPopup(false)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body alert alert-warning cancel-request-1">
+                        Are you sure to cancel revserse pickup?
+                    </div>
+                    <div class="modal-footer">
+                        
+                        <button type="button" class="btn btn-primary"
+                            (click)="cancelledReversePickup(true)">Cancel Reverse Pickup</button>
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal show pop-show" *ngIf="showRefundRequestPopup" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Replace product request</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            (click)="createOrderPopup(false)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class=" alert alert-warning mb-3">
+                        Are you sure to repalce the product with below details?
+                    </div>
+<table class="table table-bordered">
+    <tr>
+        <td>Product Name</td>
+        <td>{{newProductDetails.productName}}</td>
+    </tr>
+    <tr>
+        <td>UPC </td>
+        <td>{{newProductDetails.upc}}</td>
+    </tr>
+    <tr>
+        <td>Vareint</td>
+        <td>Size: {{newProductDetails.varientName.split(',')[0]}}, Color: {{newProductDetails.varientName.split(',')[1]}}</td>
+    </tr>
+    <tr>
+        <td>SKU</td>
+        <td>{{newProductDetails.skuName}}</td>
+    </tr>
+    <tr>
+        <td>Price</td>
+        <td>{{newProductDetails.price}}</td>
+    </tr>
+</table>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        
+                        <button type="button" class="btn btn-primary"
+                            (click)="createOrder()">Replace and Create new Order</button>
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="cancelOrderRequestModal" class="modal show pop-show" *ngIf="showCancelOrderRequestPopup" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Cancel order</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            (click)="showCancelOrderModal(false)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body alert alert-warning">
+                        Are you sure to cancel this order?
+                    </div>
+                    <div class="modal-footer">
+                        
+                        <button type="button" class="btn btn-primary"
+                            (click)="createCreditNoteForCancelOrder(3)">Cancel order</button>
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="creditNoteModal" class="modal show pop-show credit-note1" *ngIf="showCreditNotePopup && selectedPaidValue" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Credit Note</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            (click)="showCreditNoteModal(false)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body alert alert-success">
+                        CN amount: {{cnAmountToCreate.toFixed(2)}}
+                    </div>
+                    <div class="modal-footer">
+                        
+                        <button [disabled]="creditNoteBtnDisabled" type="button" class="btn btn-primary"
+                            (click)="createCreditNoteForCancelOrder(1)">Create CN</button>
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="orderNotPaid" class="modal show pop-show" *ngIf="(showCreditNotePopup || showRefundInfoPopup) && !selectedPaidValue" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Credit note</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            (click)="showCreditNoteModal(false)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body alert alert-danger">
+                        Can not create CN as this order is not paid
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div id="rejectReturnRequestModal" class="modal show pop-show" *ngIf="showReturnRejectRequestPopup" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Reject request</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            (click)="showRejectReturnRequestModal(false)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body alert alert-warning">
+                        Are you sure to reject the request?
+                    </div>
+                    <div class="modal-footer">
+                        
+                        <button type="button" class="btn btn-primary"
+                            (click)="rejectModalPopup()">Reject request</button>
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="showCancelItemFromOldOrderModal" class="modal show pop-show" *ngIf="showCancelItemFromOldOrderPopup" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Cancel Product</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            (click)="showCancelItemFromOldOrderModal(false)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body alert alert-warning">
+                        Are you sure to cancel the product from Order?
+                    </div>
+                    <div class="modal-footer">
+                        
+                        <button type="button" class="btn btn-primary"
+                            (click)="cancelOrrder()">Cancel product</button>
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="creditNoteForReturnModal" class="modal show pop-show" *ngIf="showCnPopForReturnItem" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Credit note</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            (click)="closeCnPopForReturnItem(false)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body alert alert-success">
+                        CN amount: {{cnAmountToCreate}}
+                    </div>
+                    <div class="modal-footer">
+                        
+                        <button type="button" class="btn btn-primary"
+                            (click)="createCreditNoteForReturnOrder()">Create CN</button>
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal show pop-show" *ngIf="sendEmailPopUp" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Notify to Customer</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            (click)="sendEmailToCustomerPopUp(false)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body alert alert-warning">
+                        Send email ({{orderDetail.email}}) to customer to get bank account details for refund
+
+                    </div>
+                    <div class="modal-footer">
+                        
+                        <button type="button" class="btn btn-primary"
+                            (click)="sendEmailForRefund()">Send Email</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="returnRefundItemModal" class="modal show pop-show" *ngIf="showReturnRefundItemInfoPopup" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Refund information - Order Id {{orderDetail.orderPrefixId}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            (click)="showRefundInfoForOrderReturn(false)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">SKU Name</th>
+                                    <th scope="col" align="right">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+        
+                                <tr *ngFor="let refundRec of allPendingReturnRequest">
+                                    <td>{{refundRec.name}}</td>
+                                    <td>{{refundRec.skuName}}</td>
+                                    <td>{{refundRec.refundAmount}}</td>
+                                </tr>
+                                <tr *ngIf="refundInfoRecords.totalRefundAmount>0">
+                                    <td colspan="2" align="right"><b>Total Refundable Amount</b></td>
+                                    <td align="left"><b>{{refundInfoRecords.totalRefundAmount.toFixed(2)}}</b></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h5 class="">Orders Bank Transaction Details</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Order Id</th>
+                                    <th scope="col">Bank Name</th>
+                                    <th scope="col">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+        
+                                <tr *ngFor="let refundRec of allBankTransaction">
+                                    <td>{{refundRec.orderPrefixId}}</td>
+                                    <td>{{refundRec.paymentMethod}}</td>
+                                    <td>{{refundRec.total}}</td>
+                                </tr>
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer flex-space-between">
+                        <div class="alert alert-danger">COD amount will not be refundable online</div>
+                        <button type="button" *ngIf="refundInfoRecords.totalRefundAmount>0" class="btn btn-primary"
+                            (click)="refundSubmitForReturnItem()">Refund</button>
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="adminCancelOrder" class="modal show pop-show" *ngIf="adminCancelOrderPopup" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Cancel Order</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            (click)="adminCancelOrder(false)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body alert alert-warning">
+                        Are you sure to cancel this order selected items?
+                    </div>
+                    <div class="modal-footer">
+                        
+                        <button type="button" class="btn btn-primary"
+                            (click)="CancelFullOrderAdmin()">Proceed</button>
+                           <button type="button" class="btn btn-primary"
+                            (click)="adminCancelOrder()">Cancel</button>
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>
+<div class="modal show pop-show" *ngIf="orderStatusDelivery" tabindex="-1" role="dialog">
+
+ <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Update Delivery Order Status</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    (click)="modelOpenStatus(false)">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body alert alert-warning">
+                                Are you sure to update delivery status?
+                            </div>
+                            <div class="modal-footer">
+                                
+                                <button type="button" class="btn btn-primary"
+                                    (click)="modelOpenStatus(fasle)">No</button>
+                                    <button type="button" class="btn btn-primary"
+                                    (click)="updateOrderProductStatus()">Yes</button>
+                
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+
+<div class="modal show pop-show" *ngIf="orderStatusHistoryPopup" tabindex="-1" role="dialog">
+
+<div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Cancel Order Items
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                (click)="modelCacnelPopup(false)">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body cancel-popup">
+                            <div class="row m-0">
+                                <div class="col-md-12 mb-3 cancel-popup-box " *ngFor="let item of allPendingCancelRequest">
+                                    <div class="d-flex justify-content-between">
+                                        <div><input *ngIf="orderDetailsView.creditNoteDiscount<1" type="checkbox" (change)="selectRejectItem($event, item)"/> {{item.name}} <span>({{item.varientName}})</span>
+                                        </div>
+                                        <div>Article Code: {{item.upc}}</div>
+                                        <div>Sku: {{item.skuName}}</div>
+                                    </div>
+                                    <div class="d-flex justify-content-between alert alert-warning mb-0 p-1 mt-1">
+                                        <div>Product Price: {{item.productSellingPrice * item.quantity}}</div>
+                                        <div>Discount Price: {{item.productSellingPrice - item.refundAmount}}</div>
+                                        <div>Refund Amount: {{item.refundAmount}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                                <button type="button" [disabled]="rejectItemsList.length==0" class="btn btn-primary"
+                                (click)="rejectSelectedCacncelItems()">Reject Cancel Order Items</button>
+            
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+<div class="modal show pop-show" *ngIf="orderReturnPopup" tabindex="-1" role="dialog">
+
+<div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Return Order Items
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            (click)="closeRejectModalPopup(false)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body cancel-popup">
+                        <div class="row m-0">
+                            <div class="col-md-12 mb-3 cancel-popup-box " *ngFor="let item of allPendingReturnRequest">
+                                <div class="d-flex justify-content-between">
+                                    <div><input *ngIf="orderDetailsView.creditNoteDiscount<1" type="checkbox" (change)="selectRejectItem($event, item)"/> {{item.name}} <span>({{item.varientName}})</span>
+                                    </div>
+                                    <div>Article Code: {{item.upc}}</div>
+                                    <div>Sku: {{item.skuName}}</div>
+                                </div>
+                                <div class="d-flex justify-content-between alert alert-warning mb-0 p-1 mt-1">
+                                    <div>Product Price: {{item.productSellingPrice * item.quantity}}</div>
+                                    <div>Discount Price: {{item.productSellingPrice - item.refundAmount}}</div>
+                                    <div>Refund Amount: {{item.refundAmount}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                            <button type="button" [disabled]="rejectItemsList.length==0" class="btn btn-primary"
+                            (click)="rejectReturnItems()">Reject Return Order Items</button>
+        
+                    </div>
+                </div>
+            </div>
+                                    </div>
+<div class="pop-up-overflow" *ngIf="orderStatusHistoryPopup || showRejectRequestPopup || showCancelItemFromOldOrderPopup || showRefundRequestPopup || sendEmailPopUp || adminCancelOrderPopup || orderStatusDelivery || showRefundInfoPopup || orderReturnPopup || showCnPopForReturnItem || showReturnRefundItemInfoPopup || reverseReturnPopup || viewOrderHistoryPopup || showCreditNotePopup"></div>
+
+<div class="modal show pop-show" *ngIf="viewOrderHistoryPopup" tabindex="-1" role="dialog">
+
+    <div class="modal-dialog">
+                           <div class="modal-content">
+                               <div class="modal-header">
+                                   <h5 class="modal-title">View Order History</h5>
+                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                       (click)="viewOrderHistory(0, false)">
+                                       <span aria-hidden="true">&times;</span>
+                                   </button>
+                               </div>
+                               <div class="modal-body ">
+                                <ul class='order-history-list' *ngIf="orderHistoryList.length>0; else noDataHistory;">
+                                    <ng-container *ngFor="let item of orderHistoryList">
+                                    <li *ngIf="item.active==1" [ngClass]="{'active':item.completed==1}">
+                                <span>{{item.orderStatusName}}
+                                    {{item.actionDate | date: 'dd-MM-YYYY, h:mm aa'}}
+                                    <div class="tooltip-wrapper" *ngIf="item.statusCodeRemark">
+                                        <i class='fa fa-eye ml-2'></i>
+                                        <div class="tooltip bs-tooltip-top" role="tooltip">
+                                          <div class="arrow"></div>
+                                          <div class="tooltip-inner">{{item.statusCodeRemark}}</div>
+                                        </div>
+                                      </div>
+                                </span></li>
+                            </ng-container>
+                                </ul>
+                                <ng-template #noDataHistory>
+                                    <div class="alert alert-danger">
+                                        No Record Found
+                                    </div>
+                                </ng-template>
+                               </div>
+                               <div class="modal-footer d-none">
+                                   
+                                   <button type="button" class="btn btn-primary"
+                                       (click)="viewOrderHistory(0, fasle)">OK</button>
+                               </div>
+                           </div>
+                       </div>
+                       </div>
+
+<div class="modal show pop-show" *ngIf="oldOrderIdCn" tabindex="-1" role="dialog">
+
+    <div class="modal-dialog">
+                           <div class="modal-content">
+                               <div class="modal-header">
+                                   <h5 class="modal-title">Old Source Order Id for CN</h5>
+                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                       (click)="orderCnIdPopup(false)">
+                                       <span aria-hidden="true">&times;</span>
+                                   </button>
+                               </div>
+                               <div class="modal-body">
+                                   <table class="table table-bordered" *ngIf="orderOrderCnId.length>0; else nodata;">
+                                    <thead>
+                                        <tr>
+                                            <th>Source Order Id</th>
+                                            <th>Applied Order Id</th>
+                                            <th>CN Code</th>
+                                            <th>CN Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let data of orderOrderCnId">
+                                        <td>{{data.cnSorceOrderId}}</td>
+                                        <td>{{data.cnAppliedOrderId}}</td>
+                                        <td>{{data.couponCode}}</td>
+                                        <td>{{data.amount}}</td>
+                                    </tr>
+                                </tbody>
+                                   </table>
+                                   <ng-template #nodata>
+                                    No data Found
+                                </ng-template>
+                               </div>
+                               <div class="modal-footer">
+                                   
+                                   <button type="button" class="btn btn-primary"
+                                       (click)="orderCnIdPopup(fasle)">OK</button>
+                               </div>
+                           </div>
+                       </div>
+                       </div>
+<div class="pop-up-overflow" *ngIf="oldOrderIdCn"></div>
+<div class="pop-up-overflow" *ngIf="showCancelItemFromOldOrderPopup"></div>
+<div class="pop-up-overflow" *ngIf="showRefundRequestPopup"></div>
+<div class="pop-up-overflow" *ngIf="sendEmailPopUp"></div>
+<div class="pop-up-overflow" *ngIf="adminCancelOrderPopup"></div>
+<div class="pop-up-overflow" *ngIf="orderStatusDelivery"></div>
+
+<app-popup-message [popupMessage]="popupMessage"></app-popup-message>
+<div class="custom-loader" *ngIf="showLoader"><img src="./assets/loader/loader.gif" style="height: 10vh;"></div>

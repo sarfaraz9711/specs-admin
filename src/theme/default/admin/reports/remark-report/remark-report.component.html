@@ -1,0 +1,49 @@
+<div class="container-fluid mt-3">
+    <div class="d-flex justify-content-between p-3">
+        <div class="title-card flex">
+            <h3>Remark Report</h3>
+        </div>
+        <div>
+            <input type="button" value="Export Data" class="btn btn-primary" (click)="exportAsXLSX()">
+        </div>
+    </div>
+    <div class="col-md-3 mb-3 ">
+        <div class="search-item d-flex">
+            <input type="text" #search class="form-control" formControlName="searchField"
+                placeholder="Search by OrderId" />
+            <button class="search-btn" (click)="searchcancel(search.value, 1)">search</button>
+            <button class="search-btn" (click)="searchcancel(search.value, 2)">Reset</button>
+        </div>
+    </div>
+    <div class="flex product-wrap">
+        <div class="product-table" style="width: 100%">
+            <div class="table-responsive report-content-table">
+                <table class="table table-bordered table-striped sales-content-table">
+                    <thead>
+                        <tr>
+                            <th width="100px">S. No.</th>
+                            <th width="100px">Order ID</th>
+                            <th width="100px">User Name</th>
+                            <th width="100px">Email</th>
+                            <th width="100px">Remark</th>
+                            <th width="100px">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let r of RemarkList; let i = index">
+                            <td>{{i+1}}</td>
+                            <td>{{r.orderPrefixId}}</td>
+                            <td>{{r.userName}}</td>
+                            <td>{{r.email}}</td>
+                            <td>{{r.remarks}}</td>
+                            <td>{{r.createdDate | date:'dd-MM-YYY, hh:mm:ss aa'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="no_data" *ngIf="RemarkList.length==0">
+                    <p>No Record Found</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

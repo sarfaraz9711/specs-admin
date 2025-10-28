@@ -1,0 +1,174 @@
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <input type="button" value="Export Data" class="btn btn-primary" (click)="exportAsXLSX()" />
+            <input type="button" value="Create Credit Note" class="btn btn-primary" (click)="createCreditNote()" />
+        </div>
+        </div>
+        <div class="search-form mb-3">
+
+            <div class="search-item row">
+                <div class="col-md-2">
+                    <label>Status</label>
+                    <select class="form-control" #req (change)="formOnChange(req.value, 'status')">
+                        <option value="">All</option>
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label>CN Type</label>
+                    <select class="form-control" #type (change)="formOnChange(type.value, 'type')">
+                        <option value="">All</option>
+                        <option value="Admin">Order CN</option>
+                        <option value="Claim">Claim Based CN</option>
+                        <option value="Service and Repair">Service and Repair</option>
+
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label>CN Code</label>
+                    <input type="text" #cnCode class="form-control" placeholder="CN Code"
+                        (change)="formOnChange(cnCode.value, 'cnCode')" />
+                </div>
+                <div class="col-md-2">
+                    <label>Source Order Id</label>
+                    <input type="text" #orderId class="form-control"
+                        placeholder="CN Order Id" (change)="formOnChange(orderId.value, 'orderId')" />
+
+                </div>
+                <div class="col-md-2">
+                    <label>Channel Name</label>
+                    <input type="text" #channelName class="form-control"
+                        placeholder="Channel Name" (change)="formOnChange(channelName.value, 'channelName')" />
+
+                </div>
+                <div class="col-md-2">
+                    <label>Amount</label>
+                    <input type="text" #amount class="form-control"
+                        placeholder="Amount" (change)="formOnChange(amount.value, 'amount')" />
+
+                </div>
+                <div class="col-md-2">
+                    <label>Email Id</label>
+                    <input type="text" #email class="form-control"
+                        placeholder="Email Id" (change)="formOnChange(email.value, 'email')" />
+
+                </div>
+                <div class="col-md-2">
+                    <label>Mobile</label>
+                    <input type="text" #mobile class="form-control"
+                        placeholder="Mobile" (change)="formOnChange(mobile.value, 'mobile')" />
+                </div>
+                <div class="col-md-2">
+                    <label>From Date</label>
+                    <input type="date" #createdDate class="form-control"
+                         (change)="formOnChange(createdDate.value, 'createdDate')" />
+                </div>
+                <div class="col-md-2">
+                    <label>To Date</label>
+                    <input type="date" #expiryDate class="form-control"
+                         (change)="formOnChange(expiryDate.value, 'expiryDate')" />
+                </div>
+                <div class="search-buttons col-md-2 d-flex align-items-end">
+                    <button class="btn btn-primary" (click)="searchcancel(1)">Search</button>
+                    <button class="btn btn-primary" (click)="searchcancel(2)">Reset</button>
+    
+                </div>
+            </div>
+    
+        </div>
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped sales-content-table">
+                    <thead>
+                        <tr>
+                            <th>Sr.</th>
+                            <th>Code</th>
+                            <th>Amount(Rs)</th>
+                            <th>Status</th>
+                            <th>Created On</th>
+                            <th>Expiry</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                            <th>Channel</th>
+                            <th>CN Order Id</th>
+                            <th>Applied On</th>
+                            <th>Modified Date</th>
+                            <th  [appHideIfUnauthorized]="'credit-note-tab'" colspan="2" *ngIf="showAction">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let data of cnListArray; let i= index">
+                            <tr>
+                                <td>{{i+1}}</td>
+                                <td>{{data.cnCode}}</td>
+                                <td>{{data.cnAmount}}</td>
+                                <td>{{data.statusA}}</td>
+                                <td>{{data.cnCreatedDate | date:'dd-MM-yyyy'}}</td>
+                                <td>{{data.expiredDate | date:'dd-MM-yyyy'}}</td>
+                                <td>{{data.emailId}}</td>
+                                <td>{{data.mobile}}</td>
+                                <td>{{data.channelName}}</td>
+                                <td>{{data.sourceOrderPrefixId}}</td>
+                                <td>{{data.appliedOrderId}}</td>
+                                <td><span *ngIf="data.modifiedStatus=='NA'">NA</span>
+                                    <span *ngIf="data.modifiedStatus!='NA'">{{data.modifiedStatus | date: 'dd-MM-yyyy, hh:mm:ss aa'}}</span></td>
+                                <td class="text-center"  [appHideIfUnauthorized]="'credit-note-tab'">
+                                    <div class="toggle">
+                                        <input class="tgl tgl-light" type="checkbox" id="{{data.Id}}"
+                                            [(ngModel)]="data.cnStatus" (change)="makeCnActiveInactive($event,data)" />
+                                        <label class="tgl-btn" for="{{data.Id}}"></label>
+                                    </div>
+                                </td>
+                                <td style="text-align: center;cursor: pointer;"  [appHideIfUnauthorized]="'credit-note-tab'">
+                                    <i class="fas fa-edit" (click)="updateCnUpdate($event,data)"></i>
+
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+                <div class="no_data" *ngIf="cnListArray.length==0">
+                    <p>No Record Found</p>
+                </div>
+            </div>
+        </div>
+    
+    <div id="cancelOrderRequestModal" class="modal show pop-show" *ngIf="showUpdatePopup" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update CN</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        (click)="showUpdateCnModal(false)">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Amount</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" #cnAmountForUpdate class="form-control" [(ngModel)]="cnAmount"
+                                        placeholder="CN amount"
+                                        (change)="upDateformOnChange(cnAmountForUpdate.value)" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div *ngIf="formError" class="alert alert-danger">{{formError}}</div>
+                    <button type="button" class="btn btn-primary"
+                        (click)="upDateCnForm()">UPDATE</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

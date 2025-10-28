@@ -1,0 +1,87 @@
+<div class="set-lay-notes flex" style="padding: 0 10px 0 10px;">
+    <h4>Note :</h4>
+    <p>In this section, the admin can add various taxes that will be applicable on various products that will be sold on the eCommerce portal. This will be available for selection to state the applicable tax on the price of the product, while listing the
+        product. </p>
+</div>
+
+<div class="setup-wrapper set-loc-wrapper">
+
+    <div class="setup-container localization-container">
+        <div class="card ap-general ap-info">
+            <div class="flex ap-body">
+                <ngb-tabset style="width:100%;">
+                    <ngb-tab>
+                        <ng-template ngbTabContent style="display: flex !important;">
+
+                            <div class="localize-header flex">
+                                <div class="loc-hdr-lft">
+                                    <!-- <p>Showing <span> 0 - 10 </span> results</p> -->
+                                    <div class="input-group">
+                                        <p>{{'Settings.Local.Resultsperpage' | translate}}</p>
+                                        <div class="select">
+                                            <select [(ngModel)]="pageSize" (change)="taxList()">
+                                                <option value="10">10</option>
+                                                <option value="20">20</option>
+                                                <option value="30">30</option>
+                                                <option *ngIf="pageSize!== '10' && pageSize!== '20' && pageSize!== '30'" value="{{pageSize}}">{{pageSize}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="set-ad-btn" (click)="addTax('','add')" [appHideIfUnauthorized]="'create-tax'"><img
+                                        src="assets/img/add-white-ico.png" alt="add"> {{'Settings.Local.Tax.AddTax' | translate}}
+                                </button>
+                            </div>
+                            <div class="setup-right">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>{{'Settings.Local.Tax.TaxName' | translate}}</th>
+                                                <th>{{'Settings.Local.Tax.Value' | translate}}</th>
+                                                <th>{{'Settings.Local.Emailtemplate.Status' | translate}}</th>
+                                                <th class="text-center" [appHideIfUnauthorized]="" [multipleHide]="['edit-tax','delete-tax']">
+                                                    {{'Settings.Local.Tax.Action' | translate}}
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let taxlist of (sandbox.taxList$|async); let i=index">
+                                                <td>{{taxlist.title}}</td>
+                                                <td>{{taxlist.value}}</td>
+                                                <td>
+                                                    <div *ngIf="taxlist.isActive === 1">
+                                                        {{'Settings.Local.StockStatus.Active' | translate}}
+                                                    </div>
+                                                    <div *ngIf="taxlist.isActive === 0">
+                                                        {{'Settings.Local.StockStatus.InActive' | translate}}
+                                                    </div>
+                                                </td>
+                                                <td class="text-center" [appHideIfUnauthorized]="" [multipleHide]="['edit-tax','delete-tax']">
+                                                    <div class="dropdown" ngbDropdown>
+                                                        <i class="fa fa-ellipsis-v cursor" style="padding:0 15px" ngbDropdownToggle> </i>
+                                                        <div ngbDropdownMenu class="dropdown-menu">
+                                                            <a [appHideIfUnauthorized]="'edit-tax'" class="dropdown-item" ngbDropdownItem href="javascript:void(0)" (click)="addTax(taxlist,'edit')"> <img src="assets/img/edit.png" alt="edit" /> {{'Settings.Local.Edit' | translate}} </a>
+                                                            <a [appHideIfUnauthorized]="'delete-tax'" class="dropdown-item" ngbDropdownItem href="javascript:void(0)" (click)="deleteTax(taxlist.taxId)"> <img src="assets/img/delete-new.png" alt="delete"> {{'Settings.Local.Delete' | translate}} </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <mat-paginator [length]="(sandbox.taxListCount$ | async)?.data" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" (page)="onPageChange($event)">
+                                    </mat-paginator>
+                                </div>
+                            </div>
+
+                        </ng-template>
+                    </ngb-tab>
+                    <!--country-->
+
+                    <!--zone-->
+                </ngb-tabset>
+            </div>
+        </div>
+    </div>
+
+</div>

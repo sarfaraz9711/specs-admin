@@ -1,0 +1,60 @@
+<div class="row products-section products-sub-section">
+
+    <div class="col-12">
+        <div class="flex filter-row">
+            <div class="filter-lft">
+            </div>
+
+            <div class="filter-nav-list">
+                <div class="bc-col-btn">
+                    <button class="btn" (click)="addfacilitySku()" ><img src="assets/img/add-white-ico.png"
+                            alt="add Free Product Promo"> Add Facility 
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row product-wrap">
+   <div class="ml-3">
+    <div class="filter-section border-right ">
+        <div class="w3-container">
+            
+            <!--FILTER-->
+           <app-facility-filter (sendData)="getData($event)"></app-facility-filter>
+        </div>
+    </div> 
+    </div>
+    <!--LIST-->
+    <div class="product-table col-md-9">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Facility Code</th>
+                        <th scope="col">SKU</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col" class="text-center"
+                            >Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let facilitySkuInfo of facilitySkuList; let i = i">
+                        <td>{{facilitySkuInfo.facilityCode}}</td>
+                        <td>{{facilitySkuInfo.sku}}</td>
+                        <td>{{facilitySkuInfo.Quantity}}</td>
+                        <td class="cat-prd-action" width="120px">
+                            <a class="globe_icon" [appHideIfUnauthorized]="'delete-facility'" href="javascript:void(0)"
+                                (click)="deletefacility(facilitySkuInfo.Id)">
+                                <img src="assets/img/delete-new.png" alt="delete">
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="no_data" *ngIf="facilitySkuList.length==0">
+                <p>No Record Found</p>
+            </div>
+        </div>
+        </div>  
+</div>

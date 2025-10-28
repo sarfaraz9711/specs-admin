@@ -1,0 +1,39 @@
+<app-audit-log-header></app-audit-log-header>
+<div class="breadcrumbs-row">
+  <div class="bc-col mar"><ul ><li class="cusror ng-star-inserted"><a href="javascript:void(0)" style="color: gray;"> Configration </a></li>
+<li class="cusror ng-star-inserted"><a href="javascript:void(0)" style="color: gray;"> Order Report </a></li>
+<li class="ng-star-inserted">Export</li></ul></div><div class="bc-col-btn addserv addvend margin"></div></div>
+
+<form class="validateForm" [formGroup]="exportReportForm">
+    <div class="container mt-5">
+<div class="row">
+    <div class="col-md-4">
+        <label>From Date</label>
+        <input type="date" class="form-control" formControlName="fromDate">
+    </div>
+    <div class="col-md-4">
+        <label>To Date</label>
+        <input type="date" class="form-control" formControlName="toDate">
+    </div>
+    <div class="col-md-4">
+        <label>Order Status</label>
+        <select class="form-control" formControlName="orderStatus">
+            <option value="">--Select--</option>
+            <option value="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20">All Status</option>
+            <option value="1">Order Placed</option>
+            <option value="4">Order Shipped</option>
+            <option value="5">Order Delivered</option>
+            <option value="9">Order Cancelled</option>
+            <option value="11">Order Failed</option>
+            <option value="12">Out for Delivery</option>
+        </select>
+    </div>
+    <div class="col-md-12 text-center mt-5">
+        <input type="button" value="Export Data" class="btn btn-primary" [disabled]="exportReportForm.invalid" (click)="exportAsXLSX()">
+    </div>
+</div>
+</div>
+</form>
+
+
+<app-popup-message [popupMessage]="popupMessage"></app-popup-message>

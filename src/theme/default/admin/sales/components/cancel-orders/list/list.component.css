@@ -1,0 +1,54 @@
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+    background-color: #dc4d5b !important;
+    border: #dc4d5b !important;
+}
+
+mat-radio-button {
+    padding-right: 10px !important;
+    margin-top: 6px;
+    width: 50%;
+}
+
+.product-ts-left ul li {
+    width: 50% !important;
+}
+
+.form-group {
+    margin: 0;
+}
+
+.product-wrap .product-table .table .custom-checkbox {
+    top: 0;
+}
+
+.products-section .toggle .tgl:checked+.tgl-btn:after {
+    background-color: #fff !important;
+}
+
+.toggle .tgl-light:checked+.tgl-btn {
+    background-color: #dc4d5b!important;
+}
+
+.export-color {
+    background: #eb9595 !important;
+}
+.search-btn{
+    background-color: #dc4d5b!important;
+    color: #fff;
+    border: #dc4d5b;
+    margin-left: 5px;
+    width: 30%;
+    border-radius: 5px;
+
+}
+.search-item{
+    display: flex;
+    margin-left: 10px;
+}
+.btn{
+    background-color: #dc4d5b!important;
+    color: #fff;
+    border: #dc4d5b;
+    margin-left: 5px;
+    border-radius: 5px;
+}

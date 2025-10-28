@@ -1,0 +1,41 @@
+
+<!-- <app-feedback-layout></app-feedback-layout> -->
+
+<div class="flex product-wrap">
+    <!--Filter-->
+    <div class="product-table" style="width: 100%">
+        <div class="export-row flex subscription-outer-actions">
+            <button class="btn" (click)="exportAsXLSX()">Export as Excel</button>
+        </div>
+        <div class="table-responsive subscription-content-table">
+            <table class="table">
+                <colgroup>
+                <col width="10%"/>
+                <col width="10%"/>
+                <col width="10%"/>
+                <col width="15%"/>
+                <col width="55%"/>
+            </colgroup>
+                <thead>
+                    <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Message</th>
+                
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let contactInfo of contactUsList; let i = i" >
+                        <td>{{contactInfo.name}}</td>
+                        <td>{{contactInfo.email}}</td>
+                        <td>{{contactInfo.phoneNumber}}</td>
+                        <td>{{contactInfo.createdDate | date: 'dd-MM-yyyy, h:mm a'}}</td>
+                        <td>{{contactInfo.message}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- <button (click)="exportAsXLSX()">Export as Excel</button> -->
+        </div>
+    </div>

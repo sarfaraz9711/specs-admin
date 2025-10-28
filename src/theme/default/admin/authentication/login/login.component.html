@@ -1,0 +1,91 @@
+<div class="card-align">
+    <div class="cards">
+        <form (ngSubmit)="onSubmit(loginForm.value)" [formGroup]="loginForm">
+            <div class="admin">{{'Profile.Login.AdminLogin' | translate}}</div>
+            <div class="log-group first">
+                <input type="text" class="form-control placeholder-fix" placeholder="User Name" autofocus="autofocus" formControlName="userName" [ngClass]="{
+            validationcolor:
+              (loginForm.get('userName').hasError('required') &&
+                loginForm.get('userName').touched &&
+                ifSubmitted == true) ||
+              badResponse == true
+          }" />
+                <div class="validation-error" *ngIf="
+            loginForm.get('userName').hasError('required') &&
+            loginForm.get('userName').touched &&
+            ifSubmitted == true
+          ">
+                    {{'Profile.Login.Error.Usernamerequired' | translate}}
+                </div>
+                <div class="validation-error" *ngIf="
+            loginForm.get('userName').hasError('pattern') &&
+            loginForm.get('userName').touched &&
+            ifSubmitted == true
+          ">
+                    {{'Profile.Login.Error.Incorrectemail' | translate}}
+
+                </div>
+            </div>
+            <div class="log-group">
+               <div class="group">
+                <input  [type]="repeatFieldTextType ? 'text' : 'password'"
+                class="form-control"
+                placeholder="Password" formControlName="password" [ngClass]="{
+           validationcolor:
+             (loginForm.get('password').hasError('required') &&
+               loginForm.get('password').touched &&
+               ifSubmitted == true) ||
+             badResponse == true
+         }" (paste)="false" />
+         <div class="eyeicons">
+           <i
+           class="fa"
+           [ngClass]="{
+             'fa-eye-slash': !repeatFieldTextType,
+             'fa-eye': repeatFieldTextType
+           }"
+           (click)="toggleRepeatFieldTextType()"
+         ></i>
+         </div>
+               </div>
+                <div class="validation-error" *ngIf="
+            loginForm.get('password').hasError('required') &&
+            loginForm.get('password').touched &&
+            ifSubmitted == true
+          ">
+
+                    {{'Profile.Login.Error.Passwordrequired' | translate}}
+                </div>
+            </div>
+            <div class="validation-error" *ngIf="badResponse == true">
+
+                {{'Profile.Login.Error.UsernameorPasswordisincorrect' | translate}}
+            </div>
+              <!--captcha code start-->
+              <div class="custom-captcha-container" style="display: flex; flex-direction: column; padding: 0; border: thin solid rgb(200, 221, 255);">
+                <!-- <h1>Captcha</h1> -->
+                <div style="display: flex;">
+                    <div><canvas width="150" height="100" id="myCanvas"></canvas></div>
+                    <div class="ps-login-email-contain">
+                        <span role="img" aria-label="reload" (click)="getCaptcha()" tabindex="-1" class="anticon anticon-reload" style="font-size: 24px; color: rgb(0, 143, 211); margin-top: 10px;">
+                            <svg viewBox="64 64 896 896" focusable="false" data-icon="reload" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+                                <path
+                                    d="M909.1 209.3l-56.4 44.1C775.8 155.1 656.2 92 521.9 92 290 92 102.3 279.5 102 511.5 101.7 743.7 289.8 932 521.9 932c181.3 0 335.8-115 394.6-276.1 1.5-4.2-.7-8.9-4.9-10.3l-56.7-19.5a8 8 0 00-10.1 4.8c-1.8 5-3.8 10-5.9 14.9-17.3 41-42.1 77.8-73.7 109.4A344.77 344.77 0 01655.9 829c-42.3 17.9-87.4 27-133.8 27-46.5 0-91.5-9.1-133.8-27A341.5 341.5 0 01279 755.2a342.16 342.16 0 01-73.7-109.4c-17.9-42.4-27-87.4-27-133.9s9.1-91.5 27-133.9c17.3-41 42.1-77.8 73.7-109.4 31.6-31.6 68.4-56.4 109.3-73.8 42.3-17.9 87.4-27 133.8-27 46.5 0 91.5 9.1 133.8 27a341.5 341.5 0 01109.3 73.8c9.9 9.9 19.2 20.4 27.8 31.4l-60.2 47a8 8 0 003 14.1l175.6 43c5 1.2 9.9-2.6 9.9-7.7l.8-180.9c-.1-6.6-7.8-10.3-13-6.2z"
+                                ></path>
+                            </svg>
+                        </span>
+                        <input type="text" id="user-input" placeholder="Enter captcha" value="" style="width: 120px;"/>
+                    </div>
+                </div>
+            </div>          
+              <!--captcha codeend-->
+            <button class="btn btn-log">{{'Profile.Login.login' | translate}}</button>
+            <div class="forgot" [routerLink]="['/auth/forgot-password']">
+
+                {{'Profile.Login.Error.Cantlogin?' | translate}}
+            </div>
+        </form>
+    </div>
+</div>
+
+

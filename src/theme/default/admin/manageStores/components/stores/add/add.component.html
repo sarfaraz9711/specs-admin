@@ -1,0 +1,169 @@
+<form novalidate  [formGroup]="addStoreForm" id="validateForm">
+    <input  class="form-control" placeholder="City code" formControlName="cityCode" 
+    [ngModel]= "pinCodeData.districtName" />
+    <div class="row products-section" style="margin:unset">
+        <div class="col-12">
+            <div class="breadcrumbs-row noborder">
+                <div class="bc-col">
+                </div>
+                <div class="bc-col-btn ap-col-btn">
+                    <button class="btn btn-save" [disabled]="addStoreForm.invalid" (click)="onSubmits()">
+                        <img src="assets/img/tick-round-white.png" alt="save" />
+                        Save
+                    </button>
+                    <button class="btn btn-cancel" (click)="onCancel()">
+                        <img src="assets/img/close-white-ico.png" alt="cancel" />Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+<div class="flex addproduct-wrap">
+    <div class="card ap-general">
+        <div class="ap-header">
+            General Information
+        </div>
+        <div class="flex ap-body">
+            <div class="ap-body-col">
+                <div class="form-group">
+                    <label>Store Name<sup>*</sup> </label>
+                    <input type="text" class="form-control" placeholder="Store Name" formControlName="shopName"  [ngModel]="storeData.shopName" />
+    
+                </div>
+            </div>
+            <div class="ap-body-col">
+                <div class="form-group">
+                    <label>Owner Name<sup>*</sup> </label>
+                    <input type="text" class="form-control" placeholder="Owner Name" formControlName="firstName"  [ngModel]="storeData.firstName" />
+
+                </div>
+            </div>
+            <div class="ap-body-col">
+                <div class="form-group">
+                    <label>Landline Number<sup>*</sup> </label>
+                    <input type="text" class="form-control" placeholder="Contact Number" formControlName="contactNo"   [ngModel]="storeData.contactNo" />
+
+                </div>
+            </div>
+
+            <div class="ap-body-col">
+                <div class="form-group">
+                    <label>Email </label>
+                    <input type="text" class="form-control" placeholder="Email" formControlName="emailId"  [ngModel]="storeData.emailId"  />
+
+                </div>
+            </div>
+
+            <div class="ap-body-col">
+                <div class="form-group">
+                    <label>Status<sup>*</sup> </label>
+                    <!-- <ng-select placeholder="Status" formControlName="status" >
+                        <ng-option [value]="1">Active</ng-option>
+                        <ng-option [value]="0">Disable</ng-option>
+                    </ng-select> -->
+                    <select class="form form-control" placeholder="Status" formControlName="active" [ngModel]="storeData.active" >
+                        <option value="">-Select-</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+
+                </div>
+            </div>
+            <div class="ap-body-col">
+                <div class="form-group">
+                    <label>Mobile Number<sup>*</sup> </label>
+                    <input type="number" onKeyPress="if(this.value.length==10) return false" class="form-control" placeholder="Mobile Number" formControlName="mobileNo"   [ngModel]="storeData.mobileNo" />
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<div class="flex addproduct-wrap">
+    <div class="card ap-general">
+        <div class="ap-header">
+            Store Location Information
+        </div>
+        <div class="flex ap-body">
+            
+            <div class="ap-body-col">
+                <div class="form-group">
+                    <label>Store Address<sup>*</sup> </label>
+                    <input type="text" class="form-control" placeholder="Store Address" formControlName="address" [ngModel]="storeData.address" />
+
+                </div>
+            </div>
+            <div class="ap-body-col">
+                <div class="form-group">
+                    <label>Pin Code<sup>*</sup> </label>
+                    <input type="number" onKeyPress="if(this.value.length==6) return false" class="form-control" placeholder="Pin code" #pincode formControlName="pincode" 
+                    [ngModel]="storeData.pincode"  />
+
+                </div>
+            </div>
+          
+            <div class="ap-body-col">
+                <div class="form-group">
+                    <label>City<sup>*</sup> </label>
+                    <input type="text" class="form-control" placeholder="Store City" formControlName="storeCity" 
+                    [ngModel]= "pinCodeData.cityName"
+                    />
+                    
+                </div>
+            </div>
+            <div class="ap-body-col">
+                <div class="form-group">
+                    <label>State<sup>*</sup> </label>
+                    <!-- <input type="text" class="form-control" placeholder="State" formControlName="storeState" [ngModel]= "pinCodeData.stateName" /> -->
+                    <select class="form-control" [ngModel]= "storeData.storeState" formControlName="storeState">
+                        <option value="">--Select--</option>
+                        <option *ngFor="let s of statelistData" value={{s.name}}>{{s.name}}</option>
+                    </select>
+                 
+                </div>
+            </div>
+
+            <div class="ap-body-col">
+                <div class="form-group">
+                    <label>Latitude </label>
+                    <input type="text" class="form-control" placeholder="Latitude" formControlName="latitude" [ngModel]="storeData.latitude" />
+
+                </div>
+            </div>
+
+            <div class="ap-body-col">
+                <div class="form-group">
+                    <label>Longitude </label>
+                    <input type="text" class="form-control" placeholder="Longitude" formControlName="longitude" [ngModel]="storeData.longitude" />
+
+                </div>
+            </div>
+            <div class="ap-body-col">
+                <div class="form-group">
+                    <label>Store Code </label>
+                    <input type="text" class="form-control" placeholder="Store Code" formControlName="storeCode" [ngModel]="storeData.storeCode" />
+
+                </div>
+            </div>
+            <div class="ap-body-col">
+                <div class="form-group">
+                    <label>Date of Opening </label>
+                    <input type="date" class="form-control date1" placeholder="Date of Opening" formControlName="storeOpeningDate" [ngModel]="storeData.storeOpeningDate" />
+
+                </div>
+            </div>
+            <div class="ap-body-col">
+                <div class="form-group">
+                    <label>Google Location </label>
+                    <input type="text" class="form-control" placeholder="Google Location" formControlName="googleLocation" [ngModel]="storeData.googleLocation" />
+
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+</form>

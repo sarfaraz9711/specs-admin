@@ -1,0 +1,77 @@
+<app-cms-header></app-cms-header>
+<form class="container-fluid bdr-btm mt-5" [formGroup]="brandNameForm" id="validateForm">
+    <div class="row" [style.background-color]="'#eee'">
+        <input type="hidden" formControlName="id" [(ngModel)]="editData.id" />
+        <div class="col-md-4">
+            <label>Type<sup>*</sup></label> 
+            <select class="form-control" formControlName="type" #type [(ngModel)]="editData.type" (click)="selectType(type.value)">
+                <option value="">--Select--</option>
+                    <option value="Category Image">Category Image</option>
+                    <option value="Product Flash Image">Product Flash Image</option>
+            </select>
+        </div>     
+        <div class="col-md-4">
+            <label>Category<sup>*</sup></label> 
+            <select [ngClass]="{'d-none':formEdit}" class="form-control" formControlName="mainCategoryId"  [(ngModel)]="editData.mainCategoryId" #cat (click)="setCategory(cat.value)">
+                <option value="">--Select--</option>
+                <option *ngIf="!hideDescription" value="ALL">All Category Product</option>
+                <ng-container *ngFor="let c of allCategoryList">
+                    <option *ngIf="c.categoryId==15 || c.categoryId==17 || c.categoryId==38 || c.categoryId==51" [value]="c.categoryId">{{c.name}}</option>
+                </ng-container>
+            </select>
+            <input type="text" readonly [ngClass]="{'d-none':!formEdit}" class="form-control" formControlName="categoryName" [(ngModel)]="editData.categoryName"/>
+        </div>
+        <div class="col-md-4" [ngClass]="{'d-none':!childCategory}">
+            <label>Sub Category<sup>*</sup></label> 
+            <select class="form-control" formControlName="categoryId" #subCat (click)="setSubCategory(subCat.value)" [(ngModel)]="editData.categoryId">
+                <option value="">--Select--</option>
+                <option value="ALL">{{childName}}</option>
+                <ng-container *ngFor="let c of childCategoryData">
+                    <option [value]="c.categoryId">{{c.name}}</option>
+                </ng-container>
+            </select>
+        </div>        
+        <div class="col-md-4">
+            <label>Image<sup>*</sup></label>
+            <div *ngIf="editData.imagePath && !uploadNewImage" class="editimage"><span (click)="clickClose()" class="crossimage">X</span>{{editData.imagePath?editData.imagePath:"Image Name"}}</div>
+            <div *ngIf="!editData.imagePath && uploadNewImage" class="categoryimage">Image Name</div>
+            <div>
+
+                <input type="file" 
+                    class="form-control" (change)="uploadFile($event)">
+                <input type="hidden" class="form-control" formControlName="imagePath"
+                    [(ngModel)]="editData.imagePath">
+
+
+
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <label>Status<sup>*</sup></label> 
+            <select class="form-control" formControlName="isActive" [(ngModel)]="editData.isActive">
+                <option value="">--Select--</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+            </select>
+        </div>  
+
+        <div class="col-md-12"  [ngClass]="{'d-none':!hideDescription}">
+            <label>Description<sup>*</sup></label>
+            <ckeditor [config]="config" formControlName="description"  [(ngModel)]="editData.description">
+            </ckeditor>
+        </div>
+       
+    <div class="col-md-12 mt-3">
+        <div class="text-center">
+            <input type="button" value="Submit" class="btn" (click)="formSubmit()">
+
+        </div>
+
+    </div>
+    </div>
+
+
+
+</form>
+<app-popup-message [popupMessage]="popupMessage"></app-popup-message>

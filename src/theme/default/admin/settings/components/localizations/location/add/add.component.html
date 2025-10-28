@@ -1,0 +1,44 @@
+<div style="margin: 0 !important; border-bottom: 1px solid #B1B1B5;" class="flex setting2-inner-header">
+    <h3 style="font-weight: 700;">{{updatetitle ? 'Update Location' : 'Add Location' | translate}}</h3>
+    <div class="close">
+        <button (click)="close()" class="bton">x</button>
+    </div>
+</div>
+<div class="settings-right-wrapper addnewuser">
+
+    <div class="new-user">
+        <form (ngSubmit)="onSubmit()" [formGroup]="locationForm" class="form-horizontal m-t-20">
+            <div class="row">
+                <div class="col-lg-6 col-xs-12">
+                    <div class="form-group">
+                        <label>{{'Settings.Local.Location.LocationName' | translate}}<sup class="supvalidation">*</sup></label>
+                        <input type="text" formControlName="locationname" placeholder="{{'Settings.Local.Location.LocationName' | translate}}" [ngClass]="{ 'is-invalid': submitted && f.locationname.errors }" class="form-control" />
+                        <div *ngIf="submitted && f.locationname.errors" class="invalid-feedback">
+                            <div *ngIf="f.locationname.errors.required" style="font-size: 12px;">{{'Settings.Local.Location.Error.LocationNameisrequired' | translate}}</div>
+                            <div *ngIf="locationForm.controls['locationname'].hasError('pattern')">{{'Settings.Local.Location.Error.MustbeCharacters' | translate}}</div>
+                            <div *ngIf="f.locationname.errors.maxlength" style="font-size: 12px;">{{'Settings.SiteSettings.Errors.Mustbemaximum255characterslong' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xs-12">
+                    <div class="form-group">
+                        <label>{{'Settings.Local.Location.PinCode' | translate}}<sup class="supvalidation">*</sup></label>
+                        <input type="text" formControlName="locationcode" placeholder="{{'Settings.Local.Location.PinCode' | translate}}" [ngClass]="{ 'is-invalid': submitted && f.locationcode.errors }" class="form-control" class="form-control">
+                        <div *ngIf="submitted && f.locationcode.errors" class="invalid-feedback">
+                            <div *ngIf="f.locationcode.errors.required" style="font-size: 12px;">{{'Settings.Local.Location.Error.Pincodeisrequired' | translate}}</div>
+                            <div *ngIf="locationForm.controls['locationcode'].hasError('minlength')">{{'Settings.Local.Location.Error.Mustbeatleast4numbers' | translate}}</div>
+                            <div *ngIf="locationForm.controls['locationcode'].hasError('maxlength')">{{'Settings.Local.Location.Error.Mustbemax6numbers' | translate}}</div>
+                            <div *ngIf="locationForm.controls['locationcode'].hasError('pattern')">{{'Settings.Local.Location.Error.Mustbenumbers' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12" style="margin-top: 90px;">
+                    <div class="flex user-btn">
+                        <button type="submit" class="btn btn-add set-ad-btn">{{'Settings.Local.Save' | translate}}</button>
+                        <!-- <button (click)="close()" class="btn btn-cancel"> {{'Settings.Local.Location.Cancel' | translate}}</button> -->
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

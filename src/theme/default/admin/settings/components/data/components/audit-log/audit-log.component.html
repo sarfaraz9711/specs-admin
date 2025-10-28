@@ -1,0 +1,102 @@
+<div class="set-lay-notes flex" style="padding: 0 10px 10px 10px;">
+    <h4>Note :</h4>
+    <p>In this section, the admin will have the track of all the admin activities – when a particular admin user accessed, which module they accessed and made any changes in the module, along with the date and the time log. An option for selection of dates
+        is provided to delete the logs between a certain period. </p>
+</div>
+
+<div class="setup-wrapper set-loc-wrapper">
+
+    <div class="setup-container localization-container">
+        <div class="card ap-general ap-info">
+            <form [formGroup]="auditLogForm">
+                <div class="flex ap-body">
+
+                    <div class="form-group" style="margin-right: 20px;">
+                        <label class="hd">{{'Settings.data.DateFrom' | translate}}</label>
+
+                        <input readonly style="cursor: pointer;background-color: white;width:100%;margin-bottom: 21px;" type="text" class="form-control date1" formControlName="fromDate" name="dp" id="cal-in" ngbDatepicker #d="ngbDatepicker" [maxDate]="todayDate" (click)="d.toggle()"
+                        />
+                        <div *ngIf="!(auditLogForm.value.fromDate || auditLogForm.value.toDate) && submitted === true" style="color: red;">
+                            Please Choose Atleast one date
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="hd">{{'Settings.data.DateTo' | translate}}</label>
+
+                        <input readonly style="cursor: pointer;background-color: white;width:100%;margin-bottom: 21px;" type="text" class="form-control date1" formControlName="toDate" name="dp" id="cal-in" ngbDatepicker ngbDatepicker #e="ngbDatepicker" [minDate]="auditLogForm.value.fromDate"
+                            (click)="e.toggle()" />
+                    </div>
+
+                    <div class="form-group">
+                        <button (click)="deleteDate()" class="btn button" style="margin-top: 30px;">
+                            {{'Settings.Local.Delete' | translate}}
+                        </button>
+                    </div>
+
+                    <!--Filter-->
+                    <div class="settings-right-wrapper">
+                        <div class="localize-header flex">
+                            <div class="loc-hdr-lft">
+                                <!-- <p>Showing <span> 0 - 10 </span> results</p> -->
+                                <div class="input-group">
+                                    <p>{{'Settings.Local.Resultsperpage' | translate}}</p>
+                                    <div class="select">
+                                        <select [(ngModel)]="pageSize" [ngModelOptions]="{standalone: true}" (change)="pageLength()">
+                                        <option *ngIf="pageSize!== '10' && pageSize!== '20' && pageSize!== '30'"
+                                            value="{{pageSize}}">{{pageSize}}</option>
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                    </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="setup-right">
+                            <div class="table-responsive">
+                                <table class="table" *ngIf="(sandbox.auditLogList$ | async)?.length > 0">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" placement="left" title="The User name of the User that performed a particular action.">
+                                                {{'Settings.data.User' | translate}}
+                                            </th>
+                                            <th scope="col" placement="left" title="The module in which the action was performed." style="text-align:left;">
+                                                {{'Settings.data.Module' | translate}}</th>
+                                            <th scope="col" placement="left" title="A description of the action performed.">
+                                                {{'Settings.data.Description' | translate}}</th>
+                                            <th scope="col" placement="left" title="The date and time at which the action was performed.">
+                                                {{'Settings.data.Date' | translate}}</th>
+                                            <th scope="col" placement="bottom" title="The details of the browser in which the action was performed." style="width: 20%;" style="text-align: center">
+                                                {{'Settings.data.Browser' | translate}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let array of sellerArray">
+                                            <td class="name" style="text-align:left; width: 20%;">{{ array.userName }}</td>
+                                            <td style="text-align:left; width: 20%;">{{array.module}}</td>
+                                            <td>{{array.description}}</td>
+                                            <td>{{array.createdDate | date:'dd/MM/yyyy hh:mm a'}}</td>
+                                            <td>{{array.browserInfo.browser}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="no_data" *ngIf="(sandbox.auditLogList$ | async)?.length == 0">
+                                    <p>{{'Settings.data.DataNotFound' | translate}}</p>
+                                </div>
+                                <mat-paginator #paginator [length]="(sandbox.auditLogListCount$|async)" [pageSize]="pageSize" [pageIndex]="index" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" (page)="onPageChange($event)">
+                                </mat-paginator>
+                                <!-- </div> -->
+                                <!-- </div> -->
+
+
+                            </div>
+                        </div>
+                        <!--Table-->
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

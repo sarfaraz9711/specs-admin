@@ -1,0 +1,29 @@
+// Image list
+.image-list {
+    width: 46px;
+    height: 39px;
+}
+
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+    background-color: #ed571f !important;
+    border: #ed571f !important;
+}
+
+th,
+td {
+   
+}
+.settings-right-wrapper {
+    display: block;
+    margin-left: 0px !important; 
+    background: white;
+    padding: 15px 30px 100px;
+    margin-top: 0;
+    padding-bottom: 0;
+}
+.setting2-inner-header {
+    justify-content: space-between;
+    margin-bottom: 15px;
+    margin-left: 0px !important; 
+    padding: 8px;
+  }

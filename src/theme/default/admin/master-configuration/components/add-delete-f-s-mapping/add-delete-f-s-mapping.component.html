@@ -1,0 +1,50 @@
+<form [formGroup]="user">
+    <div class="row products-section" style="margin:unset">
+        <div class="col-12">
+            <div class="breadcrumbs-row noborder">
+                <div class="bc-col">
+                </div>
+                <div class="bc-col-btn ap-col-btn">
+                    <button class="btn btn-save" (click)="onSubmits()">
+                        <img src="assets/img/tick-round-white.png" alt="save" />
+                        Save
+                    </button>
+                    <button class="btn btn-cancel" (click)="onCancel()">
+                        <img src="assets/img/close-white-ico.png" alt="cancel" />
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex addproduct-wrap">
+        <div class="card ap-general">
+            <div class="ap-header">
+                General Information
+            </div>
+            <div class="flex ap-body">
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Facility Code<sup>*</sup> </label>
+                        <input type="text" class="form-control" placeholder="facility name" formControlName="facilityCode" />
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>SKU Name<sup>*</sup> </label>
+                        <input type="text" class="form-control" placeholder="sku name" formControlName="sku" />
+                    </div>
+                </div>
+
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Quantity<sup>*</sup> </label>
+                        <input type="number" class="form-control" placeholder="quantity" formControlName="quantity" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,46 @@
+<app-cms-header></app-cms-header>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 d-flex justify-content-between mt-4">
+            <h3>List of Active</h3>
+            <div class="bc-col-btn d-none">
+                <button class="btn cms-btn" (click)="addPage()" [appHideIfUnauthorized]="'create-pages'"><img
+                        src="assets/img/add-white-ico.png" alt="add"> Add category Image
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped cms-content-table">
+            <thead>
+                <tr>
+                    <!-- <th>Title</th> -->
+                    <th>Image</th>
+                    <th>Images for</th>
+                    <th>Link</th>
+                    <th>Status</th>
+                    <th class="text-center" scope="col" width="100px" [appHideIfUnauthorized]="'make-status'" >Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of getCategoryData">
+                    <!-- <td>{{data.title}}</td> -->
+                    <td><img *ngIf="data.imagePath" [src]="imageUrl + '?path=&name=' + data.imagePath + '&width=100&height=60'" onError="this.src='/assets/error-images/Load-icon-Products.png';" 
+                                [alt]='ddddddddddddddd'></td>
+                    <td>{{data.showOn}}</td>
+                    <td class="wordbreak">{{data.link}}</td>
+                    <td class="text-center" [appHideIfUnauthorized]="'make-status'">
+                        <div class="toggle">
+                            <input class="tgl tgl-light" type="checkbox" id="{{data.Id}}" [(ngModel)]="data.status" (change)="makeActiveInactive($event,data)" />
+                            <label class="tgl-btn" for="{{data.Id}}"></label>
+                        </div>
+                    </td>
+                    <td style="text-align: center;cursor: pointer;">
+                        <i class="fas fa-edit" (click)="updateBannerStatus($event,data)"></i>
+                        
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

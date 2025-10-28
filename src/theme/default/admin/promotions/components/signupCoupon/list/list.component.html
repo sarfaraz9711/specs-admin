@@ -1,0 +1,95 @@
+<div class="row products-section products-sub-section">
+
+    <div class="col-12">
+        <div class="flex filter-row">
+            <div class="filter-lft">
+                
+            </div>
+
+            <div class="filter-nav-list promos-outer-actions">
+                <div class="bc-col-btn">
+                    
+                    <button class="btn" (click)="exportData()" ><img src="assets/img/add-white-ico.png"
+                        alt="add Free Product Promo"> Export Data
+                </button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <div class="search-form mb-3">
+
+        <div class="search-item row">
+            <div class="col-md-2">
+                <label>Redeemed</label>
+                <select class="form-control" #req (change)="formOnChange(req.value, 'status')">
+                    <option value="">All</option>
+                    <option value="1">YES</option>
+                    <option value="0">NO</option>
+
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label>Code</label>
+                <input type="text" #cnCode class="form-control" formControlName="cnCode" placeholder="Code"
+                    (change)="formOnChange(cnCode.value, 'cnCode')" />
+            </div>
+            <div class="col-md-4">
+                <label>Email</label>
+                <input type="text" #emailField class="form-control" formControlName="searchField"
+                    placeholder="Email" (change)="formOnChange(emailField.value, 'Email')" />
+
+            </div>
+            <div class="col-md-2  d-none">
+                <label>From</label>
+                <input type="date" #fromField class="form-control" formControlName="searchField2"
+                    placeholder="CN Order Id" (change)="formOnChange(fromField.value, 'fromField')" />
+            </div>
+            <div class="col-md-2  d-none">
+                <label>To</label>
+                <input type="date" #toField class="form-control" formControlName="searchField1"
+                    placeholder="CN Order Id" (change)="formOnChange(toField.value, 'toField')" />
+            </div>
+            <div class="search-buttons col-md-2 d-flex align-items-end">
+                <button class="btn btn-primary" (click)="searchcancel(1)">search</button>
+                <button class="btn btn-primary" (click)="searchcancel(2)">Reset</button>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="flex product-wrap">
+    <!--Filter-->
+    <div class="product-table" style="width: 100%">
+        <div class="table-responsive promo-content-table">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Coupon code</th>
+                        
+                        <th scope="col">Coupon type</th>
+                        <th scope="col">Counpon Value</th>
+                        <th scope="col">Redeemed</th>
+                        <th scope="col">Customer</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let promoInfo of promotionsList; let i = i">
+                        <td width="10%">{{promoInfo.couponCode}}</td>
+                        
+                        <td width="20%">{{promoInfo.couponType}}</td>
+                        <td width="10%">{{promoInfo.couponValue}}</td>
+                        <td width="5%">{{promoInfo.couponReedemed}}</td>
+                        <td>{{ promoInfo.customer}}</td>
+                        <td>{{promoInfo.startDate | date: 'dd-MM-yyyy, h:mm a'}}</td>
+                        <td>{{promoInfo.endDate  | date: 'dd-MM-yyyy, h:mm a'}}</td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

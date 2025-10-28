@@ -1,0 +1,58 @@
+
+<form class="container-fluid bdr mt-5" [formGroup]="brandNameForm" id="validateForm">
+        <div class="ml-2 bc-col-btn mb-2">
+            <input type="button" value="Export Data" class="btn" (click)="exportAsXLSX()">
+        </div>
+    <div class="row">
+        <div class="col-md-12 product-update-box">
+    <h5>For Product Update</h5>        
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <input type="file" id="fileUpload" class="form-control" (change)="onUpload($event, 1)">
+        </div>
+        <div class="col-md-6">
+            <a href="assets/demo/productDataUpload.csv" class="ripple flex bluk-upload" download> <img src="assets/img/download-white.svg" alt="download"> {{'catalog.product.Download Zip File'| translate}}</a>
+        </div>
+    </div> 
+ 
+            <div class="all-btn flex justify-content-center">
+                <button type="submit" class="btn btn-primary" (click)="uploadSuccess(1)">
+                    <span>{{'Upload'| translate}}</span></button>
+                    <button class="btn btn-danger" (click)="reset()">{{'Reset'| translate}}</button>
+
+            </div>
+            <div class="d-flex mb-5" *ngIf="showResultDiv">
+                <button class="btn btn-success" (click)="downloadCorrectionFile('update-product-logs.txt')">Download the file for Sucess/Error Record</button>
+        </div>
+        </div>
+    </div>
+</form> 
+
+
+<form class="container-fluid bdr mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-12 product-update-box">
+    <h5>For Product Media Add/Update</h5>        
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <input type="file" id="fileUpload1" class="form-control" (change)="onUpload($event, 2)">
+        </div>
+        <div class="col-md-6">
+            <a href="assets/demo/productImagesUpload.csv" class="ripple flex bluk-upload" download> <img src="assets/img/download-white.svg" alt="download"> {{'catalog.product.Download Zip File'| translate}}</a>
+        </div>
+    </div> 
+ 
+            <div class="all-btn flex justify-content-center">
+                <button type="submit" class="btn btn-primary" (click)="uploadSuccess(2)">
+                    <span>{{'Upload'| translate}}</span></button>
+                    <button class="btn btn-danger" (click)="reset()">{{'Reset'| translate}}</button>
+
+            </div>
+            <div class="d-flex mb-5" *ngIf="showResultDivImage">
+                <button class="btn btn-success" (click)="downloadCorrectionFile('update-product-images-logs.txt')">Download the file for Sucess/Error Record</button>
+        </div>
+        </div>
+    </div>
+</form> 
+<app-popup-message [popupMessage]="popupMessage"></app-popup-message>
+

@@ -1,0 +1,14 @@
+<div class="settings-wrapper flex">
+    <div class="settings-aside">
+        <h3>{{'Settings.nav.settings' | translate}}</h3>
+        <a href="javascript:Void(0)" [routerLink]="['/settings/generalsetting']" routerLinkActive="active"> <span class="general"></span> {{'Settings.nav.General' | translate}}</a>
+        <a href="javascript:Void(0)" [routerLink]="['/settings/local']" routerLinkActive="active" class=""> <span class="localization"></span> {{'Settings.nav.Localization' | translate}}</a>
+        <a href="javascript:Void(0)" [routerLink]="['/settings/access-and-permission']" routerLinkActive="active"> <span class="permission"></span> {{'Settings.nav.Accessandpermission' | translate}}</a>
+        <a href="javascript:Void(0)" [routerLink]="['/settings/sitesettings']" routerLinkActive="active" class=""> <span class="system"></span> {{'Settings.nav.System' | translate}}</a>
+        <a href="javascript:Void(0)" [routerLink]="['/settings/data']" routerLinkActive="active"> <span class="data"></span> {{'Settings.nav.Data' | translate}} </a>
+        <a href="javascript:Void(0)" [routerLink]="['/settings/personalize']" routerLinkActive="active" class=""> <span class="personalize"></span> {{'Settings.nav.Personalize' | translate}}</a>
+        <!-- <a href="javascript:Void(0)"> <span class="policy"></span> Policy </a> -->
+        <a href="javascript:Void(0)" [routerLink]="['/settings/site-settings']" routerLinkActive="active" routerLinkActive="active"> <span class="sitesettings"></span> {{'Settings.nav.SiteSettings' | translate}} </a>
+    </div>
+    <router-outlet></router-outlet>
+</div>

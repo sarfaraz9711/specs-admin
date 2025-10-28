@@ -1,0 +1,61 @@
+<div class="row products-section products-sub-section">
+
+    <div class="col-12">
+        <div class="flex filter-row">
+            <div class="filter-lft">
+            </div>
+
+            <div class="filter-nav-list promos-outer-actions">
+                <div class="bc-col-btn">
+                    <button class="btn" (click)="addcartvalues()"><img src="assets/img/add-white-ico.png"
+                            alt="add-cart-values"> Cart Value
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="flex product-wrap">
+    <!--Filter-->
+    <div class="product-table" style="width: 100%">
+        <div class="table-responsive promo-content-table">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Discount Type</th>
+                        <th scope="col">Discount Value</th>
+                        <th scope="col">Minimum Cart Value</th>
+                        <th scope="col">Maximum Cart Value</th>
+                        <th scope="col">Free Product</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                        <th scope="col">Start Time</th>
+                        <th scope="col">End Time</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let cartValueInfo of cartValuePromosList; let i = i">
+                        <td>{{cartValueInfo.discountType}}</td>
+                        <td>{{cartValueInfo.discountValue? cartValueInfo.discountValue: "NA"}}</td>
+                        <td>{{cartValueInfo.cartValue}}</td>
+                        <td>{{cartValueInfo.maxCartValue}}</td>
+                        <td>{{cartValueInfo.freeProduct?cartValueInfo.freeProduct:"NA"}}</td>
+                        <td>{{cartValueInfo.isActive == 1? "Enabled": "Disabled" }}</td>
+                        <td>{{cartValueInfo.startDate | date: 'dd-MM-yyyy, h:mm a'}}</td>
+                        <td>{{cartValueInfo.endDate | date: 'dd-MM-yyyy, h:mm a'}}</td>
+                        <td>{{cartValueInfo.startTime}}</td>
+                        <td>{{cartValueInfo.endTime}}</td>
+                        <td class="cat-prd-action" width="120px">
+                            <!-- <a class="globe_icon" [routerLink]="['/promotions/edit', cartValueInfo.Id]">
+                                <img src="assets/img/edit.png" alt="edit" />
+                            </a> -->
+                            <input type="button" class="btn btn-danger btn-sm" value="Delete" (click)="deletePromotion(cartValueInfo.Id)">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

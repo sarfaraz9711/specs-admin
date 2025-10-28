@@ -1,0 +1,65 @@
+<form novalidate [formGroup]="user">
+    <div class="row products-section" style="margin:unset">
+        <div class="col-12">
+            <div class="breadcrumbs-row noborder">
+                <div class="bc-col">
+                </div>
+                <div class="bc-col-btn ap-col-btn">
+                    <button class="btn btn-save" (click)="onUpload(caption.value)" #caption>
+                        <img src="assets/img/tick-round-white.png" alt="save" />
+                        Save
+                    </button>
+                    <button class="btn btn-cancel">
+                        <img src="assets/img/close-white-ico.png" alt="cancel" />Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!--Breadcrumbs-->
+    </div>
+
+
+    <div class="flex addproduct-wrap">
+        <div class="card ap-general">
+            <div class="ap-header download-file">
+                General Information
+                <div>
+                <a href="assets/default-download/tat-matrix.csv"  class="ripple flex"> Download CSV</a>
+            </div>
+            </div>
+            <div class="flex ap-body">
+                <div class="ap-body-col">
+                    <div class="form-group" style="display: grid;">
+                        <!-- <label>Delivery TAT<sup>*</sup> </label> -->
+                        <!-- <select>
+                            <option>Please Select</option>
+                            <option>Delhivery TAT</option>
+                            <option>ECOM TAT</option>
+                        </select> -->
+                        <div class="ap-body-col">
+                            <div class="form-group">
+                                <label>Delivery TAT<sup>*</sup> </label>
+                                <ng-select placeholder="deliveryTat" formControlName="tat">
+                                    <ng-option  >Delhivery TAT</ng-option>
+                                    <ng-option>ECOM TAT</ng-option>
+                                </ng-select>
+        
+                            </div>
+                        </div>
+                        <div class="csv-upload flex">
+                                <div class="browse-upload">
+                                <div class="bu-box flex cursor">
+                                    <a>Upload File</a>
+                                    <input class="cursor" type="file" id="file" (change)="handleChange($event)"
+                                    #fileUpload>
+                                    
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

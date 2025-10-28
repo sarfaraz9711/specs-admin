@@ -1,0 +1,36 @@
+<div class="flex main-header">
+    <h3>Permission Status</h3>
+    <div class="form-group">
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="checkbox22" [(ngModel)]="selectAllPermission" (change)="selectAll($event.target.checked)" />
+            <label class="custom-control-label cursor-pointer" for="checkbox22"> Select All </label>
+        </div>
+    </div>
+</div>
+
+
+<div class="permission-wrap">
+
+    <span class="user" *ngIf="type === 'user'">USER - <b>{{detail?.name | uppercase}}</b></span>
+    <span class="user-role">ROLE - <b>{{detail?.role | uppercase}}</b></span>
+
+
+
+    <div class="pw-row" *ngIf="(sandbox.permissionListLoaded$ | async) && (sandbox.permissionLoaded$ | async)">
+        <div *ngFor="let main of sandbox.getPermissionsList$ | async">
+            <h3>{{main?.name}}</h3>
+            <div class="form-group pw-row-full flex">
+                <div class="custom-control custom-checkbox" *ngFor="let sub of main?.permissionModule">
+                    <input type="checkbox" class="custom-control-input" [value]="sub.moduleId" [(ngModel)]="sub.selected" [checked]="sub.selected" (change)="statusChange()" id="{{sub.moduleId}}" />
+                    <label class="custom-control-label cursor-pointer" for="{{sub.moduleId}}"> {{sub?.name}} </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="flex srbtn">
+                <button class="cancel" (click)="cancel()"> Cancel </button>
+                <button type="submit" (click)="save()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

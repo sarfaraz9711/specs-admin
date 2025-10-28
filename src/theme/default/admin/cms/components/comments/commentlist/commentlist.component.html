@@ -1,0 +1,28 @@
+<app-cms-header></app-cms-header>
+<div class="col-12">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped cms-content-table">
+            <thead>
+                <tr>
+                    <th width=150px>Comment</th>
+                    <th width=100px>Create Date</th>
+                    <th width=100px>Status</th>
+                    <th width=100px>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of getCategoryData">
+                    <td>{{data.comment}}</td>
+                    <td class="wordbreak">{{data.createdDate | date: 'dd-MM-yyyy'}}</td>
+                    <td class="wordbreak">{{data.is_active == 1?"Active":"Inactive"}}</td>
+                    <td style="text-align: center;cursor: pointer;" class="bc-col-btn" *ngIf="data.is_active == 0">
+                        <button class="btn cms-btn" (click)="updateBannerStatus(data.id)"> Approve</button>
+                        <!-- <i class="fas fa-edit" (click)="updateBannerStatus(data.id)"></i> -->
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

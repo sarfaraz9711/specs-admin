@@ -1,0 +1,26 @@
+.adddiscount{
+    width: auto;
+    text-align: end;
+    margin: 10px;
+}
+.deletebtn{
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+.tooltip-text {
+    visibility: hidden;
+    position: relative;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    background-color: #000;
+    color: #fff;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 12px;
+    transition: visibility 0.3s;
+  }
+  
+  .tooltip-text.show {
+    visibility: visible;
+  }

@@ -1,0 +1,98 @@
+<div class="row products-section vendor-section">
+
+
+    <div class="flex filter-row">
+        <div class="filter-lft">
+            <div class="toggle">
+                <p>{{'Sales.Orders.Filters'| translate}}</p>
+                <input class="tgl tgl-light" id="cb1" type="checkbox" [checked]="true" (change)="check($event)" />
+                <label class="tgl-btn" for="cb1"></label>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+<div class="flex product-wrap">
+    <div class="filter-details" *ngIf="filterEnable">
+        <form (ngSubmit)="onSubmit()" [formGroup]="backorderForm" class="filter-form">
+            <div class="form-group">
+                <label for="firstName">{{'Sales.Orders.Keyword'| translate}}</label>
+                <input type="text" type="text" class="form-control" formControlName="name" placeholder="Keyword" />
+            </div>
+            <div class="text-right filter-btns">
+                <a href="javascript:void(0)" (click)="reset()">{{'Sales.Orders.Reset'| translate}}</a>
+                <button type="submit" class="btn" style="background-color:#dc4d5b">
+              {{'Sales.Orders.ApplyFilters'| translate}}
+            </button>
+            </div>
+        </form>
+    </div>
+    <!--Filter-->
+    <div class="product-table " [ngClass]="{ 'expand-list': !buttonActive }">
+        <div class="table-responsive">
+            <table class="table" id="myTable">
+                <thead>
+                    <tr>
+                        <th scope="col" width="5%">
+                        </th>
+
+                        <th scope="col" width="35%">{{'Sales.Orders.OrderId'| translate}}</th>
+                        <th scope="col" style="text-align:justify; ">{{'Sales.Orders.CustomerName'| translate}}</th>
+                        <th scope="col" style="text-align:justify; ">{{'Sales.Orders.TotalAmount'| translate}}</th>
+                        <th scope="col" style="text-align:center; ">{{'Sales.Orders.OrderCreated'| translate}}</th>
+                    </tr>
+                </thead>
+                <tbody class="panel">
+                    <ng-container *ngFor="let list of sandbox.backorderList$ | async;let i = index">
+                        <tr>
+                            <th scope="row">
+
+                            </th>
+
+                            <td class="vendid vname name" width="35%" style=" position: relative;">
+                                <span style="cursor:pointer;" (click)="list.isCollapsed = !list.isCollapsed">{{list.orderProductPrefixId}}</span>
+                                <a style="cursor:pointer;" (click)="list.isCollapsed = !list.isCollapsed" href="javascript:void(0)" class="lst-xpnd" [attr.aria-expanded]="!list.isCollapsed" [attr.aria-controls]="'demo-' + (i + 1)">
+                                    <img [src]="list.isCollapsed ? 'assets/img/arrow-right-ico.png' : 'assets/img/arrow-drop.png'" alt="right arrow" />
+
+                                </a>
+                            </td>
+                            <td style="text-align:justify; font-weight:500; color:black;">{{list.customerFirstName}}</td>
+                            <td style="text-align:justify; ">{{list.total | currencysymbol: (list.currencySymbolLeft ? {'position': 'left', symbol: list.currencySymbolLeft} : list.currencySymbolRight? {position: 'right' , symbol: list.currencySymbolRight}: null)}}
+                            </td>
+                            <td style="text-align:center; ">{{list.createdDate | date: "dd MMM yyyy h:mm a"}}</td>
+                        </tr>
+
+                        <tr id="demo-{{i + 1}}" class="acc-table" [ngbCollapse]="list.isCollapsed">
+                            <td colspan="9" class="hiddenRow" [@smoothCollapse]="list.isCollapsed?'initial':'final'">
+                                <table class="table">
+                                    <tr>
+                                        <th class="text-right" colspan="7"><a href="javascript:void(0)" (click)="list.isCollapsed = !list.isCollapsed" class="acc-tbl-close">x</a></th>
+                                    </tr>
+                                    <tr>
+                                        <th>{{'Sales.Orders.ProductName'| translate}}</th>
+                                        <th>{{'Sales.Orders.Quantity'| translate}}</th>
+                                        <th>{{'Sales.Orders.Price'| translate}}</th>
+                                    </tr>
+                                    <tr>
+                                        <td width="50%">{{list.name}}</td>
+                                        <td>{{list.quantity}}</td>
+                                        <td>{{list.productPrice}}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+            <div class="no_data" *ngIf="(sandbox.backorderList$ |async)?.length==0 && (sandbox.backorderListLoaded$ |async)">
+                <p>{{'Sales.Orders.datanotfound'| translate}}</p>
+            </div>
+            <mat-paginator [length]="sandbox.backorderListCount$ | async" [pageSize]="pageSize" [pageIndex]="index" [pageSizeOptions]="[pageSize]" (page)="onPageChange($event)">
+            </mat-paginator>
+        </div>
+    </div>
+    <!--Table-->
+</div>

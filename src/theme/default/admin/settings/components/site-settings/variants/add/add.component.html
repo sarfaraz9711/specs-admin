@@ -1,0 +1,154 @@
+<div class="flex setting2-inner-header">
+    <h3>{{'Settings.SiteSettings.variants.AddVariant' | translate}} </h3>
+    <div class="close">
+        <button class="bton" (click)="cancel()"> <img src="assets/img/icon-close-lite.svg"> </button>
+    </div>
+</div>
+
+<div class="settings-right-wrapper addnewuser">
+
+    <div class="new-user">
+        <form novalidate [formGroup]="variantsForm" class="form-horizontal">
+            <div class="row">
+                <div class="col-lg-12 col-xs-12">
+                    <div class="form-group">
+                        <label>{{'Settings.SiteSettings.variants.VariantName' | translate}}</label>
+                        <input type="text" class="form-control"
+                            placeholder="{{'Settings.SiteSettings.variants.VariantName' | translate}}"
+                            formControlName="optionName" [ngClass]="{
+                        validationcolor:
+                          variantsForm.get('optionName').hasError('required') &&
+                          variantsForm.get('optionName').touched && 
+                          submittedValues == true
+                      }" />
+                        <div class="error" *ngIf="
+                variantsForm.get('optionName').hasError('required') &&
+                variantsForm.get('optionName').touched &&
+                submittedValues == true
+              "> {{'Settings.SiteSettings.Errors.VarientRequired' | translate}}</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-xs-12">
+                    <div class="form-group">
+                        <label>{{'Settings.SiteSettings.variants.SortOrder' | translate}}</label>
+                        <input type="text" class="form-control"
+                            placeholder="{{'Settings.SiteSettings.variants.SortOrder' | translate}}" appOnlyNumber
+                            [formControl]="sortOrder" [ngClass]="{
+                validationcolor:
+                  variantsForm.get('sortOrder').hasError('required') &&
+                  variantsForm.get('sortOrder').touched &&
+                  submittedValues == true
+              }" />
+                        <div class="error" *ngIf="
+                variantsForm.get('sortOrder').hasError('required') &&
+                variantsForm.get('sortOrder').touched &&
+                submittedValues == true
+              ">
+                            {{ 'catalog.Error.SortOrderRequired' | translate }}
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-lg-12 col-xs-12">
+                    <div class="form-group">
+                        <label>{{'Settings.SiteSettings.variants.Type' | translate}}</label>
+                        <ng-select placeholder="{{'Settings.SiteSettings.variants.Select' | translate}}"
+                            [searchable]="false" id="inlineFormCustomSelect" formControlName="type">
+                            <ng-option *ngFor=" let types of optionsArray" [value]="types">{{types}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-xs-12">
+                    <div class="form-group">
+                        <label>Category List<sup>*</sup> </label>
+
+                        <select formControlName="category" class="form-control">
+                            <option [value]=''>--Select--</option>
+                            <option *ngFor="let a of totalArray" value="{{a.name}}">{{a.name}}</option>
+                        </select>
+                        <!-- <ng-select [items]="totalArray" bindLabel="name" bindValue="categoryId"
+                            formControlName="selectedBuyCategory" [multiple]="true" maxSelectedItems=1>
+                        </ng-select> -->
+
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-xs-12">
+                    <div class="form-group">
+                            <label>Display Name<sup>*</sup> </label>
+                            <input type="text" class="form-control" formControlName="varientDisplayName" placeholder="Display Name" />
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="add-variant-ss">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr>
+                                    <th width="40%"> <input type="text" formControlName="variantValue"
+                                            placeholder="{{'Settings.SiteSettings.variants.VariantValueName' | translate}}">
+                                    </th>
+                                    <th width="35%"> <input type="text" formControlName="valueSortOrder" appOnlyNumber
+                                            placeholder="{{'Settings.SiteSettings.variants.SortOrder' | translate}}">
+                                    </th>
+                                    <th width="80px" class="text-center"> <button (click)="addVariantValues()"
+                                            class="set-ad-btn"> <img src="assets/img/add-white-ico.png" alt="add">
+                                            {{buttonName}} </button> </th>
+                                </tr>
+                                <div style="margin-top: -12px !important;"
+                                    *ngIf="variantValueArray && variantValueArray.length===0 && submittedValues=== true"
+                                    class="error">{{'Settings.SiteSettings.Errors.Pleaseaddatleastonevalue' |
+                                    translate}}</div>
+                                <tr *ngFor="let data of variantValueArray; let i=index">
+                                    <td>{{data.valueName}}</td>
+                                    <td>{{data.sortOrder}}</td>
+                                    <td class="action text-center" *ngIf="edit=='edit'">
+                                        <a href="javascript:Void(0)" (click)="editVariantValue(i)" class="edit"> </a>
+                                        <a href="javascript:Void(0)" (click)="deleteVariant(i)" class="delete"> </a>
+                                    </td>
+                                </tr>
+                                <!-- <tr>
+                                    <td>Red</td>
+                                    <td>0</td>
+                                    <td class="action text-center">
+                                        <a href="javascript:Void(0)" class="edit"> </a>
+                                        <a href="javascript:Void(0)" class="delete"> </a>
+                                    </td>
+                                </tr> -->
+                                <!-- <tr>
+                                    <td>Red</td>
+                                    <td>0</td>
+                                    <td class="action text-center">
+                                        <a href="javascript:Void(0)" class="edit"> </a>
+                                        <a href="javascript:Void(0)" class="delete"> </a>
+                                    </td>
+                                </tr> -->
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-12">
+                    <div class="flex srbtn">
+                        <button (click)="cancel()" class="cancel">{{'Settings.Local.Country.Cancel' |
+                            translate}}</button>
+                        <button type="submit" class="set-ad-btn"
+                            (click)="addVariants(variantsForm.value)">{{'Settings.Local.Save' | translate}}</button>
+                    </div>
+                    <!-- <div class="flex user-btn">
+                      <button type="submit" class="btn btn-add">{{'Settings.Local.Save' | translate}}</button>
+                      <button (click)="close()" class="btn btn-cancel">{{'Settings.Local.Country.Cancel' | translate}}</button>
+                  </div> -->
+                </div>
+            </div>
+
+
+
+
+        </form>
+    </div>
+</div>

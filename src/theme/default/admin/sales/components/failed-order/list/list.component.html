@@ -1,0 +1,121 @@
+<!--Breadcrumbs-->
+
+
+<div class="row products-section products-sub-section">
+
+    <div class="col-12">
+        <div class="flex filter-row">
+            <div class="filter-lft">
+                <div class="toggle">
+                    <p>{{'Sales.Orders.Filters'| translate}}</p>
+                    <input class="tgl tgl-light" id="cb1" (change)="changeFilter($event)" [checked]="true" type="checkbox" />
+                    <label class="tgl-btn" for="cb1"></label>
+                </div>
+                <div class="ml-2 bc-col-btn export-data">
+                    <input type="button" value="Export Data" class="btn" (click)="exportAsXLSX()">
+                </div>
+            </div>
+            <!--Lft-->
+            <!-- <div class="filter-nav-list">
+                <div class="dropdown" ngbDropdown [appHideIfUnauthorized]="" [multipleHide]="['failed-order-list-export-excel','delete-order']">
+                    <i class="fa fa-ellipsis-h cursor" style="padding:8px 10px;background: #f1cdcd;" [ngClass]="{'export-color': filterDataId.length!=0}" ngbDropdownToggle>
+
+                    </i>
+                    <div ngbDropdownMenu class="dropdown-menu">
+                        <a [appHideIfUnauthorized]="'failed-order-list-export-excel'" [ngClass]="{'blur':filterDataId.length==0}" [disabled]="filterDataId.length==0" (click)="exportExcel()" class="dropdown-item" ngbDropdownItem href="javascript:void(0)"> <img src="assets/img/export-sm.svg" alt="export">{{'catalog.product.Export'| translate}} </a>
+                        <a [appHideIfUnauthorized]="'delete-order'" [ngClass]="{'blur':filterDataId.length==0}" [disabled]="filterDataId.length==0" class="dropdown-item" ngbDropdownItem href="javascript:void(0)" (click)="bulkDelete()"> <img src="assets/img/delete-sm.svg" alt="delete">{{'catalog.nav.Delete'| translate}} </a>
+                    </div>
+                </div>
+            </div> -->
+            <!--Right-->
+        </div>
+    </div>
+</div>
+
+
+<div class="flex product-wrap example-full-width">
+    <div *ngIf="buttonCheck == true" class="filter-section border-right">
+        <div class="w3-container">
+            <app-sales-failed-order-filter (salesEmit)="receiveProgress($event)"></app-sales-failed-order-filter>
+
+        </div>
+    </div>
+    <!--Filter-->
+
+    <div class="product-table sales-content-table" [ngClass]="{'changesize': buttonCheck == true }">
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" width="5%">
+                            <!-- <div class="form-group">
+                                <div class="custom-control custom-checkbox mr-sm-2" [appHideIfUnauthorized]="" [multipleHide]="['failed-order-list-export-excel','delete-order']">
+                                    <input *ngIf="appSandbox.orderList$ | async as orders" type="checkbox" class="custom-control-input" id="checkbox1" (change)="selectAll()" [(ngModel)]="selectedAll" />
+                                    <label class="custom-control-label" for="checkbox1"></label>
+                                </div>
+                            </div> -->
+                        </th>
+
+                        <th scope="col">{{'Sales.Orders.OrderId'| translate}}</th>
+                        <th scope="col">{{'Sales.Orders.CustomerName'| translate}}</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Mobile</th>
+                        <th scope="col">{{'Sales.Orders.TotalAmount'| translate}}</th>
+                        <th scope="col">Order Created</th>
+                        <th scope="col">{{'Sales.Orders.DateModified'| translate}}</th>
+                        <th scope="col">Order Status</th>
+                        <th scope="col">Reason</th>
+                        <th class="text-center" [appHideIfUnauthorized]="" [multipleHide]="['view-failed-order-detail','delete-order']">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let orderList of orderListArray">
+                        <th scope="row">
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox mr-sm-2" [appHideIfUnauthorized]="" [multipleHide]="['failed-order-list-export-excel','delete-order']">
+                                    <input type="checkbox" class="custom-control-input" id={{orderList.orderId}} [ngModelOptions]="{standalone: true}" [(ngModel)]="orderList.selected" (change)="checkOrder($event, orderList)">
+                                    <label class="custom-control-label" for={{orderList.orderId}}></label>
+                                </div>
+                            </div>
+                        </th>
+
+                        <td class="vendid vname name hyperlinks" style="position: relative;"><span style="cursor: pointer;" (click)="viewOrders(orderList.orderId)">{{orderList.orderPrefixId}}</span>
+                            <a (click)="viewOrders(orderList.orderId)" style="cursor: pointer;" href="javascript:void(0)" class="lst-xpnd" >
+                                <img src='assets/img/arrow-right-ico.png'>
+                            </a>
+                        </td>
+                        <td class="name">{{orderList.shippingFirstName}}</td>
+                        <td>{{orderList.email}}</td>
+                        <td>{{orderList.telephone}}</td>
+                        <td>{{orderList.totalAmount | currencysymbol: (orderList.currencySymbolLeft ? {'position': 'left', symbol: orderList.currencySymbolLeft} : orderList.currencySymbolRight? {position: 'right' , symbol: orderList.currencySymbolRight}:
+                            null)}}
+                        </td>
+                        <td>{{orderList.dateAdded | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{orderList.dateModified | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{orderList.orderStatus.name}}</td>
+                        <td *ngIf="orderList.orderStatusId!=1">Payment Failed On Payment Gateway <span  *ngIf="orderList.paymentType!=null">({{orderList.paymentType}})</span></td>
+                        <td *ngIf="orderList.orderStatusId==1">Payment confirmation is pending on the payment gateway <span  *ngIf="orderList.paymentType!=null">({{orderList.paymentType}})</span></td>
+                        <td class="text-center" [appHideIfUnauthorized]="" [multipleHide]="['view-failed-order-detail','delete-order']">
+                            <div class="dropdown" ngbDropdown>
+                                <i class="fa fa-ellipsis-v cursor" style="padding:0 15px" ngbDropdownToggle>
+                                </i>
+                                <div ngbDropdownMenu class="dropdown-menu">
+                                    <a [appHideIfUnauthorized]="'view-failed-order-detail'" class="dropdown-item" ngbDropdownItem href="javascript:void(0)" (click)="viewOrders(orderList.orderId)"> <img src="assets/img/export-sm.svg" alt="export"> {{'Sales.Orders.View'| translate}} </a>
+                                    <a [appHideIfUnauthorized]="'delete-order'" class="dropdown-item" ngbDropdownItem href="javascript:void(0)" (click)="deleteOrder(orderList.orderId)"> <img src="assets/img/delete-sm.svg" alt="delete">{{'Sales.Orders.Delete'| translate}} </a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="no_data" *ngIf="(appSandbox.orderList$ |async)?.length==0">
+                <p>{{'Sales.Orders.datanotfound'| translate}}</p>
+            </div>
+            <mat-paginator #paginator [length]="appSandbox.orderListCount$ | async" [pageSize]="pageSize" [pageIndex]="index" [pageSizeOptions]="[pageSize]" (page)="onPageChange($event)">
+            </mat-paginator>
+
+        </div>
+    </div>
+    <!--Table-->
+</div>

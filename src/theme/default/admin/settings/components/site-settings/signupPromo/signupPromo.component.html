@@ -1,0 +1,232 @@
+<div class="setup-wrapper setup-personalize">
+    <div class="setup-container flex">
+
+        <div class="setup-right">
+            <form (ngSubmit)="onSubmit()" [formGroup]="seoForm" class="form-horizontal">
+
+                <div class="sup-rht-section">
+                    <input class="tgl tgl-light" [hidden]="true" formControlName="recordId" type="text"
+                        [ngModel]="settingData.Id" />
+
+                    <div class="suprs-form">
+                        <div class="suprs-form-row flex">
+
+                            <div class="mm-row flex">
+                                <label>Sign up Offer</label>
+                                <div class="toggle">
+                                    <input class="tgl tgl-light" id="cb1" formControlName="settingActiveField"
+                                        type="checkbox" [(ngModel)]="settingData.isSettingActive" />
+                                    <label class="tgl-btn" for="cb1"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="suprs-form">
+                        <div class="suprs-form-row flex">
+                            <label>Coupon Amount Type<a href="javascript:void(0)">
+                                </a> </label>
+                            <div class="suprs-form-col">
+                                <!-- <label>Discount Amount Type</label> -->
+                                <select class="form-control" formControlName="discountAmountType"
+                                    [ngModel]="settingData.discountTypeAmountIn">
+                                    <option value="_none">--Select--</option>
+                                    <option value="percent">Percent</option>
+                                    <option value="flat_amount">Amount</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="suprs-form">
+                        <div class="suprs-form-row flex">
+                            <label>Coupon amount</label>
+                            <div class="suprs-form-col">
+                                <input type="text" [ngModel]="settingData.couponValue"
+                                    [appDisableIfUnauthorized]="'edit-seo-url'" formControlName="couponAmount"
+                                    class="form-control"
+                                    [ngClass]="{'validationcolor':seoForm.controls.couponAmount.errors && submitted}">
+                                <div class="validation-error"
+                                    *ngIf="couponAmount.invalid && (couponAmount.dirty || couponAmount.touched)">
+                                    <div *ngIf="couponAmount.errors.required">This field is required.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="suprs-form">
+                        <div class="suprs-form-row flex">
+                            <label>Coupon Code</label>
+                            <div class="suprs-form-col">
+                                <input type="text" [ngModel]="settingData.couponCode" formControlName="couponCode"
+                                    class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="suprs-form">
+                        <div class="suprs-form-row flex">
+                            <label>Signup Banner</label>
+                            <div><input type="file" formControlName="bannerImage" class="form-control"
+                                    (change)="uploadFile($event,'bannerImage')">
+                                <input type="hidden" class="form-control" formControlName="bannerImage"
+                                    [(ngModel)]="settingData.bannerImage">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="suprs-form">
+                        <div class="suprs-form-row flex">
+                            <label>Signup Pop Up Image</label>
+                            <div><input type="file" formControlName="signupPopupImage" class="form-control"
+                                    (change)="uploadFile($event,'signupPopupImage')">
+                                <input type="hidden" class="form-control" formControlName="signupPopupImage"
+                                    [(ngModel)]="settingData.signupPopupImage">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="suprs-form">
+                        <div class="suprs-form-row flex">
+                            <label>Signup Pop Up</label>
+                            <div class="suprs-form-col">
+                                <input type="text" [ngModel]="settingData.signUpPopUp" formControlName="signUpPopUp"
+                                    class="form-control">
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="suprs-form">
+                        <div class="suprs-form-row flex">
+                            <label>Min cart amount<a href="javascript:void(0)">
+                                    <!-- <img src="assets/img/icon-information-circle-outline.svg">  -->
+                                </a> </label>
+                            <div class="suprs-form-col">
+                                <input type="text" [ngModel]="settingData.minimumPurchaseAmount"
+                                    [appDisableIfUnauthorized]="'edit-seo-url'" formControlName="minCartValue"
+                                    class="form-control"
+                                    [ngClass]="{'validationcolor':seoForm.controls.minCartValue.errors && submitted}">
+                                <div class="validation-error"
+                                    *ngIf="minCartValue.invalid && (minCartValue.dirty || minCartValue.touched)">
+                                    <div *ngIf="minCartValue.errors.required">
+                                        This field is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="suprs-form">
+                        <div class="suprs-form-row flex">
+                            <label>Max cart amount <a href="javascript:void(0)">
+                                    <!-- <img src="assets/img/icon-information-circle-outline.svg">  -->
+                                </a> </label>
+                            <div class="suprs-form-col">
+                                <input type="text" [ngModel]="settingData.maximumPurchaseAmount"
+                                    [appDisableIfUnauthorized]="'edit-seo-url'" formControlName="maxCartValue"
+                                    class="form-control"
+                                    [ngClass]="{'validationcolor':seoForm.controls.maxCartValue.errors && submitted}">
+                                <div class="validation-error"
+                                    *ngIf="maxCartValue.invalid && (maxCartValue.dirty || maxCartValue.touched)">
+                                    <div *ngIf="maxCartValue.errors.required">
+                                        This field is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="suprs-form">
+                        <div class="suprs-form-row flex">
+                            <label>Usage limit for the coupon <a href="javascript:void(0)">
+                                    <!-- <img src="assets/img/icon-information-circle-outline.svg">  -->
+                                </a> </label>
+                            <div class="suprs-form-col">
+                                <input type="text" [ngModel]="settingData.maxCouponUse"
+                                    [appDisableIfUnauthorized]="'edit-seo-url'" formControlName="maxCouponUse"
+                                    class="form-control"
+                                    [ngClass]="{'validationcolor':seoForm.controls.maxCouponUse.errors && submitted}">
+                                <div class="validation-error"
+                                    *ngIf="maxCouponUse.invalid && (maxCouponUse.dirty || maxCouponUse.touched)">
+                                    <div *ngIf="maxCouponUse.errors.required">
+                                        This field is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="suprs-form">
+                        <div class="suprs-form-row flex">
+                            <label>No of times user can use this discount <a href="javascript:void(0)">
+                                    <!-- <img src="assets/img/icon-information-circle-outline.svg">  -->
+                                </a> </label>
+                            <div class="suprs-form-col">
+                                <input type="text" [ngModel]="settingData.noOfMaxCouponUsePerUser"
+                                    [appDisableIfUnauthorized]="'edit-seo-url'"
+                                    formControlName="noOfMaxCouponUsePerUser" class="form-control"
+                                    [ngClass]="{'validationcolor':seoForm.controls.noOfMaxCouponUsePerUser.errors && submitted}">
+                                <div class="validation-error"
+                                    *ngIf="noOfMaxCouponUsePerUser.invalid && (noOfMaxCouponUsePerUser.dirty || noOfMaxCouponUsePerUser.touched)">
+                                    <div *ngIf="noOfMaxCouponUsePerUser.errors.required">
+                                        This field is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="suprs-form">
+                        <div class="suprs-form-row flex">
+                            <label>Start date <a href="javascript:void(0)">
+                                    <!-- <img src="assets/img/icon-information-circle-outline.svg">  -->
+                                </a> </label>
+                            <div class="suprs-form-col">
+                                <input type="date" [ngModel]="settingData.startDate"
+                                    [appDisableIfUnauthorized]="'edit-seo-url'" formControlName="startDate"
+                                    class="form-control"
+                                    [ngClass]="{'validationcolor':seoForm.controls.startDate.errors && submitted}"
+                                    [min]="minDate">
+                                <div class="validation-error"
+                                    *ngIf="startDate.invalid && (startDate.dirty || startDate.touched)">
+                                    <div *ngIf="startDate.errors.required">
+                                        This field is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="suprs-form">
+                        <div class="suprs-form-row flex">
+                            <label>End date <a href="javascript:void(0)">
+                                    <!-- <img src="assets/img/icon-information-circle-outline.svg">  -->
+                                </a> </label>
+                            <div class="suprs-form-col">
+                                <input type="date" [ngModel]="settingData.endDate"
+                                    [appDisableIfUnauthorized]="'edit-seo-url'" formControlName="endDate"
+                                    class="form-control"
+                                    [ngClass]="{'validationcolor':seoForm.controls.endDate.errors && submitted}"
+                                    [min]="minDate">
+                                <div class="validation-error"
+                                    *ngIf="endDate.invalid && (endDate.dirty || endDate.touched)">
+                                    <div *ngIf="endDate.errors.required">
+                                        This field is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="errorSet == '1'" class="alert alert-danger">{{errorMessage}}</div>
+                    <div class="flex srbtn">
+                        <button (click)="seoCancel()" [appHideIfUnauthorized]="'edit-seo-url'"
+                            class="cancel">{{'Settings.SiteSettings.Cancel' | translate}}</button>
+                        <button type="submit" [appHideIfUnauthorized]="'edit-seo-url'">{{'Settings.SiteSettings.Save' |
+                            translate}}</button>
+                    </div>
+
+
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</div>

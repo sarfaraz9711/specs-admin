@@ -1,0 +1,32 @@
+<div class="setup-wrapper">
+
+    <div class="setup-container localization-container">
+
+        <div class="loc-lay-title">
+            <h3>System</h3>
+            <p>RED CHIEF to meet growing demand for branded high quality leather footwear. The company is a complete leather and footwear manufacturer with its own tannery and two manufacturing plants. This recognition is inspiring the team to increase its production capacity and fulfill the growing needs of consumers</p>
+        </div>
+
+        <div class="card ap-general ap-info set-loc-card">
+
+            <div class="localize-tab">
+
+                <div class="tab seo-tab">
+                    <button [appHideIfUnauthorized]="''" [routerLinkActive]="'active'" [routerLink]="['/settings/sitesettings/maintenance']" class="tablinks">Maintenance</button>
+                    <button [appHideIfUnauthorized]="''" [routerLinkActive]="'active'" [routerLink]="['/settings/sitesettings/email']" class="tablinks">Email</button>
+                    <button [appHideIfUnauthorized]="''" [routerLinkActive]="'active'" [routerLink]="['/settings/sitesettings/smtp']" class="tablinks d-none">SMTP</button>
+                    <button [appHideIfUnauthorized]="''" [routerLinkActive]="'active'" [routerLink]="['/settings/sitesettings/sms']" class="tablinks d-none">SMS</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+<router-outlet></router-outlet>

@@ -1,0 +1,61 @@
+<form >
+    <div class="percentvalue">
+        <div class="mr-2 ml-2" *ngFor="let p of product; let i = i">
+            <input type="checkbox" name="product" (change)="discountvalue($event)" value="{{p}}">{{p}}%
+        </div>
+        <div class="apply-btn">
+            <input  type ="button" (click)="getProduct()" value="Apply" /> 
+        </div>
+    </div>
+    
+
+    <div *ngIf="percentdataList">
+        <div class="row mt-4 ml-3">
+            <div class="col-md-3">
+                <input type="checkbox" (change)="selectAllData($event)"/>
+                <label>Select All</label>
+            </div>
+            <div class="col-md-3">
+                    <label>Start Date <sup>*</sup>
+                    </label>
+                    <input (change)="setStartMinDate(date.value)" #date
+                    style="cursor: pointer;background-color: white;width:100%;" min="{{minDate}}"
+                    max={{maxStartDate}} type="date" class="form-control date1" formControlName="startDate"
+                    />
+            </div>
+    
+            <div class="col-md-3">
+                    <label>End Date <sup>*</sup>
+                    </label>
+                    <input (change)="setEndMinDate(endDate.value)" #endDate
+                        style="cursor: pointer;background-color: white;width:100%;" min={{minEndDate}} type="date" class="form-control date1"
+                        formControlName="endDate" />
+            </div>
+            <div class="col-md-3 gen-btn apply-btn">
+                <input type="button" (click) ="getUrl()" value="Generate Url" />
+            </div>
+        </div>
+
+        <div *ngIf="offerurl" class="offers">
+            <p>{{offerurl.url}}</p>
+        </div>
+     <div *ngIf="!offerurl" >
+        <div class="productdata "  *ngFor="let list of percentdataList; let i = i">
+            <div class="d-flex">
+                <input type="checkbox" value="{{list.productId}}" (change)="checkProductid($event, list)" class="select" [checked]="isChecked"/>
+                <img [src]="
+                imageUrl +
+                '?path=' + '' +
+                 '&name=' +
+                list.image +
+                '&width=60&height=60'
+              " onError="this.src='assets/error-images/Load-icon-Products.png';" />      
+              <p style="width: '700px';">{{list.productName+"("+list.upc+")"}}</p>
+            </div>
+        </div>
+    </div>
+    </div>
+   
+</form>
+
+<app-popup-message [popupMessage]="popupMessage"></app-popup-message>

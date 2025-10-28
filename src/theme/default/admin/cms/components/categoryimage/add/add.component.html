@@ -1,0 +1,76 @@
+<app-cms-header></app-cms-header>
+<form class="container-fluid bdr-btm mt-5" [formGroup]="brandNameForm" id="validateForm">
+    <div class="row" [style.background-color]="'#eee'" [style.height]="'200px'">
+
+        <div class="col-md-4">
+            <label>View</label> 
+            <input *ngIf="editId" type="text" readonly class="form-control" value={{viewdata}} />
+            <ng-select  *ngIf="!editId" placeholder="Select" (change)="getview($event)">
+                <ng-option value="mobile">For Mobile</ng-option>
+                <ng-option value="desktop">For Desktop</ng-option>
+            </ng-select>
+        </div>        
+        
+        <div class="col-md-4" *ngIf="getViewEnviroment =='desktop'">
+            <label>Parent category<sup>*</sup></label>
+            <input  [ngClass]="editId?'d-block':'d-none'" type="text" readonly class="form-control" value={{editData.content}} />
+            <ng-select  [ngClass]="!editId?'d-block':'d-none'" placeholder="--Select--" [items]="parentcategory" bindLabel="name" bindValue="name"
+                formControlName="content" (change)="setXProduct($event)" [(ngModel)]="editData.content">
+            </ng-select>
+        </div>
+
+        <div class="col-md-4" *ngIf="getViewEnviroment =='desktop'">
+            <label>Child Category<sup>*</sup></label>
+            <input [ngClass]="editId?'d-block':'d-none'" type="text" readonly class="form-control" value={{editData.showOn}} />
+            <ng-select [ngClass]="!editId?'d-block':'d-none'" placeholder="--Select--" [items]="childcategory" bindLabel="name" bindValue="name"
+                formControlName="showOn" [(ngModel)]="editData.showOn">
+            </ng-select>
+        </div>
+
+        <div class="col-md-4" *ngIf="getViewEnviroment =='mobile'">
+            <label>Category<sup>*</sup></label>
+            <input [ngClass]="editId?'d-block':'d-none'" type="text" readonly class="form-control text-uppercase" value={{editData.showOn}} />
+            <ng-select [ngClass]="!editId?'d-block':'d-none'" placeholder="--Select--" formControlName="showOn" [(ngModel)]="editData.showOn">
+                <ng-option value="footwear">FOOTWEAR</ng-option>
+                <ng-option value="garments">GARMENTS</ng-option>
+                <ng-option value="accessories">ACCESSORIES</ng-option>
+            </ng-select>
+        </div>
+
+        <div class="col-md-4">
+            <label>Image<sup>*</sup></label>
+            <div *ngIf="editData.imagePath && !uploadNewImage" class="editimage"><span (click)="clickClose()" class="crossimage">X</span>{{editData.imagePath?editData.imagePath:"Image Name"}}</div>
+            <div *ngIf="!editData.imagePath && uploadNewImage" class="categoryimage">Image Name</div>
+
+
+            <div>
+                <input type="file" formControlName="imagefile"
+                    class="form-control" (change)="uploadFile($event)">
+                <input type="hidden" class="form-control" formControlName="imagePath"
+                    [(ngModel)]="imageUploadData.image">
+            <span *ngIf="getViewEnviroment =='desktop'" class="imageformettext">(Image upload size is height = 300 and width = 300)</span>
+            <span *ngIf="getViewEnviroment =='mobile'" class="imageformettext">(Image upload size is height = 70 and width = 100)</span>
+
+
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <label>Link<sup>*</sup></label>
+            <input type="text" class="form-control" formControlName="link" [(ngModel)]="editData.link">
+        </div>
+       
+    </div>
+
+
+
+    <div class=" mt-3">
+        <div class="text-center">
+            <input type="button" value="Submit" class="btn" [disabled]="brandNameForm.invalid" (click)="formSubmit()">
+            <button class="btn ml-2" (click)="cancelForm()">Cancel</button>
+
+        </div>
+
+    </div>
+</form>
+<app-popup-message [popupMessage]="popupMessage"></app-popup-message>

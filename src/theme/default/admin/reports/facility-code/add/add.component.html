@@ -1,0 +1,46 @@
+<form novalidate (ngSubmits)="onSubmits(user.value)" [formGroup]="user">
+
+    <div class="row products-section" style="margin:unset">
+        <div class="col-12">
+            <div class="breadcrumbs-row noborder">
+                <div class="bc-col">
+                </div>
+                <div class="bc-col-btn ap-col-btn">
+                    <button class="btn btn-save" (click)="onSubmits(user.value)">
+                        <img src="assets/img/tick-round-white.png" alt="save" />
+                        Save
+                    </button>
+
+                    <button (click)="exportAsXLSX()" class="btn btn-save">Export as Excel</button>
+                    
+                    <!-- <button class="btn btn-cancel" (click)="onCancel()">
+                        <img src="assets/img/close-white-ico.png" alt="cancel" />Cancel
+                    </button> -->
+                </div>
+            </div>
+        </div>
+        <!--Breadcrumbs-->
+    </div>
+
+    <div class="flex addproduct-wrap">
+        <div class="card ap-general">
+            <div class="ap-header">
+                General Information
+            </div>
+            <div class="ap-body-col">
+                <div class="form-group">
+                    <label>Facility-code
+                        <img placement="top"
+                            title="Separate the facility codes, with commas."
+                            style="margin-left: 5px;" src="assets/img/info-ico.png" alt="info" />
+                    </label>
+                    <textarea class="form-control" placeholder="facility-code" *ngFor="let facilityCodeInfo of facilityDataList; let i = i"
+                        formControlName="facilityCode" [(ngModel)]="facilityCodeInfo.facilityCode">{{facilityCodeInfo.facilityCode}}</textarea>
+                </div>
+           
+            </div>
+        </div>
+    </div>
+</form>
+
+<app-popup-message [popupMessage]="popupMessage"></app-popup-message>

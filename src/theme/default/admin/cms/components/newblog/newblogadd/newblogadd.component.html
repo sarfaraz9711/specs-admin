@@ -1,0 +1,157 @@
+<!-- <app-pages-layout></app-pages-layout> -->
+<div class="row products-section ">
+    <div class="col-12">
+        <div class="breadcrumbs-row noborder">
+            <div class="bc-col">
+
+            </div>
+            <div class="bc-col-btn ap-col-btn">
+                <button type="submit" class="btn btn-save" [disabled]="this.pagesForm.invalid"   [ngClass]="{'disabledFrom': ckEditorValid == false}" (click)="onSubmit()"><img
+                        src="assets/img/tick-round-white.png" alt="add"> Save
+                </button>
+                <button (click)="pagesCancel()" class="btn btn-cancel"><img src="assets/img/close-white-ico.png"
+                        alt="close">Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="flex addproduct-wrap">
+
+    <div class="card ap-general">
+        <form (ngSubmit)="onSubmit()" [formGroup]="pagesForm" class="container-fluid bdr-btm mt-5">
+            <div class="ap-header">
+                General Information
+            </div>
+            <div class="flex row">
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Title <sup>*</sup></label>
+                        <input type="text" class="form-control" formControlName="title" placeholder="Title"
+                            [ngClass]="{ 'is-invalid': submitted && f.title.errors  }" />
+                            <div class="validation-error" *ngIf="
+                            pagesForm.get('title').hasError('required') &&
+                            pagesForm.get('title').touched">
+                            Title is required
+                         </div>
+                         <div class="validation-error" *ngIf="pagesForm.get('title').hasError('maxlength')">
+                            Maximum length will be 50
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+
+                        <label>Thumbnail Image<sup>*</sup></label>
+                        <div *ngIf="getBlogdata?.image && !uploadNewImage" class="editimage"><span
+                                (click)="clickClose()" class="crossimage">X</span>
+                            {{getBlogdata?.image?getBlogdata?.image:"Image Name"}}</div>
+                        <div *ngIf="!getBlogdata?.image && uploadNewImage" class="categoryimage">Image Name</div>
+
+
+                        <div><input type="file" formControlName="imagefile" class="form-control"
+                                (change)="uploadFile($event,'image')">
+                            <input type="hidden" class="form-control" formControlName="image"
+                                [(ngModel)]="imageUploadData.image">
+
+                        </div>
+                        <div class="validation-error" *ngIf="
+                        pagesForm.get('image').hasError('required') &&
+                        pagesForm.get('image').touched">
+                        Thumbnail Image is required
+                     </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+
+                        <label> Banner Image<sup>*</sup></label>
+                        <div *ngIf="getBlogdata?.banner_image && !uploadBanberNewImage" class="editimage"><span
+                                (click)="bannerClickClose()" class="crossimage">X</span>
+                            {{getBlogdata?.banner_image?getBlogdata?.banner_image:"Image Name"}}</div>
+                        <div *ngIf="!getBlogdata?.banner_image && uploadBanberNewImage" class="categoryimage">Image Name</div>
+
+
+                        <div><input type="file" formControlName="imagebannerfile" class="form-control"
+                                (change)="uploadFile($event, 'bannerimage')">
+                            <input type="hidden" class="form-control" formControlName="bannerimage"
+                                [(ngModel)]="imageUploadBannerData.image">
+
+                        </div>
+                        <div class="validation-error" *ngIf="
+                        pagesForm.get('bannerimage').hasError('required') &&
+                        pagesForm.get('bannerimage').touched">
+                        banner Image is required
+                     </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Status <sup>*</sup></label>
+                        <select  placeholder="Select Status" class="form-control" formControlName="status">
+                            <option value="">--Select--</option>
+                            <option [value]="1">Active</option>
+                            <option [value]="0">Inactive</option>
+                        </select>
+                        <div class="validation-error" *ngIf="
+                        pagesForm.get('status').hasError('required') &&
+                        pagesForm.get('status').touched">
+                        Status is required
+                     </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Category Name <sup>*</sup></label>
+                        <select  placeholder="Select Status" class="form-control" formControlName="category_name">
+                            <option value="">--Select Category--</option>
+                            <option value="footwear">Footwear</option>
+                            <option value="garments">Garments</option>
+                            <option value="accessories">Accessories</option>
+                        </select>
+                        <div class="validation-error" *ngIf="
+                        pagesForm.get('status').hasError('required') &&
+                        pagesForm.get('status').touched">
+                        Category is required
+                     </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Description<sup>*</sup></label>
+                        <ckeditor [config]="config" formControlName="description" (change)="getData(ckEditor.value)" #ckEditor >
+                        </ckeditor>
+                        <div class="validation-error" *ngIf="
+                        pagesForm.get('description').hasError('required') &&
+                        pagesForm.get('description').touched">
+                                           Description is Required.
+                     </div>
+                        <!-- <ckeditor [config]="config" formControlName="description" [ngClass]="{ 'is-invalid': submitted }">
+                        </ckeditor> -->
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <label> Description Image Url</label>
+                        <div><input type="file" formControlName="descriptionfile" class="form-control"
+                                (change)="uploadFile($event, 'descriptionimage')">
+                            <input type="text" id="descriptionImg" class="form-control" formControlName="descriptionimage"
+                                [(ngModel)]="imageUploaddescriptionData.image" style="height: 0; width: 0; opacity: 0;">
+                        </div>
+                        <p style="font-size: 12px; margin-top: 5px;">Copy this image url as image in descrption</p>
+                        <span style="padding: 10px; font-size: 12px; border: 1px solid #000;" *ngIf="imageUploaddescriptionData.image">{{imageUploaddescriptionData.path}}/{{imageUploaddescriptionData.image}}</span>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+
+    </div>
+
+</div>

@@ -1,0 +1,74 @@
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Credit Note</h4>
+            <hr/>
+        </div>
+        <div class="col-md-12">
+<form [formGroup]="creditNoteForm" class="row" id="validateForm">
+    <input type="hidden" class="form-control" formControlName="id" [ngModel]="creditNoteData.id"/>
+        <div class="col-md-4">
+            <label>Channel Name</label>
+            <select class="form-control" [value]="selectedChannel" (change)="addChannel(ch.value)" #ch>
+                <option value="">--Select--</option>
+                <option value="Flipkart">Flipkart</option>
+                <option value="Amazon">Amazon</option>
+                <option value="Ajio">Ajio</option>
+                <option value="Myntra">Myntra</option>
+                <option value="Snapdeal">Snapdeal</option>
+                <option value="Redchief">Redchief</option>
+                <option value="Tatacliq">Tatacliq</option>
+                <option value="Admin">Admin</option>
+                <option value="Service and Repair">Service and Repair</option>
+                <option value="Other">Other</option>
+            </select>
+            <input [type]="channelType" [ngModel]="creditNoteData.channelName" class="form-control"  formControlName="channelName"/>
+        </div>
+        <div class="col-md-4">
+            <label>Email</label>
+            <input type="email" class="form-control" formControlName="emailId" [ngModel]="creditNoteData.emailId"/>
+        </div>
+        <div class="col-md-4">
+            <label>Mobile</label>
+            <input type="number" onKeyPress="if(this.value.length==10) return false" class="form-control" formControlName="mobile" [ngModel]="creditNoteData.mobile"/>
+        </div>
+        <div class="col-md-4">
+            <label>CN Order Id</label>
+            <input type="text" class="form-control" formControlName="cn_source_order_id" [ngModel]="creditNoteData.cn_source_order_id"/>
+        </div>
+        <div class="col-md-4">
+            <label>CN Code</label>
+            <input type="text" class="form-control" formControlName="cn_code" [ngModel]="creditNoteData.cn_code"/>
+        </div>
+        <div class="col-md-4">
+            <label>CN Amount</label>
+            <input type="text" class="form-control" formControlName="cn_amount" [ngModel]="creditNoteData.cn_amount"/>
+        </div>
+        <div class="col-md-4">
+            <label>CN Created Date</label>
+            <input type="date" class="form-control" formControlName="cn_created_date" [ngModel]="creditNoteData.cn_created_date"/>
+        </div>
+        <div class="col-md-4">
+            <label>CN Expiry Date</label>
+            <input type="date" class="form-control" formControlName="cn_expiry_date" [ngModel]="creditNoteData.cn_expiry_date"/>
+        </div>
+        <div class="col-md-4">
+            <label>Status</label>
+            <select *ngIf="!expiredCn" class="form-control" formControlName="status" [ngModel]="creditNoteData.status">
+                <option value="">--Select--</option>
+                <option value='1'>Active</option>
+                <option value='0'>InActive</option>
+            </select>
+            <input *ngIf="expiredCn" class="form-control" type="text" readonly value="Expired"/>
+        </div>
+
+    </form>
+</div>
+    <div class="col-md-12 mt-3 mb-3 text-center">
+    <input type="button" class="btn btn-primary" value="Submit" (click)="formSubmit()" [disabled]="creditNoteForm.invalid"/>
+</div>
+        </div>
+        
+</div>
+
+<app-popup-message [popupMessage]="popupMessage"></app-popup-message>

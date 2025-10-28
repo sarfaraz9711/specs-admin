@@ -1,0 +1,46 @@
+<app-cms-header></app-cms-header>
+    <!-- <div class="col-12"> -->
+        <div class="flex filter-row">
+            <div class="filter-lft">
+            </div>
+            <div class="filter-nav-list">
+                <div class="bc-col-btn">
+                    <button class="btn cms-btn" (click)="addPage()" ><img
+                            src="assets/img/add-white-ico.png" alt="add">Add Blogs
+                    </button>
+                </div>
+        </div>
+    <!-- </div> -->
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped cms-content-table">
+            <thead>
+                <tr>
+                    <!-- <th>Image</th> -->
+                    <th width=150px>Title</th>
+                    <th width=900px>Description</th>
+                    <th width=150px>Category Name</th>
+                    <th width="150">Status</th>
+                    <th width=150px>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of getCategoryData">
+                    <!-- <td><img [src]="imageUrl + '?path=&name=' + data.image + '&width=100&height=60'" onError="this.src='/assets/error-images/Load-icon-Products.png';" 
+                                [alt]='data.image'></td> -->
+                    <td>{{data.title}}</td>
+                    <td class="wordbreak blogdescrpition" >{{data.description}}</td>
+                    <td class="wordbreak">{{data.category_name}}</td> 
+                    <td>{{data.isActive == 1?"Active":"In-Active"}}</td>    
+                    <td style="text-align: center;cursor: pointer;">
+                        <i class="fas fa-edit" 
+                        (click)="updateBannerStatus(data.id)"
+                        ></i>
+                        
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+   
+</div>

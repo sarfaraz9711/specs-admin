@@ -1,0 +1,26 @@
+<div class="subtoolbar servicetoolbar">
+    <div class="sub-nav-menu">
+
+        <a [appHideIfUnauthorized]="'reports'" href="javascript:void(0)" [routerLink]="['/reports/sales-report']" [routerLinkActive]="'active'">
+            <span><img src="assets/img/header-icons/report/Report - Sales Report.svg"><img src="assets/img/header-icons/report/Report - Sales Report Active.svg"></span>{{'Dashboard.SalesReport'| translate}}
+        </a>
+
+        
+        <a [appHideIfUnauthorized]="'reports'" href="javascript:void(0)" [routerLink]="['/reports/facility-code']" [routerLinkActive]="'active'">
+            <span><img src="assets/img/header-icons/report/Report - Sales Report.svg"><img src="assets/img/header-icons/report/Report - Sales Report Active.svg"></span>Configration-Facility Code
+        </a>
+
+        <a [appHideIfUnauthorized]="'reports'" href="javascript:void(0)" [routerLink]="['/reports/delivery-tat']" [routerLinkActive]="'active'">
+            <span><img src="assets/img/header-icons/report/Report - Sales Report.svg"><img src="assets/img/header-icons/report/Report - Sales Report Active.svg"></span>Configration-Delivery TAT
+        </a>
+        <a  href="javascript:void(0)" [routerLink]="['/reports/order-report']" [routerLinkActive]="'active'" [appHideIfUnauthorized]="'reports'">
+            <span><img src="assets/img/header-icons/report/Report - Sales Report.svg"><img src="assets/img/header-icons/report/Report - Sales Report Active.svg"></span>Order Report
+        </a>
+        <a  href="javascript:void(0)" [routerLink]="['/reports/payment-report']" [routerLinkActive]="'active'" [appHideIfUnauthorized]="'reports'">
+            <span><img src="assets/img/header-icons/report/Report - Sales Report.svg"><img src="assets/img/header-icons/report/Report - Sales Report Active.svg"></span>Payment Report
+        </a>
+        <a  href="javascript:void(0)" [routerLink]="['/reports/remark-report']" [routerLinkActive]="'active'" [appHideIfUnauthorized]="'reports'">
+            <span><img src="assets/img/header-icons/report/Report - Sales Report.svg"><img src="assets/img/header-icons/report/Report - Sales Report Active.svg"></span>Remark Report
+        </a>
+    </div>
+</div>

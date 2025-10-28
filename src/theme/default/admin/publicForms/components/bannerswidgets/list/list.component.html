@@ -1,0 +1,45 @@
+<!-- <app-freeproducts-layout></app-freeproducts-layout> -->
+<div class="row products-section products-sub-section">
+
+    <div class="col-12">
+        <div class="flex filter-row">
+            <div class="filter-lft">
+            </div>
+
+            <div class="filter-nav-list">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="flex product-wrap">
+    <!--Filter-->
+    <div class="product-table" style="width: 100%">
+        <div class="export-row flex subscription-outer-actions">
+            <button class="btn" (click)="exportAsXLSX()">Export as Excel</button>
+        </div>
+        <div class="table-responsive subscription-content-table">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Visitor Counter</th>
+                        <th scope="col">Link</th>
+                        <!-- <th scope="col">Widgets Counter</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let bannerInfo of bannerwidgetsList; let i = i">
+                        <td>{{bannerInfo.title}}</td>
+                        <td>{{bannerInfo.imagePath}}</td>
+                        <td>{{bannerInfo.counter}}</td>
+                        <td>{{bannerInfo.link}}</td>
+                        
+                        <!-- <td>{{bannerInfo.Status}}</td> -->
+                    </tr>
+                </tbody>
+            </table>
+            <!-- <button (click)="exportAsXLSX()">Export as Excel</button> -->
+        </div>
+    </div>
+</div>

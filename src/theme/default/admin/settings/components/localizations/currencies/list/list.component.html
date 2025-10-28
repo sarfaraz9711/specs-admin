@@ -1,0 +1,98 @@
+<div class="set-lay-notes flex" style="padding: 0 10px 10px 10px;">
+    <h4>Note :</h4>
+    <p>In this section, admin can maintain the master list of currencies and admin can choose any one currency from this list that will be available in the general settings for configuring the currency in which the price of the products will be shown in
+        the eCommerce portal. </p>
+</div>
+
+<div class="setup-wrapper set-loc-wrapper">
+    <div class="setup-container localization-container">
+        <div class="card ap-general ap-info">
+            <div class="flex ap-body">
+                <ngb-tabset style="width:100%;">
+                    <ngb-tab>
+                        <ng-template ngbTabContent style="display: flex !important;">
+
+                            <!-- <div class="localize-header flex">
+                                <div class="loc-hdr-lft">
+                                    <h3>Currency list</h3>
+                                    <p>Here the Admin maintains the master list of currencies and one among these currencies becomes the default currency in which the pricing of the products will be shown.
+                                    </p>
+                                </div>
+                                <button class="btn" (click)="addCurrency('','add')" [appHideIfUnauthorized]="'create-currency'"><img
+                        src="assets/img/add-white-ico.png" alt="add"> {{'Settings.Local.Currency.AddCurrency' | translate}}
+                </button>
+                            </div> -->
+                            <div class="localize-header flex">
+                                <div class="loc-hdr-lft">
+                                    <!-- <p>Showing <span> 0 - 10 </span> results</p> -->
+                                    <div class="input-group">
+                                        <p>{{'Settings.Local.Resultsperpage' | translate}}</p>
+                                        <div class="select">
+                                            <select [(ngModel)]="pageSize" (change)="currencyList()">
+                                                <option *ngIf="pageSize!== '10' && pageSize!== '20' && pageSize!== '30'" value="{{pageSize}}">{{pageSize}}</option>
+                                                <option value="10">10</option>
+                                                <option value="20">20</option>
+                                                <option value="30">30</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button (click)=" addCurrency('','add')" class="set-ad-btn" [appHideIfUnauthorized]="'create-currency'"><img
+                                        src="assets/img/add-white-ico.png" alt="add">{{'Settings.Local.Currency.AddCurrency' | translate}}</button>
+                            </div>
+
+                            <div class="setup-right">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>{{'Settings.Local.Currency.CurrencyTitle' | translate}}</th>
+                                                <th>{{'Settings.Local.Currency.Code' | translate}}</th>
+                                                <th>{{'Settings.Local.Currency.LastUpdate' | translate}}</th>
+                                                <th>{{'Settings.Local.Emailtemplate.Status' | translate}}</th>
+                                                <th class="text-center" [appHideIfUnauthorized]="" [multipleHide]="['edit-currency','delete-currency']">
+                                                    {{'Settings.Local.Currency.Action' | translate}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let currencylist of (sandbox.currencyList$|async); let i=index">
+                                                <td>{{currencylist.title}}</td>
+                                                <td>{{currencylist.code}}</td>
+                                                <td>{{currencylist.modifiedDate ? (currencylist.modifiedDate | date:" dd/MM/yyyy") : (currencylist.createdDate | date:" dd/MM/yyyy")}}</td>
+                                                <td>
+                                                    <div *ngIf="currencylist.isActive === 1">
+                                                        {{'Settings.Local.StockStatus.Active' | translate}}
+                                                    </div>
+                                                    <div *ngIf="currencylist.isActive === 0">
+                                                        {{'Settings.Local.StockStatus.InActive' | translate}}
+                                                    </div>
+                                                </td>
+                                                <td class="text-center" [appHideIfUnauthorized]="" [multipleHide]="['edit-currency','delete-currency']">
+                                                    <div class="dropdown" ngbDropdown>
+                                                        <i class="fa fa-ellipsis-v cursor" style="padding:0 15px" ngbDropdownToggle> </i>
+                                                        <div ngbDropdownMenu class="dropdown-menu">
+                                                            <a [appHideIfUnauthorized]="'edit-currency'" class="dropdown-item" ngbDropdownItem href="javascript:void(0)" (click)="addCurrency(currencylist,'edit')"> <img src="assets/img/edit.png" alt="edit" /> {{'Settings.Local.Edit' | translate}} </a>
+                                                            <a [appHideIfUnauthorized]="'delete-currency'" class="dropdown-item" ngbDropdownItem href="javascript:void(0)" (click)="deleteCurrency(currencylist.currencyId)"> <img src="assets/img/delete-new.png" alt="delete"> {{'Settings.Local.Delete' | translate}} </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <mat-paginator [length]="(sandbox.currencyListCount$ | async)?.data" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" (page)="onPageChange($event)">
+                                    </mat-paginator>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+                    <!--country-->
+
+                    <!--zone-->
+                </ngb-tabset>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>

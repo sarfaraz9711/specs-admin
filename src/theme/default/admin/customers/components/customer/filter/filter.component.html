@@ -1,0 +1,34 @@
+<input type="text" id="focusOut" style="height: 0; width: 0; opacity: 0;">
+<form (ngSubmit)="onSubmit()" class="filter-form" [formGroup]="custftrform">
+    <div class="form-group">
+        <label for="keyboard">{{ 'Customers.Customer.CustomerName' | translate }}
+    </label>
+        <input type="text" formControlName="customername" class="form-control" id="keyboard" aria-describedby="emailHelp" placeholder="{{ 'Customers.Customer.CustomerName' | translate }}" />
+    </div>
+    <div class="form-group">
+        <label for="sku">{{ 'Customers.Customer.Email' | translate }} </label>
+        <input type="text" formControlName="email" class="form-control" id="sku" placeholder="{{ 'Customers.Customer.Email' | translate }}" />
+    </div>
+    <div class="form-group sol-fm">
+        <label for="sku">{{ 'Customers.Customer.CustomerGroup' | translate }}
+    </label>
+        <ng-select placeholder="{{ 'Customers.Customer.SelectCustomerGroup' | translate}}" [clearable]="false" [searchable]="false" formControlName="customergroup" id="sku">
+            <ng-option *ngFor=" let customersGrouplist of Sandbox.getCustomersGroupList$ | async" [value]="customersGrouplist.groupId">{{customersGrouplist.name}}</ng-option>
+        </ng-select>
+
+    </div>
+    <div class="form-group">
+        <label class="control-label">{{ 'Customers.Customer.DateAdded' | translate }}
+    </label>
+        <input readonly style="cursor: pointer" type="text" class="form-control date" (dateSelect)="onDateSelect($event)" formControlName="custDate" placeholder="dd/mm/yyyy" name="dp" id="cal-in" ngbDatepicker #f="ngbDatepicker" (click)="f.toggle()" [maxDate]="todaysDate"
+        />
+    </div>
+    <div class="text-right filter-btns">
+        <a (click)="reset()" style="cursor: pointer">{{
+      'Sales.Orders.Reset' | translate
+    }}</a>
+        <button type="submit" class="btn">
+      {{ 'Sales.Orders.ApplyFilters' | translate }}
+    </button>
+    </div>
+</form>

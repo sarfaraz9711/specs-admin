@@ -1,0 +1,35 @@
+<app-audit-log-header></app-audit-log-header>
+<div class="breadcrumbs-row">
+  <div class="bc-col mar"><ul ><li class="cusror ng-star-inserted"><a href="javascript:void(0)" style="color: gray;"> Configration </a></li>
+<li class="cusror ng-star-inserted"><a href="javascript:void(0)" style="color: gray;"> Payment Report </a></li>
+<li class="ng-star-inserted">Export</li></ul></div><div class="bc-col-btn addserv addvend margin"></div></div>
+
+<form class="validateForm" [formGroup]="exportReportForm">
+    <div class="container mt-5">
+<div class="row">
+    <div class="col-md-4">
+        <label>From Date</label>
+        <input type="date" class="form-control" formControlName="fromDate">
+    </div>
+    <div class="col-md-4">
+        <label>To Date</label>
+        <input type="date" class="form-control" formControlName="toDate">
+    </div>
+    <div class="col-md-4">
+        <label>Payment Status</label>
+        <select class="form-control" formControlName="paymentStatus">
+            <option value="">--Select--</option>
+            <option value="1">Success</option>
+            <option value="0">Pending</option>
+            <option value="2">Failed</option>
+        </select>
+    </div>
+    <div class="col-md-12 text-center mt-5">
+        <input type="button" value="Export Data" class="btn btn-primary" [disabled]="exportReportForm.invalid" (click)="exportAsXLSX()">
+    </div>
+</div>
+</div>
+</form>
+
+
+<app-popup-message [popupMessage]="popupMessage"></app-popup-message>

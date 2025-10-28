@@ -1,0 +1,41 @@
+<div class="setup-wrapper">
+
+    <div class="setup-container localization-container">
+
+        <div class="loc-lay-title">
+            <h3>Data</h3>
+            <p>In this section, the admin may track the various admin user activities for any auditing purpose and also configure for taking data back up on a time-to-time basis.</p>
+        </div>
+
+        <div class="card ap-general ap-info set-loc-card">
+
+            <div class="localize-tab">
+
+                <ngb-tabset>
+                    <ngb-tab>
+                        <ng-template ngbTabTitle='Audit Log'>
+                            <button routerLinkActive="'active'" [routerLink]="['/settings/data/audit-log/list']" routerLinkActive="active" class="tablinks">Audit Log</button>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+
+                        </ng-template>
+                    </ngb-tab>
+
+                    <!-- <ngb-tab>
+                        <ng-template ngbTabTitle='Data Back-up'>
+                            <button routerLinkActive="'active'" [routerLink]="['/settings/data/data-back-up/list']" routerLinkActive="active" class="tablinks">Data Back-up</button>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+
+                        </ng-template>
+                    </ngb-tab> -->
+                </ngb-tabset>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<router-outlet></router-outlet>

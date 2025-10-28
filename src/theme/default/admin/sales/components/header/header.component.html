@@ -1,0 +1,35 @@
+<div class="subtoolbar salestoolbar">
+    <div class="sub-nav-menu">
+        <a href="javascript:void(0)" [appHideIfUnauthorized]="'list-order'" [routerLink]="['/sales/orders']" [routerLinkActive]="'active'">
+            <span><img src="assets/img/header-icons/sales/sales-order.svg" alt="orders"><img src="assets/img/header-icons/sales/sales-order-on.svg" alt="orders"></span> {{'Sales.Orders.Orders'| translate}}
+        </a>
+        <a class="d-none" href="javascript:void(0)" [routerLink]="['/sales/backorder']" [appHideIfUnauthorized]="'sales-back-order'" [routerLinkActive]="'active'">
+            <span><img src="assets/img/header-icons/sales/sales-back-orders.svg" alt="backorders"><img src="assets/img/header-icons/sales/sales-back-orders-on.svg" alt="backorders"></span> {{'Sales.nav.Backorders'| translate}}
+        </a>
+        <a href="javascript:void(0)" [routerLink]="['/sales/failed-order']" [appHideIfUnauthorized]="'sales-failed-order'" [routerLinkActive]="'active'">
+            <span><img src="assets/img/header-icons/sales/orders-ico.svg" alt="orders"><img src="assets/img/header-icons/sales/orders-ico-on.svg" alt="orders"></span> Failed/Pending Orders
+        </a>
+        <a href="javascript:void(0)" [routerLink]="['/sales/payments']" [appHideIfUnauthorized]="'sales-payments'" [routerLinkActive]="'active'">
+            <span><img src="assets/img/header-icons/sales/sales-payment.svg" alt="payments"><img src="assets/img/header-icons/sales/sales-payment-on.svg" alt="payments"></span> {{'Sales.nav.Payments'| translate}}
+        </a>
+        <a class="d-none" href="javascript:void(0)" [routerLink]="['/sales/archive-payments']" [routerLinkActive]="'active'" [appHideIfUnauthorized]="'sales-archive-paments'">
+            <span><img src="assets/img/header-icons/sales/sales-archive-payment.svg" alt="archive-payments"><img src="assets/img/header-icons/sales/sales-archive-payment-on.svg" alt="archive-payments"></span> {{'Sales.nav.ArchivePayments'| translate}}
+        </a>
+        <a class="d-none" href="javascript:void(0)" [routerLink]="['/sales/inventory-products']" [routerLinkActive]="'active'" [appHideIfUnauthorized]="'sales-inventory'">
+            <span><img src="assets/img/header-icons/sales/production.svg" alt="inventory"><img src="assets/img/header-icons/sales/production-on.svg" alt="inventory"></span> {{'Sales.nav.Inventory'| translate}}
+        </a>
+        <a href="javascript:void(0)" [routerLink]="['/sales/cancel-orders']" [routerLinkActive]="'active'" [appHideIfUnauthorized]="'sales-cancel-request'">
+            <span><img src="assets/img/header-icons/sales/sales-cancel-request.svg" alt="cancel requests"><img src="assets/img/header-icons/sales/sales-cancel-request-on.svg"  alt="cancel requests"></span> {{'Sales.nav.CancelRequests'| translate}}
+        </a>
+        <a href="javascript:void(0)" [routerLink]="['/sales/return-orders']" [routerLinkActive]="'active'" [appHideIfUnauthorized]="'sales-return-request'">
+            <span><img src="assets/img/header-icons/sales/sales-cancel-request.svg" alt="return requests"><img src="assets/img/header-icons/sales/sales-cancel-request-on.svg"  alt="return requests"></span> {{'Sales.nav.ReturnRequests'| translate}}
+        </a>
+
+        <a href="javascript:void(0)" [routerLink]="['/sales/credit-notes']" [routerLinkActive]="'active'">
+            <span><img src="assets/img/header-icons/sales/sales-cancel-request.svg" alt="credit Note"><img src="assets/img/header-icons/sales/sales-cancel-request-on.svg"  alt="Credit Notes"></span> Credit Notes
+        </a>
+        <!-- <a href="javascript:void(0)" [routerLink]="['/sales/quotation-requests']" [routerLinkActive]="'active'" class="qr-nav" [routerLink]="['/sales/quotation-requests']" [appHideIfUnauthorized]="'sales-quotation-request'">
+            <span><img src="assets/img/header-icons/sales/sales-quotation-request.svg"  alt="quotation requests"><img src="assets/img/header-icons/sales/sales-quotation-request-on.svg"  alt="quotation requests"></span> {{'Sales.nav.QuotationRequests'| translate}}
+        </a> -->
+    </div>
+</div>
