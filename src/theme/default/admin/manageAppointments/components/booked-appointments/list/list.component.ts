@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ExcelService } from 'src/core/admin/PublicForms/excel.service';
 import { AppointmentsService } from 'src/core/admin/appointments/appointment.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-contactus-list',
@@ -13,6 +14,7 @@ export class ListComponent implements OnInit {
   appointments: any[] = [];
   customers: any[] = [];
   selectedCustomer: any = null;
+  selectedDate: string = '';
 
   constructor(
     private http: HttpClient,
@@ -23,6 +25,16 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
      this.agentcustomerList();
+  }
+  onStartDateSelect(event: any) {
+    this.selectedDate = event.target.value;
+  }
+  applyFilter() {
+    this.loadAppointments(this.selectedDate);
+  }
+  reset() {
+    this.selectedDate = '';
+    this.agentcustomerList();
   }
 
     agentcustomerList() {
@@ -56,10 +68,13 @@ export class ListComponent implements OnInit {
   }
 
    
-  loadAppointments() {
+  loadAppointments(date?: string) {
+    const currentDate = new Date();
+    const formattedCurrentDate = currentDate.toISOString().split('T')[0];
+
     const payload = {
       isActive: 1,
-      appointmentDate: '2025-10-28'
+      appointmentDate: date || formattedCurrentDate
     };
 
     this._appointmentsService.bookedAppointments(payload).subscribe({

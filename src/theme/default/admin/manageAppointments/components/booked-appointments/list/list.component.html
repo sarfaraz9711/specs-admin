@@ -1,5 +1,17 @@
 <div class="flex product-wrap">
     <div class="product-table" style="width: 100%">
+
+        <div class="d-flex justify-content-end align-items-center mb-3">
+            <div class="form-group mb-0 mr-2">
+                <label class="control-label mb-0 mr-2">Date:</label>
+                <input type="date" class="form-control date1" name="startdate" [(ngModel)]="selectedDate"
+                    (change)="onStartDateSelect($event)" style="cursor: pointer; width: 100%;" />
+            </div>
+
+            <a style="cursor: pointer; margin-right: 10px;" (click)="reset()">Reset</a>
+            <button type="button" class="btn btn-primary" (click)="applyFilter()">Apply</button>
+        </div>
+
         <div class="table-responsive subscription-content-table">
             <table class="table">
                 <thead>

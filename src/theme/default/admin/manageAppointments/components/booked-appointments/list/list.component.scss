@@ -50,3 +50,22 @@
 .export-data {
     background: #8cffa0 !important;
 }
+.form-group {
+  width: auto !important;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  label {
+    margin-right: 8px;
+    white-space: nowrap;
+  }
+  input {
+    width: 200px;
+  }
+}
+
+.product-table {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
