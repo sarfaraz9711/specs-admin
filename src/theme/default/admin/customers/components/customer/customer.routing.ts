@@ -14,6 +14,7 @@ import { CustomerAddComponent } from './add/add.component';
 import { CustomerListComponent } from './list/list.component';
 import { CustomerViewComponent } from './view/view.component';
 import { AuthGuard } from '../../../../../../core/admin/providers/auth.guard';
+import { CustomerAddAgentComponent } from './addAgent/addAgent.component';
 
 const customerRoutes: Routes = [
   { path: '', redirectTo: 'list', pathMatch: 'full' },
@@ -51,7 +52,15 @@ const customerRoutes: Routes = [
       { title: 'Customers', url: '' },
       { title: 'Update', url: '' }]
     }
-  }
+  },
+  {
+    path: 'addagent', component: CustomerAddAgentComponent, canActivate: [AuthGuard],
+    data: {
+      permission: 'create-customer', urls: [{ title: 'Customers', url: '' },
+      { title: 'Agent', url: '' },
+      { title: 'Add', url: '' }]
+    }
+  },
 ];
 
 @NgModule({

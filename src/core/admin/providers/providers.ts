@@ -8,7 +8,7 @@
 */
 import { Api } from './api/api';
 import { HttpClientModule } from '@angular/common/http';
-import { HttpModule } from '@angular/http';
+// import { HttpModule } from '@angular/http';
 import {
   HttpRequest,
   HttpInterceptor,
@@ -22,7 +22,7 @@ export {
   Api,
   HttpRequest,
   HttpClientModule,
-  HttpModule,
+  // HttpModule,
   HttpErrorResponse,
   HttpInterceptor,
   HttpResponse,

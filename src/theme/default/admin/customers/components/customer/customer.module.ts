@@ -39,6 +39,7 @@ import { HttpClient } from '@angular/common/http';
 import { MAT_CHECKBOX_DEFAULT_OPTIONS } from '@angular/material/checkbox';
 import { ComponentsModule } from '../../../shared/components';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CustomerAddAgentComponent } from './addAgent/addAgent.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CustomerListComponent,
     CustomerViewComponent,
     CustomerAddressComponent,
-    CustomerFilterComponent
+    CustomerFilterComponent,
+    CustomerAddAgentComponent
   ],
   imports: [
     CommonModule,

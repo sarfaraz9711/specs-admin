@@ -1,0 +1,49 @@
+<div class="flex product-wrap">
+    <div class="product-table" style="width: 100%">
+        <div class="table-responsive subscription-content-table">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Full Name</th>
+                        <th>Mobile</th>
+                        <th>Appointment Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Remarks</th>
+                        <th>Assign Agent</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let appointment of appointments">
+                        <td>{{ appointment.id }}</td>
+                        <td>{{ appointment.fullName }}</td>
+                        <td>{{ appointment.mobile }}</td>
+                        <td>{{ appointment.appointmentDate }}</td>
+                        <td>{{ appointment.appointmentTime }}</td>
+                        <td>{{ appointment.appointmentStatus }}</td>
+                        <td>{{ appointment.remarks }}</td>
+
+                        <td>
+                            <select [(ngModel)]="appointment.selectedCustomerId" name="customerSelect{{ i }}"
+                                class="form-control" (change)="onCustomerSelect(appointment)">
+                                <option value="">Select Customer</option>
+                                <option *ngFor="let cust of customers" [value]="cust.id">
+                                    {{ cust.firstName }}
+                                </option>
+                            </select>
+                        </td>
+
+                        <td>
+                            <div class="bc-col-btn">
+                                <button class="btn customer-btn" (click)="updateCustomer(appointment)"
+                                    [appHideIfUnauthorized]="'create-customer'"> Assign Agent
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>

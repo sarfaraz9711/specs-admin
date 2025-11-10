@@ -121,7 +121,7 @@ export class CustomerListComponent implements OnInit, OnDestroy {
 
   addAddress() {
     this.service.setcusteditdata('');
-    this.router.navigate(['/customers/customer/add'], { queryParams: this.queryData });
+    this.router.navigate(['/customers/customer/addagent'], { queryParams: this.queryData });
   }
 
   customerList() {

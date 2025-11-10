@@ -196,4 +196,7 @@ export class CustomersApiClientService extends Api {
   public viewOrderProductCount(param: any): Observable<any> {
     return this.http.get(this.url + '/customer/order-product-list', { params: param });
   }
+  agentregister(payload: any): Observable<any> {
+    return this.http.post(`${this.url}/customer/register`, payload);
+  }
 }

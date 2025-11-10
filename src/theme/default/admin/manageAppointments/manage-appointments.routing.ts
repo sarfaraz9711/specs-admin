@@ -7,7 +7,7 @@ import { AppointmentsLayout } from './components/layout/layout.component';
 
 
 
-const storeRoutes: Routes = [
+const appointmentRoutes: Routes = [
   { path: '', redirectTo: "appointments" , pathMatch: 'full'},
   
   {
@@ -20,14 +20,20 @@ const storeRoutes: Routes = [
         //canActivate: [AuthGuard],
         //data: { permissionForHeader: 'customers-customer', root: 'feedback' }
       },
-      
+      {
+        path: 'booked-appointments',
+        loadChildren: () => import('./components/booked-appointments/booked-appointment.module').then(m => m.BookedAppointmentsModule),
+        //canActivate: [AuthGuard],
+        //data: { permissionForHeader: 'customers-customer', root: 'feedback' }
+      },
+
     
     ]
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(storeRoutes)],
+  imports: [RouterModule.forChild(appointmentRoutes)],
   exports: [RouterModule]
 })
 export class ManageAppointmentsRoutingModule {}

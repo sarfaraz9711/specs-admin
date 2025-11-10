@@ -1,0 +1,136 @@
+<div class="row products-section" style="margin:unset">
+    <div class="col-12">
+        <div class="breadcrumbs-row noborder">
+            <div class="bc-col">
+
+            </div>
+            <div class="bc-col-btn ap-col-btn">
+                <button class="btn btn-save" (click)="onSubmit()">
+                    <img src="assets/img/tick-round-white.png" alt="save" />
+                    Save
+                </button>
+                <button (click)="cancel()" class="btn btn-cancel">
+                    <img src="assets/img/close-white-ico.png" alt="cancel" />
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<form (ngSubmit)="onSubmit()" [formGroup]="customerForm" novalidate class="form-horizontal m-t-20">
+    <div class="flex addproduct-wrap">
+        <div class="card ap-general">
+            <div class="ap-header">
+                <span> 1 </span>Agent Detail
+            </div>
+
+            <div class="flex ap-body">
+                <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Name <sup>*</sup>
+                        </label>
+                        <input type="text" class="form-control" formControlName="name"
+                            placeholder="Name" />
+                    </div>
+
+                     <div class="form-group">
+                        <label>Last Name <sup>*</sup>
+                        </label>
+                        <input type="text" class="form-control" formControlName="lastname"
+                            placeholder=" Last Name" />
+                    </div>
+
+                </div>
+                 <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>{{ 'Customers.Customer.Email' | translate }} <sup>*</sup></label>
+                        <input type="email" class="form-control" formControlName="email"
+                            placeholder="{{'Customers.CustomerPlaceholder.Email' | translate}}"
+                           />
+                    </div>
+                </div>
+
+                 <div class="ap-body-col">
+                    <div class="form-group">
+                        <label>Mobile<sup>*</sup></label>
+                        <input type="text" class="form-control" formControlName="mobile" maxlength="15" appOnlyNumber
+                            placeholder="Mobie " />
+                    </div>
+                </div>
+             </div>
+        </div>
+ 
+        <div class="card ap-general ap-info">
+            <div class="ap-header">
+                <span> 2 </span>{{ 'Customers.Customer.MoreInformation' | translate }}
+            </div>
+            <div class="flex ap-body">
+                <ngb-tabset style="width:100%;">
+                    <ngb-tab>
+                        <ng-template ngbTabTitle>{{ 'Customers.Customer.General' | translate }}
+                        </ng-template>
+                        <ng-template ngbTabContent>
+
+                            <div class="flex data-row">
+                                <div class="data-col">
+                                    <div class="form-group">
+                                        <label>{{ 'Customers.Customer.Password' | translate}}<sup>*</sup></label>
+                                        <div class="group">
+                                            <input class="form-control" [type]="fieldTextType ? 'text' : 'password'"
+                                                #pwd [ngClass]="{
+                        'is-invalid': submitted && f.password.errors
+                      }" formControlName="password" placeholder="{{
+                        'Customers.CustomerPlaceholder.Password' | translate
+                      }}" (keyup)="enterPassword(pwd.value)" (paste)="false" />
+                                            <div class="eyeicon">
+                                                <i class="fa" [ngClass]="{
+                        'fa-eye-slash': !fieldTextType,
+                        'fa-eye': fieldTextType
+                      }" (click)="toggleFieldTextType()"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                 </div>
+                                 <div class="data-col">
+                                    <div class="form-group">
+                                        <label>{{ 'Customers.Customer.ConfirmPassword' | translate
+                                            }}<sup *ngIf="!editCustomerId">*</sup></label>
+                                        <div class="group">
+                                            <input [type]="repeatFieldTextType ? 'text' : 'password'"
+                                                class="form-control" maxlength="50" [ngClass]="{
+                        'is-invalid': submitted && f.confirmpassword.errors
+                      }" formControlName="confirmpassword" placeholder="{{
+                        'Customers.Customer.ConfirmPassword' | translate
+                      }}" (paste)="false" />
+                                            <div class="eyeicon">
+                                                <i class="fa" [ngClass]="{
+                        'fa-eye-slash': !repeatFieldTextType,
+                        'fa-eye': repeatFieldTextType
+                      }" (click)="toggleRepeatFieldTextType()"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                 </div>
+ 
+                                 <div class="data-col">
+                                    <div class="form-group">
+                                        <label>{{ 'Customers.Customer.Status' | translate
+                                            }}<sup>*</sup></label>
+                                        <ng-select placeholder="{{ 'Customers.Customer.SelectStatus' | translate}}"
+                                            [ngClass]="{ 'error-fields': submitted && f.status.errors }"
+                                            [searchable]="false" formControlName="status">
+                                            <ng-option [value]="1">Type 1</ng-option>
+                                            <ng-option [value]="2">Type 2</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+            </div>
+        </div>
+    </div>
+</form>
