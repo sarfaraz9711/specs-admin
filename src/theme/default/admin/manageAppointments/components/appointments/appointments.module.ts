@@ -26,9 +26,9 @@ import { MAT_CHECKBOX_DEFAULT_OPTIONS } from '@angular/material/checkbox';
 import { ComponentsModule } from '../../../shared/components';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddStoreComponent } from './add/add.component';
-import { StoresService } from 'src/core/admin/stores/stores.service';
 import { ListComponent } from './list/list.component';
 import { ExcelService } from 'src/core/admin/PublicForms/excel.service';
+import { AppointmentsService } from 'src/core/admin/appointments/appointment.service';
 
 @NgModule({
   declarations: [
@@ -57,7 +57,7 @@ import { ExcelService } from 'src/core/admin/PublicForms/excel.service';
     NumberAcceptModule
   ],
   providers: [
-    StoresService,
+    AppointmentsService,
     ExcelService,
     { provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: 'check' }
   ],

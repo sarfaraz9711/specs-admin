@@ -16,10 +16,10 @@ export const imageUrl = apiBaseUrl+'/api/media/image-resize'
 
 export const environment = {
   production: false,
-    baseUrl: apiUrl,
-   imageUrl: imageUrl, 
-  // baseUrl: 'http://192.168.100.59:4200/api',
-  // imageUrl: 'http://192.168.100.59:4200/api/media/image-resize', 
+  // baseUrl: apiUrl,
+  //  imageUrl: imageUrl, 
+  baseUrl: 'http://192.168.100.59:4200/api',
+  imageUrl: 'http://192.168.100.59:4200/api/media/image-resize',
   productUrl: 'http://localhost:3001/',
   pluginUrl: 'http://localhost:8000/login',
   s3BucketUrl: 'https://lgpl-prod-s3-bucket.s3.amazonaws.com'

@@ -8,32 +8,22 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Gender</th>
-                        <th>Email</th>
-                        <th>Mobile</th>
-                        <th>Appointment Date</th>
-                        <th>Time</th>
-                        <th>Status</th>
-                        <th>Remarks</th>
-                        <th>Active</th>
-                        <th>Booked Date</th>
+                        <th>Calendar Period</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Booking Not Allowed Days</th>
+                         <th>Saturday Off</th>
+                        <th>Sunday Off</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let appointment of appointments">
-                        <td>{{ appointment.appointmentId }}</td>
-                        <td>{{ appointment.name }}</td>
-                        <td>{{ appointment.gender }}</td>
-                        <td>{{ appointment.email }}</td>
-                        <td>{{ appointment.mobile }}</td>
-                        <td>{{ appointment.appointmentDate }}</td>
-                        <td>{{ appointment.appointmentTime }}</td>
-                        <td>{{ appointment.appointmentStatus }}</td>
-                        <td>{{ appointment.remarks }}</td>
-                        <td>{{ appointment.active ? 'Yes' : 'No' }}</td>
-                        <td>{{ appointment.bookedDate }}</td>
+                        <td>{{ appointment.calendarPeriod }}</td>
+                        <td>{{ appointment.startTime }}</td>
+                        <td>{{ appointment.endTime }}</td>
+                        <td>{{ appointment.bookingNotAllowedDays }}</td>
+                         <td>{{ appointment.saturdayOff }}</td>
+                        <td>{{ appointment.sundayOff }}</td>
                         <td>
                     </tr>
                 </tbody>

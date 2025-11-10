@@ -24,6 +24,12 @@
                   <img src="assets/img/add-white-ico.png"alt="add"/> {{ 'Customers.Customer.AddCustomer' | translate }}
                 </button>
                 </div> -->
+
+                <div class="bc-col-btn">
+                    <button class="btn customer-btn" (click)="addAddress()" [appHideIfUnauthorized]="'create-customer'">
+                  <img src="assets/img/add-white-ico.png"alt="add"/>Add Agent
+                </button>
+                </div>
                 <ul class="flex">
                     <li [appHideIfUnauthorized]="'export-all-customer'">
                         <a style="border-color: #4AAF62!important;color: #4AAF62;" (click)="exportAllExcel($event)">

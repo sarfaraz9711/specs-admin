@@ -34,14 +34,13 @@
                         </div>
 
                         <div *ngFor="let dateCtrl of bookingNotAllowedDays.controls; let i = index"
-                            class=" d-flex align-items-center">                                
-                                <input type="date" [formControl]="dateCtrl" class="form-control" />
-                            <button type="button" class="btn btn-danger btn-sm ml-2"
+                            class=" d-flex align-items-center">
+                            <input type="date" [formControl]="dateCtrl" class="form-control mb-1" />
+                             <button *ngIf="i > 0" type="button" class="btn btn-danger btn-sm ml-2"
                                 (click)="removeDate(i)">Remove</button>
                         </div>
                     </div>
                 </div>
-
                 <div class="ap-body-col">
                     <div class="form-group">
                         <label>Saturday Off:</label><br />

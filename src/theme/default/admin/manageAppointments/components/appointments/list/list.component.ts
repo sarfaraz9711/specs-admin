@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { StoresService } from 'src/core/admin/stores/stores.service';
 import { ExcelService } from 'src/core/admin/PublicForms/excel.service';
+import { AppointmentsService } from 'src/core/admin/appointments/appointment.service';
 
 @Component({
   selector: 'app-contactus-list',
@@ -15,20 +15,29 @@ export class ListComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private route: Router,
-    private _storesService: StoresService,
-    private excelService: ExcelService
+    private excelService: ExcelService,
+    private _appointmentsService: AppointmentsService,
+
   ) { }
 
   ngOnInit(): void {
     this.loadAppointments();
   }
 
-  loadAppointments(): void {
-    this.http.get<any[]>('http://localhost:3000/appointments')
-      .subscribe(data => this.appointments = data);
-
+  loadAppointments() {
+    this._appointmentsService.appointmentList().subscribe({
+      next: (res: any) => {
+        if (res && res.status === 200 && res.data) {
+          this.appointments = [res.data];
+        } else {
+          this.appointments = [];
+        }
+      },
+      error: (err) => {
+        this.appointments = [];
+      }
+    });
   }
-
   addStore() {
     this.route.navigate(['/manage-appointments/appointments/add']);
   }
